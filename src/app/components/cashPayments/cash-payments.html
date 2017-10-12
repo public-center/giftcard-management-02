@@ -1,0 +1,15 @@
+<cq-modal modal-id="cash-payment" submit-button="ctrl.cashPayment()"
+          modal-title="Make a cash payment on current denial balance" disabled="ctrl.cashPaymentDisableSubmit()">
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Current balance:</h4>
+      <h3>{{rejectionTotal | currency}}</h3>
+    </div>
+    <div class="col-md-6">
+      <h4>Amount to pay</h4>
+      <input type="text" class="input-sm form-control"
+             ng-model="ctrl.displayData.denialCashPayment"
+             numbers-only="decimal">
+    </div>
+  </div>
+</cq-modal>

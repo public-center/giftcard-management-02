@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="text-center">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      <img src="assets/images/logo/JPEG72_small_grey.jpg" class="img-responsive" ui-sref="auth.admin" style="cursor: pointer">
+    </div>
+  </div>
+</div>
+<div class="row text-center">
+  <h3>Reset your password</h3>
+</div>
+<div class="middle-box text-center animated fadeInDown">
+  <form class="m-t" role="form">
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" ng-model="resetPasswordCtrl.password">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Confirm Password" ng-model="resetPasswordCtrl.confirm">
+    </div>
+    <button type="submit" class="btn btn-primary block full-width m-b" ng-click="resetPasswordCtrl.resetPassword()"
+            ng-disabled="resetPasswordCtrl.submitDisabled()">Change Password</button>
+    <a ui-sref="auth.admin">Login</a>
+  </form>
+</div>
+<cq-modal modal-id="reset-password-success" hide-submit="true" modal-title="Password successfully updated"></cq-modal>
+<cq-modal modal-id="reset-password-fail" hide-submit="true" modal-title="{{resetPasswordCtrl.error}}"></cq-modal>

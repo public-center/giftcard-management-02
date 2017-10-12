@@ -1,0 +1,29 @@
+<div class="form">
+  <p>
+    We have confirmed that one of the cards submitted for liquidation has lost value. The card details are listed below:
+  </p>
+  <table style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', Sans-Serif; font-size: 12px; background: #fff; margin: 45px; width: 480px; border-collapse: collapse; text-align: left;">
+    <thead>
+      <tr>
+        <th ng-repeat="label in ['Date', 'CQ ACH', 'CQ Paid Amount', 'Brand', 'Card Number', 'PIN', 'Balance'] track by $index"
+            style="font-size: 14px; font-weight: normal; color: #039; padding: 10px 8px; border-bottom: 2px solid #6678b1;">
+          {{label}}
+        </th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="ach in ctrl.cqAchArray track by $index">
+      <tr ng-repeat="inventory in ctrl.inventoriesByAch[ach.achNumber] track by $index">
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{inventory.created | date:'M/d/yyyy':'UTC'}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ach.achNumber}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ctrl.getNetAmount(inventory) | currency}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{inventory.retailer.name}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{inventory.card.number}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{inventory.card.pin}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">$0.00</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Per our policy, we will deduct {{ctrl.sumAchs(ctrl.cqAchArray) | currency}} from a future transaction. If you have any questions, please contact CardQuiry.
+  </p>
+</div>

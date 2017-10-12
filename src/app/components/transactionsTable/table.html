@@ -1,0 +1,633 @@
+<table
+  st-table="displayData.display"
+  st-pipe="piper"
+  class="table table-striped activity-table activity-revised-table table-bordered"
+>
+  <colgroup>
+    <!--sellDate-->
+    <col>
+    <!--batch-->
+    <col>
+    <!--storeName-->
+    <col>
+    <!--retailer-->
+    <col>
+    <!--employee-->
+    <col>
+    <!--customerName-->
+    <col>
+    <!--customerPhone-->
+    <col>
+    <!--customerEmail-->
+    <col>
+    <!--memo-->
+    <col>
+    <!--number-->
+    <col>
+    <!--pin-->
+    <col>
+    <!--balance-->
+    <col>
+    <!--verifiedBalance-->
+    <col>
+    <!--cardValuePercentage-->
+    <col>
+    <!--cardValue-->
+    <col>
+    <!--reserveRate-->
+    <col>
+    <!--reserveAmount-->
+    <col>
+    <!--merchantMaxValue-->
+    <col>
+    <!--merchantTransactionAmt-->
+    <col>
+    <!--cashPaymentAmount-->
+    <col>
+    <!--balanceCardIssued-->
+    <col>
+    <!--balanceCardAmount-->
+    <col>
+    <!--balanceCardPrefix-->
+    <col>
+    <!--merchantPayoutPercentage-->
+    <col>
+    <!--merchantPayoutAmount-->
+    <col>
+    <!--sellRate-->
+    <col>
+    <!--cqPaid-->
+    <col>
+    <!--cqTotalWithhold-->
+    <col>
+    <!--netPayoutAmtToVista-->
+    <col>
+    <!--type-->
+    <col>
+    <!--shipStatus-->
+    <col>
+    <!--ach-->
+    <col>
+    <!--deduction-->
+    <col>
+    <!--notes-->
+    <col>
+    <!--vmMemo1-->
+    <col>
+    <!--vmMemo2-->
+    <col>
+    <!--vmMemo3-->
+    <col>
+    <!--vmMemo4-->
+    <col>
+  </colgroup>
+  <thead>
+  <tr>
+    <!--sellDate-->
+    <th st-sort="created">
+      <div>Date Purchased</div>
+    </th>
+    <!--batch-->
+    <th st-sort="batch">
+      <div>Batch #</div>
+    </th>
+    <!--storeName-->
+    <th st-sort="storeName">
+      <div>Store Name</div>
+    </th>
+    <!--retailer-->
+    <th st-sort="retailer_name">
+      <div>Retailer</div>
+    </th>
+    <!--employee-->
+    <th st-sort="employeeName">
+      <div>Employee Name</div>
+    </th>
+    <!--customerName-->
+    <th st-sort="customerName" >
+      <div>Customer Name</div>
+    </th>
+    <!--customerPhone-->
+    <th st-sort="customerPhone" >
+      <div>Customer Phone</div>
+    </th>
+    <!--customerEmail-->
+    <th st-sort="customerEmail" >
+      <div>Customer Email</div>
+    </th>
+    <!--memo-->
+    <th st-sort="transaction.memo">
+      <div>Memo</div>
+    </th>
+    <!--number-->
+    <th st-sort="card_number">
+      <div>Card #</div>
+    </th>
+    <!--pin-->
+    <th st-sort="pin_code">
+      <div>PIN</div>
+    </th>
+    <!--balance-->
+    <th st-sort="balance">
+      <div>Balance</div>
+    </th>
+    <!--verifiedBalance-->
+    <th st-sort="verifiedBalance">
+      <div>Verified Balance</div>
+    </th>
+    <!--cardValuePercentage-->
+    <th st-sort="creditValuePercentage">
+      <div>Card Value Percentage</div>
+    </th>
+    <!--cardValue-->
+    <th st-sort="cardValue">
+      <div>Card Value</div>
+    </th>
+    <!--reserveRate-->
+    <th st-sort="reserveRate">
+      <div>Reserve Rate</div>
+    </th>
+    <!--reserveAmount-->
+    <th st-sort="reserveAmount">
+      <div>Reserve Amount</div>
+    </th>
+    <!--merchantMaxValue-->
+    <th st-sort="merchantMax">
+      <div>Merchant Max Value</div>
+    </th>
+    <!--merchantTransactionAmt-->
+    <th st-sort="transactionTotal">
+      <div>Merchant Transaction Amount</div>
+    </th>
+    <!--cashPaymentAmount-->
+    <th st-sort="cashPaymentAmount">
+      <div>Cash Payment Amount</div>
+    </th>
+    <!--balanceCardIssued-->
+    <th st-sort="balanceCardIssued">
+      <div>Balance Card Issued</div>
+    </th>
+    <!--balanceCardAmount-->
+    <th st-sort="transaction.nccCardValue">
+      <div>Balance Card Amount</div>
+    </th>
+    <!--balanceCardPrefix-->
+    <th st-sort="transaction.prefix">
+      <div>Balance Card Prefix</div>
+    </th>
+    <!--merchantPayoutPercentage-->
+    <th st-sort="transaction.merchantPayoutPercentage">
+      <div>Merchant Payout Percentage</div>
+    </th>
+    <!--merchantPayoutAmount-->
+    <th st-sort="transaction.merchantPayoutAmount">
+      <div>Merchant Payout Amt</div>
+    </th>
+    <!--sellRate-->
+    <th st-sort="smpRate">
+      <div>Sell Rate</div>
+    </th>
+    <!--cqPaid-->
+    <th st-sort="cqPaid">
+      <div>CQ Paid</div>
+    </th>
+    <!--cqTotalWithhold-->
+    <th st-sort="cqWithheld">
+      <div>CQ Total Withheld</div>
+    </th>
+    <!--netPayoutAmtToVista-->
+    <th st-sort="netPayoutAmount">
+      <div>Net Payout Amount to Vista Money</div>
+    </th>
+    <!--type-->
+    <th st-sort="type">
+      <div>Type</div>
+    </th>
+    <!--shipStatus-->
+    <th st-sort="buyerShipStatus">
+      <div>Ship Status</div>
+    </th>
+    <!--ach-->
+    <th st-sort="cqAch">
+      <div>CQ ACH</div>
+    </th>
+    <!--deduction-->
+    <th st-sort="deduction">
+      <div>Deduction</div>
+    </th>
+    <!--notes-->
+    <th st-sort="adminActivityNote">
+      <div>Notes</div>
+    </th>
+    <!--vmMemo1-->
+    <th st-sort="adminActivityNote">
+      <div>VM Memo 1</div>
+    </th>
+    <!--vmMemo2-->
+    <th st-sort="adminActivityNote">
+      <div>VM Memo 2</div>
+    </th>
+    <!--vmMemo3-->
+    <th st-sort="adminActivityNote">
+      <div>VM Memo 3</div>
+    </th>
+    <!--vmMemo4-->
+    <th st-sort="adminActivityNote">
+      <div>VM Memo 4</div>
+    </th>
+  </tr>
+  <tr>
+    <!--sellDate-->
+    <th><div></div></th>
+    <!--batch-->
+    <th>
+      <div>
+        <select st-search="batch" class="activity-select-header">
+          <option></option>
+          <option value="{{batch._id}}" ng-repeat="batch in ctrl.displayData.params.batches track by $index">
+            {{batch.batchId}}
+          </option>
+        </select>
+      </div>
+    </th>
+    <!--storeName-->
+    <th>
+      <div>
+        <select st-search="store" class="activity-select-header">
+          <option></option>
+          <option value="{{store._id}}" ng-repeat="store in ctrl.displayData.params.stores track by $index">
+            {{store.name}}
+          </option>
+        </select>
+      </div>
+    </th>
+    <!--retailer-->
+    <th>
+      <div><input st-search="retailer" class="input-sm form-control" type="search" placeholder="Retailer"/></div>
+    </th>
+    <!--employee-->
+    <th>
+      <div><input st-search="employeeName" class="input-sm form-control" type="search" placeholder="Employee name"/></div>
+    </th>
+    <!--customerName-->
+    <th>
+      <div><input st-search="customerName" class="input-sm form-control" type="search" placeholder="Customer name"/></div>
+    </th>
+    <!--customerPhone-->
+    <th>
+      <div><input st-search="customerPhone" class="input-sm form-control" type="search" placeholder="Customer phone"/></div>
+    </th>
+    <!--customerEmail-->
+    <th>
+      <div><input st-search="customerEmail" class="input-sm form-control" type="search" placehodler="Customer email"/></div>
+    </th>
+    <!--memo-->
+    <th><div></div></th>
+    <!--number-->
+    <th>
+      <div><input st-search="number" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--pin-->
+    <th>
+      <div><input st-search="pin" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--balance-->
+    <th>
+      <div><input st-search="balance" class="input-sm form-control" type="search" numbers-only="decimal" ng-model="ctrl.balanceSearch"/></div>
+    </th>
+    <!--verifiedBalance-->
+    <th>
+      <div><input st-search="verifiedBalance" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--cardValuePercentage-->
+    <th><div></div></th>
+    <!--cardValue-->
+    <th><div></div></th>
+    <!--reserveRate-->
+    <th><div></div></th>
+    <!--reserveAmount-->
+    <th><div></div></th>
+    <!--merchantMaxValue-->
+    <th><div></div></th>
+    <!--merchantTransactionAmt-->
+    <th><div></div></th>
+    <!--cashPaymentAmount-->
+    <th><div></div></th>
+    <!--balanceCardIssued-->
+    <th>
+      <div>
+        <select st-search="balanceCardIssued" class="activity-select-header">
+          <option></option>
+          <option value="false">N</option>
+          <option value="true">Y</option>
+        </select>
+      </div>
+    </th>
+    <!--balanceCardAmount-->
+    <th><div></div></th>
+    <!--balanceCardPrefix-->
+    <th>
+      <div><input st-search="transactionPrefix" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--merchantPayoutPercentage-->
+    <th><div></div></th>
+    <!--merchantPayoutAmount-->
+    <th><div></div></th>
+    <!--sellRate-->
+    <th><div></div></th>
+    <!--cqPaid-->
+    <th><div></div></th>
+    <!--cqTotalWithhold-->
+    <th><div></div></th>
+    <!--netPayoutAmtToVista-->
+    <th><div></div></th>
+    <!--type-->
+    <th>
+      <div>
+        <select st-search="type" class="activity-select-header">
+          <option></option>
+          <option value="electronic">
+            Electronic
+          </option>
+          <option value="physical">
+            Physical
+          </option>
+        </select>
+      </div>
+    </th>
+    <!--shipStatus-->
+    <th><div></div></th>
+    <!--ach-->
+    <th>
+      <div><input st-search="cqAch" class="input-sm form-control" type="search"></div>
+    </th>
+    <!--deduction-->
+    <th><div></div></th>
+    <!--notes-->
+    <th><div></div></th>
+    <!--vmMemo1-->
+    <th><div></div></th>
+    <!--vmMemo2-->
+    <th><div></div></th>
+    <!--vmMemo3-->
+    <th><div></div></th>
+    <!--vmMemo4-->
+    <th><div></div></th>
+  </tr>
+  </thead>
+  <tbody>
+  <!--Data-->
+  <tr ng-repeat="row in displayData.display" select-row="row" ctrl="ctrl" ng-class="{credited: row.credited, rejected: row.rejected, isPayment: row.isPayment}">
+    <!--sellDate-->
+    <td>
+      <div ng-if="!row.isPayment">{{row.created | date:'M/d/yyyy':'UTC'}}</div>
+      <div ng-if="row.isPayment">PAYMENT</div>
+    </td>
+    <!--batch-->
+    <td>{{row.batch.batchId}}</td>
+    <!--storeName-->
+    <td>{{row.store.name}}</td>
+    <!--retailer-->
+    <td>{{row.retailer.name}}</td>
+    <!--employee-->
+    <td>{{row.user.firstName}} {{row.user.lastName}}</td>
+    <!--customerName-->
+    <td>{{row.customer.fullName}}</td>
+    <!--customerPhone-->
+    <td>{{row.customer.phone}}</td>
+    <!--customerEmail-->
+    <td>{{row.customer.email}}</td>
+    <!--memo-->
+    <td>{{row.transaction.memo}}</td>
+    <!--number-->
+    <td>{{row.card.number}}</td>
+    <!--pin-->
+    <td>{{row.card.pin}}</td>
+    <!--balance-->
+    <td>{{row.balance | currency}}</td>
+    <!--verifiedBalance-->
+    <td>{{row.verifiedBalance | currency}}</td>
+    <!--cardValuePercentage-->
+    <td>{{row.transaction.creditValuePercentage * 100 | number:0}}%</td>
+    <!--cardValue-->
+    <td ng-if="!row.hasVerifiedBalance">{{row.transaction.creditValuePercentage * row.balance | number:2 | currency}}</td>
+    <td ng-if="row.hasVerifiedBalance">{{row.transaction.creditValuePercentage * row.verifiedBalance | number:2 | currency}}</td>
+    <!--reserveRate-->
+    <td>5%</td>
+    <!--reserveAmount-->
+    <td>{{row.transaction.reserveAmount | currency}}</td>
+    <!--merchantMaxValue-->
+    <td>{{row.transaction.maxSpending | currency}}</td>
+    <!--merchantTransactionAmt-->
+    <td>{{row.transaction.transactionTotal | currency}}</td>
+    <!--cashPaymentAmount-->
+    <td>{{row.transaction.amountDue | currency}}</td>
+    <!--balanceCardIssued-->
+    <td>{{row.transaction.nccCardValue ? 'Y' : 'N'}}</td>
+    <!--balanceCardAmount-->
+    <td>{{row.transaction.nccCardValue | currency}}</td>
+    <!--balanceCardPrefix-->
+    <td>{{row.transaction.prefix}}</td>
+    <!--merchantPayoutPercentage-->
+    <td>{{row.transaction.merchantPayoutPercentage * 100}}%</td>
+    <!--merchantPayoutAmount-->
+    <td>{{row.transaction.merchantPayoutAmount | currency}}</td>
+    <!--sellRate-->
+    <td>{{row.corpRateThisInventory * 100 | number:2}}% {{row.merchandise ? '(M)' : ''}}</td>
+    <!--cqPaid-->
+    <td>{{row.transaction.cqPaid | currency}}</td>
+    <!--cqTotalWithhold-->
+    <td>{{row.transaction.cqWithheld | currency}}</td>
+    <!--netPayoutAmtToVista-->
+    <td>{{row.transaction.netPayout | currency}}</td>
+    <!--type-->
+    <td>{{row.type}}</td>
+    <!--shipStatus-->
+    <td>{{row.activityStatus}}</td>
+    <!--ach-->
+    <td>{{row.cqAch}}</td>
+    <!--deduction-->
+    <td>{{row.deduction}}</td>
+    <!--notes-->
+    <td>{{row.adminActivityNote}}</td>
+    <!--vmMemo1-->
+    <td><input ng-model="row.transaction.vmMemo1" ng-change="setValue({row: row, type: 'vmMemo1'})" class="transactions-input"></td>
+    <!--vmMemo2-->
+    <td><input ng-model="row.transaction.vmMemo2" ng-change="setValue({row: row, type: 'vmMemo2'})" class="transactions-input"></td>
+    <!--vmMemo3-->
+    <td><input ng-model="row.transaction.vmMemo3" ng-change="setValue({row: row, type: 'vmMemo3'})" class="transactions-input"></td>
+    <!--vmMemo4-->
+    <td><input ng-model="row.transaction.vmMemo4" ng-change="setValue({row: row, type: 'vmMemo4'})" class="transactions-input"></td>
+  </tr>
+  <!--Page totals-->
+  <tr>
+    <!--sellDate-->
+    <td><strong>PAGE TOTALS</strong></td>
+    <!--batch-->
+    <td></td>
+    <!--storeName-->
+    <td></td>
+    <!--retailer-->
+    <td></td>
+    <!--employee-->
+    <td></td>
+    <!--customerName-->
+    <td></td>
+    <!--customerPhone-->
+    <td></td>
+    <!--customerEmail-->
+    <td></td>
+    <!--memo-->
+    <td></td>
+    <!--number-->
+    <td></td>
+    <!--pin-->
+    <td></td>
+    <!--balance-->
+    <td>{{totals.pageTotal.balance | currency}}</td>
+    <!--verifiedBalance-->
+    <td>{{totals.pageTotal.verifiedBalance | currency}}</td>
+    <!--cardValuePercentage-->
+    <td></td>
+    <!--cardValue-->
+    <td></td>
+    <!--reserveRate-->
+    <td></td>
+    <!--reserveAmount-->
+    <td></td>
+    <!--merchantMaxValue-->
+    <td></td>
+    <!--merchantTransactionAmt-->
+    <td></td>
+    <!--cashPaymentAmount-->
+    <td></td>
+    <!--balanceCardIssued-->
+    <td></td>
+    <!--balanceCardAmount-->
+    <td></td>
+    <!--balanceCardPrefix-->
+    <td></td>
+    <!--merchantPayoutPercentage-->
+    <td></td>
+    <!--merchantPayoutAmount-->
+    <td></td>
+    <!--sellRate-->
+    <td></td>
+    <!--cqPaid-->
+    <td>{{totals.pageTotal.cqPaid | currency}}</td>
+    <!--cqTotalWithhold-->
+    <td></td>
+    <!--netPayoutAmtToVista-->
+    <td></td>
+    <!--type-->
+    <td></td>
+    <!--shipStatus-->
+    <td></td>
+    <!--ach-->
+    <td></td>
+    <!--deduction-->
+    <td></td>
+    <!--notes-->
+    <td></td>
+    <!--vmMemo1-->
+    <td></td>
+    <!--vmMemo2-->
+    <td></td>
+    <!--vmMemo3-->
+    <td></td>
+    <!--vmMemo4-->
+    <td></td>
+  </tr>
+  <!--Grand totals-->
+  <tr>
+    <!--sellDate-->
+    <td><strong>GRAND TOTALS</strong></td>
+    <!--batch-->
+    <td></td>
+    <!--storeName-->
+    <td></td>
+    <!--retailer-->
+    <td></td>
+    <!--employee-->
+    <td></td>
+    <!--customerName-->
+    <td></td>
+    <!--customerPhone-->
+    <td></td>
+    <!--customerEmail-->
+    <td></td>
+    <!--memo-->
+    <td></td>
+    <!--number-->
+    <td></td>
+    <!--pin-->
+    <td></td>
+    <!--balance-->
+    <td>{{totals.grandTotal.balance | currency}}</td>
+    <!--verifiedBalance-->
+    <td>{{totals.grandTotal.verifiedBalance | currency}}</td>
+    <!--cardValuePercentage-->
+    <td></td>
+    <!--cardValue-->
+    <td></td>
+    <!--reserveRate-->
+    <td></td>
+    <!--reserveAmount-->
+    <td></td>
+    <!--merchantMaxValue-->
+    <td></td>
+    <!--merchantTransactionAmt-->
+    <td></td>
+    <!--cashPaymentAmount-->
+    <td></td>
+    <!--balanceCardIssued-->
+    <td></td>
+    <!--balanceCardAmount-->
+    <td></td>
+    <!--balanceCardPrefix-->
+    <td></td>
+    <!--merchantPayoutPercentage-->
+    <td></td>
+    <!--merchantPayoutAmount-->
+    <td></td>
+    <!--sellRate-->
+    <td></td>
+    <!--cqPaid-->
+    <td>{{totals.grandTotal.cqPaid | currency}}</td>
+    <!--cqTotalWithhold-->
+    <td></td>
+    <!--netPayoutAmtToVista-->
+    <td></td>
+    <!--type-->
+    <td></td>
+    <!--shipStatus-->
+    <td></td>
+    <!--ach-->
+    <td></td>
+    <!--deduction-->
+    <td></td>
+    <!--notes-->
+    <td></td>
+    <!--vmMemo1-->
+    <td></td>
+    <!--vmMemo2-->
+    <td></td>
+    <!--vmMemo3-->
+    <td></td>
+    <!--vmMemo4-->
+    <td></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="34">
+      <div st-pagination="" st-items-by-page="displayData.perPage"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<!--Mass update-->
+<cq-modal modal-id="mass-update-confirm" submit-button="massUpdate()" modal-title="Mass update selected cards?"></cq-modal>
+<cq-modal modal-id="mass-update-success" hide-submit="true" modal-title="Mass update successful"></cq-modal>
+<cq-modal modal-id="mass-update-failure" hide-submit="true" modal-title="Mass update failed"></cq-modal>

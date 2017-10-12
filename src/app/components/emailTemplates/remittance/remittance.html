@@ -1,0 +1,26 @@
+<div class="form">
+  <p>An ACH Payment has been processed for the following...</p>
+  <table style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', Sans-Serif; font-size: 12px; background: #fff; margin: 45px; width: 480px; border-collapse: collapse; text-align: left;">
+    <thead>
+      <tr>
+        <th ng-repeat="label in ['Date Paid', 'CQ ACH', 'Store Name', 'Denials', 'Amount Paid', 'Total Paid']"
+            style="font-size: 14px; font-weight: normal; color: #039; padding: 10px 8px; border-bottom: 2px solid #6678b1;">
+          {{label}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ach in ctrl.cqAchArray track by $index">
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ctrl.currentDate | date:'M/d/yyyy'}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ach.achNumber}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ctrl.getStoreNames(ctrl.inventoriesByAch[ach.achNumber])}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ach.denials | currency}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ach.achValue | currency}}</td>
+        <td style="color: #669; padding: 9px 8px 0px 8px;">{{ach.achValue - ach.denials | currency}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    To reconcile these payments, please enter this CQ ACH number in the CQ ACH search field on the "Activity" page of the GCM. If you have any questions please feel free to contact us. We appreciate your business.
+  </p>
+</div>

@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <form method="get" class="form-horizontal">
+          <!--Merchant Settings -->
+          <div class="form-group"><label class="col-sm-2 control-label">Retailer Name</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="idCtrl.displayData.retailer.name"></div>
+          </div>
+          <div class="form-group"><label class="col-sm-2 control-label">GS ID</label>
+            <div class="col-sm-10"><input type="text" class="form-control" numbers-only ng-model="idCtrl.displayData.retailer.gsId"></div>
+          </div>
+          <div class="form-group"><label class="col-sm-2 control-label">Image Url</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="idCtrl.displayData.retailer.imageUrl"></div>
+          </div>
+          <div class="form-group"><label class="col-sm-2 control-label">Require cards to have a PIN</label>
+            <div class="col-sm-10"><input type="checkbox" class="form-control" ng-model="idCtrl.displayData.retailer.pinRequired" style="width: auto;"></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">CardCash</label>
+            <div class="col-sm-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.sellRates.cardCash" placeholder="Sell Rate">
+            </div>
+            <div class="col-md-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.smpMaxMin.cardCash.max" placeholder="Max value">
+            </div>
+            <div class="col-md-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.smpMaxMin.cardCash.min" placeholder="Min value">
+            </div>
+            <div class="col-md-2">
+              <button ng-click="idCtrl.newRetailerSetCardType('cardCash', 'electronic')" class="btn btn-xs btn-primary"
+                      ng-class="{'new-not-active': idCtrl.displayData.retailer.smpType.cardCash !== 'electronic'}">Electronic</button>
+              <button ng-click="idCtrl.newRetailerSetCardType('cardCash', 'physical')" class="btn btn-xs btn-info"
+                      ng-class="{'new-not-active': idCtrl.displayData.retailer.smpType.cardCash === 'electronic'}">Physical</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">CardPool</label>
+            <div class="col-sm-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.sellRates.cardPool" placeholder="Sell Rate">
+            </div>
+            <div class="col-md-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.smpMaxMin.cardPool.max" placeholder="Max value">
+            </div>
+            <div class="col-md-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.smpMaxMin.cardPool.min" placeholder="Min value">
+            </div>
+            <div class="col-md-2">
+              <button ng-click="idCtrl.newRetailerSetCardType('cardPool', 'electronic')" class="btn btn-xs btn-primary"
+                      ng-class="{'new-not-active': idCtrl.displayData.retailer.smpType.cardPool !== 'electronic'}"
+              >Electronic</button>
+              <button ng-click="idCtrl.newRetailerSetCardType('cardPool', 'physical')" class="btn btn-xs btn-info"
+                      ng-class="{'new-not-active': idCtrl.displayData.retailer.smpType.cardPool === 'electronic'}"
+              >Physical</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">GiftCard Zen</label>
+            <div class="col-sm-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.sellRates.giftcardZen" placeholder="Sell Rate">
+            </div>
+            <div class="col-md-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.smpMaxMin.giftcardZen.max" placeholder="Max value">
+            </div>
+            <div class="col-md-2">
+              <input type="text" numbers-only="decimal" class="form-control" ng-model="idCtrl.displayData.retailer.smpMaxMin.giftcardZen.min" placeholder="Min value">
+            </div>
+            <div class="col-md-2">
+              <button ng-click="idCtrl.newRetailerSetCardType('giftcardZen', 'electronic')" class="btn btn-xs btn-primary"
+                      ng-class="{'new-not-active': idCtrl.displayData.retailer.smpType.giftcardZen !== 'electronic'}"
+              >Electronic</button>
+              <button ng-click="idCtrl.newRetailerSetCardType('giftcardZen', 'physical')" class="btn btn-xs btn-info"
+                      ng-class="{'new-not-active': idCtrl.displayData.retailer.smpType.giftcardZen === 'electronic'}"
+              >Physical</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+              <button class="btn btn-primary" type="submit" ng-click="idCtrl.createRetailer()">Save changes</button>
+              <button class="btn btn-white" type="submit" ui-sref="main.admin.settings.companies.list" ng-if="!storeCtrl.displayData.isManager">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .new-not-active {
+    opacity: 0.4;
+  }
+</style>
+

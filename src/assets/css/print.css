@@ -1,0 +1,77 @@
+@media print {
+  /*Everything white except this*/
+  .shipping-electronic {
+    display: block !important;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 15px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .shipping-physical {
+    page-break-before: always;
+    display: block !important;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 15px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  body, td {
+    overflow: visible;
+    background-color: #ffffff;
+    color: #000000;
+    font-family: Arial;
+    font-size: 8pt;
+  }
+
+  /*Remove float so we can have page breaks*/
+  .wrapper.wrapper-content {
+    float:none
+  }
+
+  /*Don't display these*/
+  .navbar-default {
+    display: none !important;
+  }
+  .footer {
+    display: none !important;
+  }
+  .dates {
+    display: none !important;
+  }
+  top-nav {
+    display: none !important;
+  }
+  cq-header {
+    display: none !important;
+  }
+  .print-button {
+    display: none !important;
+  }
+  .packing-date-picker {
+    display: none !important;
+  }
+  .go-to-inventory {
+    display: none !important;
+  }
+  .sidebar {
+    display: none !important;
+  }
+}

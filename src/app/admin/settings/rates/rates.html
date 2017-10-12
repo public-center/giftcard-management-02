@@ -1,0 +1,237 @@
+<div class="wrapper wrapper-content animated ">
+  <div class="row">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-sm btn-success" ng-click="ratesCtrl.uploadCcRatesConfirm()">
+        Upload CardCash rates document
+      </button>
+    </div>
+    <div class="col-md-4">
+      <div class="text-center">
+        <button type="button" class="btn btn-sm btn-success" ng-click="ratesCtrl.uploadCardPoolRatesConfirm()">
+          Upload CardPool rates document
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <p>All rates are displayed WITHOUT margins. So, if Victoria's Secret is selling to SaveYa for 85%, it will be
+          displayed at 0.85.</p>
+        <p>The rates shown are just the sell rates. They do not include any commissions or margins.</p>
+
+        <div class="activity-table-responsive">
+          <table
+            st-table="ratesCtrl.displayData.rates"
+            st-safe-src="ratesCtrl.displayData.ratesSafe"
+            class="table table-striped activity-table">
+            <col width="10%">
+            <col width="10%">
+            <col width="8%">
+            <col width="8%">
+            <col width="10%">
+            <col width="8%">
+            <col width="8%">
+            <col width="6%">
+            <col width="8%">
+            <col width="6%">
+            <col width="18%">
+            <thead>
+            <tr>
+              <th st-sort="name">Retailer</th>
+              <th st-sort="smp">SMP</th>
+              <th st-sort="originalRate">Original Rate</th>
+              <th st-sort="newRate">New Rate</th>
+              <th st-sort="spelling">SMP Spelling</th>
+              <th st-sort="type">New Spelling</th>
+              <th>Max</th>
+              <th>New Max</th>
+              <th>Min</th>
+              <th>New Min</th>
+              <th>Type</th>
+            </tr>
+            <tr>
+              <th>
+                <input st-search="retailer" class="input-sm form-control" type="search"/>
+              </th>
+              <th>
+                <input st-search="smp" class="input-sm form-control" type="search"/>
+              </th>
+              <th>
+                <input st-search="rate" class="input-sm form-control" type="search"/>
+              </th>
+              <th>
+                <input st-search="newRate" class="input-sm form-control" type="search"/>
+              </th>
+              <th>
+                <input st-search="spelling" class="input-sm form-control" type="search"/>
+              </th>
+              <th>
+                <input st-search="newSpelling" class="input-sm form-control" type="search"/>
+              </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in ratesCtrl.displayData.rates">
+              <td>{{row.retailer.toUpperCase()}}</td>
+              <td>{{row.smp.toUpperCase()}}{{row.isMerch ? ' (MERCH)' : ''}}</td>
+              <td>{{row.sellRates}}</td>
+              <td>
+                <input type="text" ng-model="row.newRate"
+                       ng-change="ratesCtrl.setProp(row.newRate, [row.isMerch ? 'sellRatesMerch' : 'sellRates', row.smp], row._id)"
+                       numbers-only="decimal">
+              </td>
+              <td>{{row.smpSpelling}}</td>
+              <td><input type="text" ng-model="row.newSpelling"
+                         ng-change="ratesCtrl.setProp(row.newSpelling, ['smpSpelling', row.smp], row._id)">
+              </td>
+              <td>{{row.max}}</td>
+              <td>
+                <input type="text" ng-model="row.newMax"
+                       ng-change="ratesCtrl.setProp(row.newMax, [row.isMerch ? 'smpMaxMinMerch' : 'smpMaxMin', row.smp, 'max'], row._id)"
+                       numbers-only="decimal">
+              </td>
+              <td>{{row.min}}</td>
+              <td>
+                <input type="text" ng-model="row.newMin"
+                       ng-change="ratesCtrl.setProp(row.newMin, [row.isMerch ? 'smpMaxMinMerch' : 'smpMaxMin', row.smp, 'min'], row._id)"
+                       numbers-only="decimal">
+              </td>
+              <td>
+                <button type="button" class="btn btn-xs"
+                        ng-class="{'btn-default': row.smpType !== 'electronic', 'btn-info': row.smpType === 'electronic'}"
+                        ng-click="ratesCtrl.setProp('electronic', [row.isMerch ? 'smpTypeMerch' : 'smpType', row.smp], row._id)">
+                  Electronic
+                </button>
+                <button type="button" class="btn btn-xs"
+                        ng-class="{'btn-default': row.smpType !== 'physical', 'btn-info': row.smpType === 'physical'}"
+                        ng-click="ratesCtrl.setProp('physical', [row.isMerch ? 'smpTypeMerch' : 'smpType', row.smp], row._id)">
+                  Physical
+                </button>
+                <button type="button" class="btn btn-xs"
+                        ng-class="{'btn-default': row.smpType !== 'disabled', 'btn-info': row.smpType === 'disabled'}"
+                        ng-click="ratesCtrl.setProp('disabled', [row.isMerch ? 'smpTypeMerch' : 'smpType', row.smp], row._id)">
+                  Disabled
+                </button>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="ratesCtrl.displayData.perPage"></div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Upload CC rates sheet-->
+<cq-modal modal-id="cardcash-rates-upload" hide-submit="true" cancel-text="Close"
+          modal-title="Upload CardCash rates sheet">
+  <form name="cc-upload">
+    <div class="button ngf-select-button text-center" ngf-select ng-model="ratesCtrl.ccRates" name="file"
+         ngf-max-size="20MB"
+         ngf-min-height="100" ngf-pattern="'text/csv'">
+      <span class="upload-text" ng-show="!ratesCtrl.ccRates">Click here to select CC rates document (.csv)</span>
+      <span class="upload-text" ng-show="ratesCtrl.ccRates">{{ratesCtrl.ccRates.name}} ready for upload</span>
+    </div>
+    <button type="button" class="btn btn-sm btn-primary" ng-click="ratesCtrl.uploadCcRatesDoc()"
+            ng-disabled="!ratesCtrl.ccRates"> Upload CC rates doc
+    </button>
+  </form>
+</cq-modal>
+
+<!--Upload CardPool rates sheet-->
+<cq-modal modal-id="cardpool-rates-upload" hide-submit="true" cancel-text="Close"
+          modal-title="Upload CardPool rates sheet">
+  <form name="cc-upload">
+    <div class="button ngf-select-button text-center" ngf-select ng-model="ratesCtrl.cpRates" name="file"
+         ngf-max-size="20MB"
+         ngf-min-height="100" ngf-pattern="'text/csv'">
+      <span class="upload-text" ng-show="!ratesCtrl.cpRates">Click here to select rates document (.csv)</span>
+      <span class="upload-text" ng-show="ratesCtrl.cpRates">{{ratesCtrl.cpRates.name}} ready for upload</span>
+    </div>
+
+    <div class="button ngf-select-button text-center" ngf-select ng-model="ratesCtrl.cpElectronicPhysical" name="file"
+         ngf-max-size="20MB"
+         ngf-min-height="100" ngf-pattern="'text/csv'">
+        <span class="upload-text" ng-show="!ratesCtrl.cpElectronicPhysical">
+          Click here to select electronic/physical retailers document (.csv)</span>
+      <span class="upload-text" ng-show="ratesCtrl.cpElectronicPhysical">{{ratesCtrl.cpElectronicPhysical.name}} ready for upload</span>
+    </div>
+
+    <button type="button" class="btn btn-sm btn-primary" ng-click="ratesCtrl.uploadCardPoolDoc('cpRates')"
+            ng-disabled="!ratesCtrl.cpRates"> Upload CP rates doc
+    </button>
+    <button type="button" class="btn btn-sm btn-primary"
+            ng-click="ratesCtrl.uploadCardPoolDoc('cpElectronicPhysical')"
+            ng-disabled="!ratesCtrl.cpElectronicPhysical"> Upload CP electronic/physical doc
+    </button>
+  </form>
+</cq-modal>
+
+<!--Upload GCR rates sheets-->
+<cq-modal modal-id="gcr-rates-upload" hide-submit="true" modal-title="Upload Giftcard Rescue rates sheet"
+          cancel-text="Close">
+  <form name="cc-upload">
+    <div class="button ngf-select-button text-center" ngf-select ng-model="ratesCtrl.gcrRates" name="file"
+         ngf-max-size="20MB"
+         ngf-min-height="100" ngf-pattern="'text/csv'">
+      <span class="upload-text" ng-show="!ratesCtrl.gcrRates">Click here to select GCR rates document (.csv)</span>
+      <span class="upload-text" ng-show="ratesCtrl.gcrRates">{{ratesCtrl.gcrRates.name}} ready for upload</span>
+    </div>
+
+    <div class="button ngf-select-button text-center" ngf-select ng-model="ratesCtrl.gcrElectronic" name="file"
+         ngf-max-size="20MB"
+         ngf-min-height="100" ngf-pattern="'text/csv'">
+      <span class="upload-text" ng-show="!ratesCtrl.gcrElectronic">Click here to select GCR electronic retailers document (.csv)</span>
+      <span class="upload-text"
+            ng-show="ratesCtrl.gcrElectronic">{{ratesCtrl.gcrElectronic.name}} ready for upload</span>
+    </div>
+
+    <div class="button ngf-select-button text-center" ngf-select ng-model="ratesCtrl.gcrPhysical" name="file"
+         ngf-max-size="20MB"
+         ngf-min-height="100" ngf-pattern="'text/csv'">
+      <span class="upload-text" ng-show="!ratesCtrl.gcrPhysical">Click here to select GCR physical retailers document (.csv)</span>
+      <span class="upload-text" ng-show="ratesCtrl.gcrPhysical">{{ratesCtrl.gcrPhysical.name}} ready for upload</span>
+    </div>
+    <button type="button" class="btn btn-sm btn-primary" ng-click="ratesCtrl.uploadGcrRatesDoc()"
+            ng-disabled="!ratesCtrl.gcrRates"> Upload GCR documents
+    </button>
+  </form>
+</cq-modal>
+
+<!--Upload success-->
+<cq-modal modal-id="upload-success" modal-title="Rates updated successfully" hide-submit="true">
+</cq-modal>
+
+<!--Upload failure-->
+<cq-modal modal-id="upload-failure" modal-title="Failed to update rates, go get Logan!" hide-submit="true">
+</cq-modal>
+
+<style>
+  .ngf-select-button {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px dashed black;
+  }
+
+  .upload-text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+</style>

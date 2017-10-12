@@ -1,0 +1,9 @@
+---
+- name: Set up ssh agent forwarding
+  hosts: all
+  remote_user: ubuntu
+#  local_action: lineinfile dest=/home/logan/.ssh/config regexp="{{ansible_ec2_public_hostname}}" state=absent
+#  with_items: ec2.instances
+  tasks:
+    - ec2_facts:
+    - debug: var=ec2

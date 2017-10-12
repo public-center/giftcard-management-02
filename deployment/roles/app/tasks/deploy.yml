@@ -1,0 +1,35 @@
+---
+
+- name: See if the deploy key exists on the server
+  stat: path=/home/ubuntu/.ssh/github
+  register: deploy_key
+
+- name: Upload the private key used for Github cloning
+  sudo: yes
+  when: not deploy_key.stat.exists
+  copy: src=private_key/id_rsa dest=/home/ubuntu/.ssh/github
+
+- name: Correct SSH deploy key permissions
+  sudo: yes
+  file: dest=/home/ubuntu/.ssh/github mode=0600
+
+- name: Add github to known hosts
+  sudo: yes
+  shell: ssh-keyscan -H github.com >> /etc/ssh/ssh_known_hosts
+
+- name: Deploy site files from Github repository (production)
+  git: repo={{repo}} dest={{install_path}} key_file=/home/ubuntu/.ssh/github accept_hostkey=yes force=yes version={{branch}}
+  sudo: yes
+  when: production == True
+
+- name: Deploy site files from Github repository (staging)
+  git: repo={{repo}} dest="{{install_path}}" key_file=/home/ubuntu/.ssh/github accept_hostkey=yes force=yes version={{branch}}
+  sudo: yes
+  when: staging == True
+
+- name: Delete SSH deploy key
+  file: path=/home/ubuntu/.ssh/github state=absent
+
+- name: Change owner and group of app to ubuntu
+  sudo: yes
+  shell: chown -R ubuntu:ubuntu /var/www

@@ -1,0 +1,21 @@
+<div class="modal inmodal" id="{{modalId}}" role="dialog" aria-hidden="true" data-backdrop="{{static ? 'static' : 'false'}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <i class="fa fa-laptop modal-icon"></i>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+        <small class="font-bold" ng-if="modalTitleSmall">{{modalTitleSmall}}</small>
+      </div>
+      <div class="modal-body">
+        <ng-transclude></ng-transclude>
+      </div>
+      <div class="modal-footer">
+        <div class="m-buttons">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-hide="hideCancel" ng-click="closeModalCallback()">{{cancelText || 'Cancel'}}</button>
+          <button type="button" class="btn btn-{{buttonClass || 'primary'}}" ng-click="submitButton()" ng-hide="hideSubmit" tabindex="{{enterTab}}" ng-disabled="disabled({what: 'what'})">{{buttonText || 'Continue'}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

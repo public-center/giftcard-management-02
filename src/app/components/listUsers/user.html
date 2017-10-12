@@ -1,0 +1,18 @@
+<div class="col-lg-4">
+  <div class="contact-box">
+    <a ng-click="listUsersCtrl.modifySingle(user)">
+      <div class="col-sm-4">
+        <div class="text-center">
+          <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a6.jpg">
+            <div class="m-t-xs font-bold">{{user.role | capitalize}}</div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <h3><strong>{{user.email}}</strong></h3>
+        <strong>{{user.fullName}}</strong><br>
+        <abbr title="role">Role:</abbr> {{user.role}}
+      </div>
+      <div class="clearfix"></div>
+    </a>
+  </div>
+</div>

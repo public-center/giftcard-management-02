@@ -1,0 +1,18 @@
+<div class="form">
+  <p>The following gift cards have been verified to have exceptions upon liquidation and prior to payment. There will be an adjustment to the payout amount. You can manage these cards from the "Activity" page in the GCM."</p>
+  <ol>
+    <li ng-repeat="cqAch in ctrl.cqAchArray track by $index">
+      CQ ACH {{cqAch.achNumber}} ({{cqAch.achValue | currency}})
+      <ol>
+        <li ng-repeat="inventory in ctrl.inventoriesByAch[cqAch.achNumber] track by $index">
+          {{inventory.retailer.name}} {{inventory.card.number}} {{inventory.card.pin}} {{inventory.balance | currency}}
+          <ul ng-if="inventory.verifiedBalance - inventory.balance >= 0.001 || inventory.verifiedBalance - inventory.balance <= 0.001">
+            <li>
+              This card was originally entered at {{inventory.balance | currency}} and was verified for {{inventory.verifiedBalance | currency}}
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>

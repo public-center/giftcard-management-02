@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <form method="get" class="form-horizontal">
+          <!--Name-->
+          <div class="form-group" cq-error="firstName"><label class="col-sm-2 control-label">Contact first name</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="createAdminCtrl.firstName"></div>
+          </div>
+          <div class="form-group" cq-error="lastName"><label class="col-sm-2 control-label">Contact last name</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="createAdminCtrl.lastName"></div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <!--Email-->
+          <div class="form-group" cq-error="email"><label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="createAdminCtrl.email"></div>
+          </div>
+          <!--Password-->
+          <div class="form-group" cq-error="hashedPassword"><label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="createAdminCtrl.password"></div>
+          </div>
+          <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+              <button class="btn btn-primary" type="submit" ng-click="createAdminCtrl.register()">Save changes</button>
+              <button class="btn btn-white" type="submit" ui-sref="main.admin.users.list">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

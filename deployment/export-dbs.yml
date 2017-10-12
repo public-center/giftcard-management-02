@@ -1,0 +1,6 @@
+---
+- name: Export MongoDB collections locally
+  hosts: app_servers
+  remote_user: ubuntu
+  roles:
+    - export-mongodb

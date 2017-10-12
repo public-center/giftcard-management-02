@@ -1,0 +1,22 @@
+---
+
+- name: Export entire database
+  local_action: shell mongodump -d gcmanager --out .
+  args:
+    chdir: collections/
+
+- name: Check if collections directory exists
+  stat: path=/home/ubuntu/collections
+  register: collections_dir
+
+- name: Create collections directory if it doesn't exist
+  when: collections_dir.stat.exists == False
+  file: path=/home/ubuntu/collections state=directory mode=0755
+
+- name: Upload collections
+  synchronize: src=collections/gcmanager dest=/home/ubuntu/collections
+  sudo: yes
+
+- name: Change permissions for uploaded files
+  file: mode=0777 owner=ubuntu group=ubuntu path=/home/ubuntu/collections recurse=yes
+  sudo: yes

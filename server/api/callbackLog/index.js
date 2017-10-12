@@ -1,0 +1,32 @@
+'use strict';
+
+const express = require('express');
+const controller = require('./callbackLog.controller');
+const auth = require('../auth/auth.service');
+import {prepareValidationRules} from '../../helpers/validation';
+import validationRules from './validationRules';
+
+const router = express.Router();
+
+// Get all callback logs
+router.get('/', auth.isAuthenticated(), controller.getCallbacksInDateRange);
+// Force re-run of callbacks which have already been sent based on a list
+router.post('/reFire/:callbackType/list', auth.isAuthenticated(), controller.refireCallbackFromList);
+// Re-run callbacks for a card which should have been sent but weren't
+router.post('/reFire/:cardId/:callbackType', auth.isAuthenticated(true, validationRules), controller.reFireCallback);
+// Re-run callbacks for a card which should have been sent but weren't
+router.post('/fireAll/:companyId', auth.isAuthenticated(true, validationRules), controller.fireAllCallbacks);
+// Get callback logs for a time range
+router.get('/:begin/:end', auth.isAuthenticated(true, validationRules), controller.getCallbacksInDateRange);
+
+module.exports = router;
+
+// db.inventories.find({company: c._id, 'transaction.callbacks': 'cqPaymentInitiated'}).limit(5).forEach(function (i) {c = db.cards.findOne({_id: i.card});print(c._id);})
+
+/*
+ 596bc1bfb0447615186a82dc,
+ 596bc1f9b0447615186a82e1,
+ 596bc62dbc6d910eccd570a6,
+ 596bd202bc6d910eccd570aa,
+ 596bd6cabc6d910eccd570ae
+ */

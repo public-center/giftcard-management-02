@@ -1,0 +1,96 @@
+---
+
+#- name: Check for symlink of gulp in application directory
+#  stat: path=/var/www/gcmanager/gulp-bin
+#  register: gulpbin
+#
+#- name: Create a symbolic link of gulp to the application directory
+#  shell: ln -s /usr/local/bin/gulp ./gulp-bin
+#  when: gulpbin.stat.islnk is not defined
+#  args:
+#    chdir: /var/www/gcmanager
+#
+
+- name: Gather facts about instance
+  action: ec2_facts
+  register: instance_facts
+
+- name: Install forever.js
+  sudo: yes
+  npm: name=forever global=yes version=0.15.1
+
+- name: Upload env.json template
+  copy: src=env.json dest="{{install_path}}/env.json"
+
+##########################################
+
+#- name: Replace the resource base API url
+#  replace: dest=/var/www/gcmanager/src/app/Resources/ResourceBase.js regexp="this.url = '.*';" replace="this.url = '';"
+#
+#- name: Replace socket URL
+#  replace: dest=/var/www/gcmanager/src/app/components/socket/SocketService.js regexp="localhost" replace="{{instance_facts['ansible_facts']['ansible_ec2_public_ipv4']}}"
+#
+#- name: Replace the liquidation API url
+#  replace: dest=/var/www/gcmanager/server/api/deferredBalanceInquiries/runDefers.js regexp="localhost" replace="{{instance_facts['ansible_facts']['ansible_ec2_public_ipv4']}}"
+#
+#- name: Build the application
+#  shell: gulp build
+#  args:
+#    chdir: "{{install_path}}"
+#
+#- name: Copy .babelrc
+#  copy: src=.babelrc dest=/var/www/gcmanager/.babelrc
+#
+#- name: Compile server
+#  shell: ./node_modules/babel-cli/bin/babel.js --presets es2015 server --out-dir server-compiled
+#  args:
+#    chdir: "{{install_path}}"
+
+############################
+
+- name: Replace resource base API URL
+  local_action: replace dest={{local_path}}/src/app/Resources/ResourceBase.js regexp="this.url = '.*';" replace="this.url = '{{api_url}}';"
+
+- name: Replace socket URL
+  local_action: replace dest={{local_path}}/src/app/components/socket/SocketService.js regexp="http://localhost:9000" replace="{{api_url}}"
+
+  # These lines will fail if the value isn't found
+- name: Check base API URL replaced
+  local_action: shell grep {{api_url}} {{local_path}}/src/app/Resources/ResourceBase.js
+
+- name: Check base socket URL replaced
+  local_action: shell grep {{api_url}} {{local_path}}/src/app/components/socket/SocketService.js
+
+- name: Add http to https redirect
+  local_action: replace dest={{local_path}}/src/app/components/body/body.controller.js regexp="\/\/REDIRECT" replace="window.location.href = window.location.href.replace('http', 'https');"
+  when: production == True
+
+- name: Check redirect in place
+  local_action: shell grep 'https' {{local_path}}/src/app/components/body/body.controller.js
+  when: production == True
+
+- name: Build the application
+  local_action: shell gulp build
+  args:
+    chdir: "{{local_path}}"
+
+- name: Copy the built application to the remote server
+  synchronize: src={{local_path}}/dist dest={{install_path}}
+
+- name: Restore resource base API URL (development)
+  local_action: replace dest={{local_path}}/src/app/Resources/ResourceBase.js regexp="this.url = .*" replace="this.url = 'http://localhost:9000';"
+
+- name: Restore socket URL
+  local_action: replace dest={{local_path}}/src/app/components/socket/SocketService.js regexp="{{api_url}}" replace="http://localhost:9000"
+
+- name: Remove http to https redirect
+  local_action: replace dest={{local_path}}/src/app/components/body/body.controller.js regexp="window.location.href.+" replace="//REDIRECT"
+  when: production == True
+
+##########################
+
+- name: Make damn sure nginx is restarted
+  sudo: yes
+  service:
+    name: nginx
+    state: restarted

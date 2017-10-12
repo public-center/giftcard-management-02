@@ -1,0 +1,16 @@
+---
+
+- hosts: app_servers
+  remote_user: ubuntu
+  # sudo can be called here, and will apply to all tasks
+  sudo: yes
+  tasks:
+    - name: Test connection
+      # modules don't necessarily need any parameters passed to them
+      ping:
+      remote_user: ubuntu
+      # or sudo can be called here
+      sudo: yes
+      # You can sudo to another user after logging in like this
+      # sudo_user: root
+

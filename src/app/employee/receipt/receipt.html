@@ -1,0 +1,194 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="wrapper wrapper-content animated">
+
+      <div class="ibox-content forum-container hidden-print">
+
+        <div class="row">
+          <div class="col-md-12">
+            <h4>{{receiptCtrl.displayData.receipt.created | date}}</h4>
+          </div>
+        </div>
+        <!--Customer information-->
+        <div class="row" ng-if="receiptCtrl.displayData.customer">
+          <div class="col-md-12">
+            <h3>{{receiptCtrl.displayData.customer.fullName}}</h3>
+            <p>{{receiptCtrl.displayData.customer.address1}}</p>
+            <p ng-if="receiptCtrl.displayData.customer.address2">{{receiptCtrl.displayData.customer.address2}}</p>
+            <p>{{receiptCtrl.displayData.customer.city}}, {{receiptCtrl.displayData.customer.state}}
+              {{receiptCtrl.displayData.customer.zip}}</p>
+          </div>
+        </div>
+
+        <div>
+          <!--Table existing cards-->
+          <table class="table table-hover">
+            <tbody>
+            <tr ng-repeat="inventory in receiptCtrl.displayData.receipt.inventories track by $index">
+              <td class="project-title">
+                <strong>{{inventory.retailer.name}}</strong>
+                <br/>
+              </td>
+              <td class="project-title">
+                <small>Last four digits of number</small>
+                <br>
+                <strong>{{inventory.card.number.substring(inventory.card.number.length - 4)}}</strong>
+                <br/>
+              </td>
+              <td class="project-title">
+                <small>Balance</small>
+                <br>
+                <strong>{{inventory.card.balance | currency}}</strong>
+                <br/>
+              </td>
+              <td class="project-title">
+                <small>Bought for</small>
+                <br>
+                <strong>{{inventory.buyAmount | currency}}</strong>
+                <br/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="ibox">
+                <div>
+                  <table class="table table-stripped m-t-md">
+                    <tbody>
+                    <tr ng-if="receiptCtrl.displayData.rejectionTotal">
+                      <td>
+                        <h4>Subtotal</h4>
+                      </td>
+                      <td>
+                        <h1 class="no-margins">{{receiptCtrl.displayData.total | currency}}</h1>
+                      </td>
+                    </tr>
+                    <tr ng-if="receiptCtrl.displayData.rejectionTotal" ng-class="{blurred: receiptCtrl.displayData.hasModifiedDenial}">
+                      <td><h4>Current Denials</h4></td>
+                      <td>
+                        <h1 class="no-margins">{{receiptCtrl.displayData.rejectionTotal | currency}}</h1>
+                      </td>
+                    </tr>
+                    <tr ng-if="receiptCtrl.displayData.rejectionTotal">
+                      <td><h4>Amount Subtracted</h4><small>from current denials</small></td>
+                      <td>
+                        <h1 class="no-margins">{{receiptCtrl.displayData.subtracted | currency}}</h1>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h3>Grand Total</h3>
+                      </td>
+                      <td>
+                        <h1 class="no-margins">{{receiptCtrl.displayData.grandTotal | currency}}</h1>
+                      </td>
+                    </tr>
+                    <tr ng-if="receiptCtrl.displayData.rejectionTotal">
+                      <td><small>Remaining denials after this purchase</small></td>
+                      <td>
+                        <h4 class="no-margins">{{receiptCtrl.displayData.remainingDenials | currency}}</h4>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a class="btn btn-primary btn-rounded btn-block print-button"
+           ng-click="receiptCtrl.printReceipt()"><i class="fa fa-print"></i> Print receipt</a>
+
+        <button class="btn btn-warning go-to-inventory" type="button" ng-click="receiptCtrl.goToInventoryConfirm()">
+          <i class="fa fa-check"></i> Go to inventory
+        </button>
+      </div>
+
+      <!--Printed receipt-->
+      <div class="visible-print">
+        <h2 style="text-align: center; width: 100%; margin-top: 10px;">{{receiptCtrl.displayData.receipt.user.company.name}}</h2>
+        <h3 style="text-align: center; width: 100%;"><span id="gc-number-0" class="gc-cs-link" title="Call with Google Voice" ng-if="receiptCtrl.displayData.receipt.store.phone">{{receiptCtrl.displayData.receipt.store.phone}}</span>
+        </h3>
+
+        <div style="text-align: center; width: 100%;">
+          <span ng-if="receiptCtrl.displayData.receipt.user.company.url">
+            {{receiptCtrl.displayData.receipt.user.company.url}}
+          </span>
+          <br>
+          Sales Receipt
+        </div>
+        <div class="blockDiv" style="padding-top: 10px; padding-bottom: 10px;">
+
+          <label class="dleft" }="">Receipt:</label> <label class="dright">{{receiptCtrl.displayData.receipt.receiptId}}</label> <label
+          class="dleft">Date:</label> <label class="dright">{{receiptCtrl.displayData.receipt.userTime | date:'medium'}}</label> <label
+          class="dleft">Customer:</label>
+          <label class="dright">{{receiptCtrl.displayData.receipt.customer.fullName}}</label>
+          <label class="dright">{{receiptCtrl.displayData.receipt.customer.stateId}}</label>
+          <label class="dleft"> </label>
+          <label class="dright">{{receiptCtrl.displayData.receipt.customer.address1}}</label>
+          <label class="dleft"></label>
+          <label class="dright">{{receiptCtrl.displayData.receipt.customer.city}}, {{receiptCtrl.displayData.receipt.customer.state}} {{receiptCtrl.displayData.receipt.customer.zip}}</label>
+          <label class="dleft">Cashier:</label>
+          <label class="dright">{{receiptCtrl.displayData.receipt.user.fullName}}</label>
+          <div ng-if="receiptCtrl.displayData.receipt.store">
+            <label class="dleft">Store:</label>
+            <label class="dright">{{receiptCtrl.displayData.receipt.store.address1}}<span ng-if="receiptCtrl.displayData.receipt.store.address2">, {{receiptCtrl.displayData.receipt.store.address2}}</span>
+              <span id="gc-number-1" class="gc-cs-link" ng-if="receiptCtrl.displayData.receipt.store.phone">- {{receiptCtrl.displayData.receipt.store.phone}}</span></label>
+          </div>
+          <div ng-if="receiptCtrl.displayData.rejectionTotal">
+            <label class="dleft">Subtotal:</label> <label class="dright">{{receiptCtrl.displayData.total | currency}}</label>
+            <label class="dleft">Current Denials:</label> <label class="dright">{{receiptCtrl.displayData.rejectionTotal | currency}}</label>
+          </div>
+          <label class="dleft">Total:</label> <label class="dright">{{receiptCtrl.displayData.total -
+          receiptCtrl.displayData.rejectionTotal | currency}}</label>
+        </div>
+        <div style="margin-top: 20px; display: inline;" class="blockDiv">
+          <h3 style="width: 100%; text-align: center;">Gift Cards ({{receiptCtrl.displayData.receipt.inventories.length}})</h3>
+          <span class="rname">Retailer</span> <span class="serial">Serial Number</span>
+          <span class="verified">Verified</span> <span class="amount">Paid</span>
+          <hr>
+          <div ng-repeat="inventory in receiptCtrl.displayData.receipt.inventories track by $index">
+            <span class="rname">{{inventory.retailer.name}}</span>
+            <span class="serial">{{inventory.card.number.substring(inventory.card.number.length - 4)}}</span>
+            <div class="verified">{{inventory.card.balance | currency}}</div>
+            <div class="amount">{{inventory.buyAmount | currency}}</div>
+            <br>
+          </div>
+        </div>
+        <div class="sigblock">
+        <!--Acknowledgement-->
+        <span class="ack">By signing below, I testify that I am the lawful
+          owner of the above listed gift card(s) and that I am transferring my
+          full legal interest in the gift card(s) to the designated business
+          purchasing the gift card(s) for monetary compensation. This exchange
+          of product for service will take effect as soon as this document is
+          signed and the purchaser can verify that the value of the gift
+          card(s) is accurately represented at the time of sale and thereafter.
+          I attest that the gift card(s) will not be used after this
+          transaction is enacted; my use of the gift cards subsequent to the
+          enactment of this transaction will result in prosecution by local and
+          national law enforcement agencies, including the United States
+          Department of Justice, pursuant to the Federal Wire Fraud Act, 18
+          U.S.C. 1343. I hereby certify that I did not receive these gift
+          card(s) from a third party or through felonious, illegal or
+          unregulated activity.</span>
+          <br>
+          <div class="sig">X____________________________________</div>
+          <div class="sig" style="float: left; clear: left; margin-top: 5px; margin-left: 20px;">Customer
+            Signature
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Go to inventory-->
+  <cq-modal modal-id="go-to-inventory" submit-button="receiptCtrl.goToInventory()"
+            modal-title="Go to inventory?" button-text="Go to inventory">
+  </cq-modal>
+</div>
+
+<div ng-include="'app/employee/receipt/receipt_style.html'"></div>

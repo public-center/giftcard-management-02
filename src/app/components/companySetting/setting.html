@@ -1,0 +1,14 @@
+<div class="feed-activity-list">
+  <div class="feed-element">
+    <div class="media-body ">
+      <div class="actions">
+        <a ng-class="{'btn btn-xs': true, 'btn-primary': prop, 'btn-default': !prop}" ng-click="toggleSetting()">
+          <i ng-class="{'fa': true, 'fa-check-square': prop, 'fa-square-o': !prop}"></i> {{buttonText}}</a>
+      </div>
+      <div class="well">
+        <div class="desc"></div>
+        <ng-transclude></ng-transclude>
+      </div>
+    </div>
+  </div>
+</div>

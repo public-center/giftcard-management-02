@@ -1,0 +1,134 @@
+<div class="row hidden-print">
+  <div class="col-lg-12">
+    <div class="wrapper wrapper-content animated">
+
+      <div class="ibox-content forum-container">
+
+        <div class="row packing-date-picker">
+          <div class="form-group col-md-3">
+            <label class="font-noraml">Date</label>
+
+            <div class="input-group date">
+              <datepicker date-format="MM-dd-yyyy">
+                <input type="text" class="form-control" ng-model="reconciliationCompleteCtrl.displayData.packingDate">
+              </datepicker>
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!--<div ng-if="reconciliationCompleteCtrl.displayData.packing.electronic.length">-->
+          <!--<div class="forum-title">-->
+            <!--<h3>Electronic Cards</h3>-->
+          <!--</div>-->
+
+          <!--<div class="forum-item" ng-repeat="card in reconciliationCompleteCtrl.displayData.packing.electronic track by $index">-->
+            <!--<div class="row">-->
+              <!--<div class="col-md-12">-->
+                <!--<div class="forum-icon">-->
+                  <!--<i class="fa fa-bolt"></i>-->
+                <!--</div>-->
+                <!--<a class="forum-item-title">Retailer: {{card.inventory.retailer.name}}</a>-->
+                <!--<a class="forum-item-title">Balance: {{card.inventory.balance | currency}}</a>-->
+                <!--<div class="forum-sub-title">Bought For: {{card.inventory.buyAmount | currency}}</div>-->
+                <!--<div class="forum-sub-title">CQ Pays: {{card.inventory.balance * card.inventory.liquidationRate | currency}}</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div ng-if="reconciliationCompleteCtrl.displayData.packing.physical.length">-->
+          <!--<div class="forum-title">-->
+            <!--<h3>Physical Cards</h3>-->
+          <!--</div>-->
+
+          <!--<div class="forum-item" ng-repeat="card in reconciliationCompleteCtrl.displayData.packing.physical track by $index">-->
+            <!--<div class="row">-->
+              <!--<div class="col-md-12">-->
+                <!--<div class="forum-icon">-->
+                  <!--<i class="fa fa-envelope"></i>-->
+                <!--</div>-->
+                <!--<a class="forum-item-title">Retailer: {{card.inventory.retailer.name}}</a>-->
+                <!--<a class="forum-item-title">Balance: {{card.inventory.balance | currency}}</a>-->
+                <!--<div class="forum-sub-title">Bought For: {{card.inventory.buyAmount | currency}}</div>-->
+                <!--<div class="forum-sub-title">CQ Pays: {{card.inventory.balance * card.inventory.liquidationRate | currency}}</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <reconciliation ctrl="reconciliationCompleteCtrl" complete="true" highlight-off="true"></reconciliation>
+
+        <a class="btn btn-primary btn-rounded btn-block print-button" ng-click="reconciliationCompleteCtrl.printPackingSlip()"><i class="fa fa-print"></i> Print packing slips</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Printed packing slip-->
+<div class="visible-print">
+  <h1>{{reconciliationCompleteCtrl.displayData.user.company.name}}</h1>
+  <h2>BATCH {{reconciliationCompleteCtrl.displayData.batch.batchId}}</h2>
+  <h3>
+    <span>{{reconciliationCompleteCtrl.displayData.user.store.name}}</span>
+  </h3>
+
+  <br>
+  <h5>Ship To:</h5>
+  <p>CardQuiry</p>
+  <p>2209 E. Lexington Ave</p>
+  <p>Fresno, CA 93720</p>
+
+  <div style="margin-top: 20px; display: inline;" class="blockDiv">
+    <h3 style="width: 100%; text-align: center;">Electronic Cards
+      ({{reconciliationCompleteCtrl.displayData.inventory.electronic.length}})</h3>
+    <span class="rname">Retailer</span>
+    <span class="serial">Number</span>
+    <span class="verified">Balance</span>
+    <span class="verified">Sell Amount</span>
+    <hr>
+    <div ng-repeat="inventory in reconciliationCompleteCtrl.displayData.inventory.electronic track by $index">
+      <span class="rname">{{inventory.retailer.name}}</span>
+      <span class="serial">{{inventory.card.number}}</span>
+      <div class="verified">{{inventory.card.balance | currency}}</div>
+      <div class="amount">{{inventory.sellAmount | currency}}</div>
+      <br>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px; display: inline;" class="blockDiv">
+    <h3 style="width: 100%; text-align: center;">Mail-in Cards
+      ({{reconciliationCompleteCtrl.displayData.inventory.physical.length}})</h3>
+    <span class="rname">Retailer</span>
+    <span class="serial">Number</span>
+    <span class="verified">Balance</span>
+    <span class="verified">Sell Amount</span>
+    <hr>
+    <div ng-repeat="inventory in reconciliationCompleteCtrl.displayData.inventory.physical track by $index">
+      <span class="rname">{{inventory.retailer.name}}</span>
+      <span class="serial">{{inventory.card.number}}</span>
+      <div class="verified">{{inventory.card.balance | currency}}</div>
+      <div class="amount">{{inventory.sellAmount | currency}}</div>
+      <br>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px; display: inline;" class="blockDiv">
+    <h3 style="width: 100%; text-align: center;">Totals</h3>
+    <span class="rname">Balance</span>
+    <span class="serial">Sell Amount</span>
+    <span class="verified"></span>
+    <span class="verified"></span>
+    <hr>
+    <div>
+      <span class="rname">{{reconciliationCompleteCtrl.displayData.intakeTotal.balance | currency}}</span>
+      <span class="serial">{{reconciliationCompleteCtrl.displayData.intakeTotal.sellAmount | currency}}</span>
+      <div class="verified"></div>
+      <div class="amount"></div>
+      <br>
+    </div>
+  </div>
+</div>
+
+<div ng-include="'app/employee/receipt/receipt_style.html'"></div>

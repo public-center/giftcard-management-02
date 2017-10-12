@@ -1,0 +1,19 @@
+---
+
+- name: Install nginx
+  sudo: yes
+  apt: name=nginx state=present update_cache=yes
+
+- name: Get ec2 information
+  action: ec2_facts
+  register: instance_facts
+
+- name: Replace nginx global config
+  sudo: yes
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+
+- name: Replace nginx site config
+  sudo: yes
+  template: src=default.j2 dest=/etc/nginx/sites-available/default
+  notify:
+    - restart nginx

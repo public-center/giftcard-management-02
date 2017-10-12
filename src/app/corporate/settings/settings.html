@@ -1,0 +1,183 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-12">
+    <div class="title-action">
+      <a class="btn btn-primary" ng-click="corpCtrl.showModifyProfile()">Modify company profile</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Card Intake</h5>
+        </div>
+        <div class="ibox-content">
+
+          <!--Auto-sell cards in inventory-->
+          <company-setting
+            prop="corpCtrl.displayData.company.settings.autoSell"
+            toggle-setting="corpCtrl.toggleSetting('autoSell')"
+            button-text="Auto-sell cards in inventory"
+            description="<p>When set to active, cards which are added to inventory will automatically be sold for the best rate. If set to inactive, cards which are not active will need a manager to approve the sale before it will proceed.</p>">
+          </company-setting>
+
+          <!--Require manager override to change buy rates-->
+          <company-setting
+            prop="corpCtrl.displayData.company.settings.managersSetBuyRates"
+            toggle-setting="corpCtrl.toggleSetting('managersSetBuyRates')"
+            button-text="Managers set buy rates"
+            description="<div><p>When set to active, store employees will not be able to set the buy rate for any individual card.</p>
+                  <p>If a manager sets the buy rates for Macy's cards to 75%, and a customer wishes to sell a 100% Macy's card to a store, then the employee will only be able to accept this card at $75.</p>
+                  <p>If this setting is off, then the store employees as well as managers can change the rate which cards are accepted.</p></div>">
+          </company-setting>
+
+          <!--Allow employees to see sell rates-->
+          <company-setting
+            prop="corpCtrl.displayData.company.settings.employeesCanSeeSellRates"
+            toggle-setting="corpCtrl.toggleSetting('employeesCanSeeSellRates')"
+            button-text="Employees can see sell rates"
+            description="<p>When set to active, store employees will be able to see the rates at which cards are sold after they are purchased from customers. When not active, employees can only see the rates at which cards will be purchased from customers.</p>">
+          </company-setting>
+
+          <!--Minimum adjusted denial amount from a sale-->
+          <company-setting
+            prop="corpCtrl.displayData.company.settings.minimumAdjustedDenialAmount"
+            toggle-setting="corpCtrl.toggleSetting('minimumAdjustedDenialAmount')"
+            button-text="Allow partial payment"
+            description="<p>When set to active, customers who owe money for previous denials will be required to pay a minimum percentage of that total on each transaction.</p> <p>If the customer owes $500 and this is active and set to 0.1, the customer will be obligated to pay at least $50 of that denial for each sale (if the sale total is not $50, they will pay the total amount of the sale).</p>">
+            <input ng-model='corpCtrl.displayData.company.settings.minimumAdjustedDenialAmount' ng-change='corpCtrl.changeNewMinAmount()' numbers-only="decimal" max="1"/> Choose a percentage, represented as a number between 0 and 1. For example, 50% is 0.5
+          </company-setting>
+
+          <!--Customer Data Required-->
+          <company-setting
+            prop="corpCtrl.displayData.company.settings.customerDataRequired"
+            toggle-setting="corpCtrl.toggleSetting('customerDataRequired')"
+            button-text="All Customer Data Required"
+            description="<p>When set to active, customer data must always be entered when creating a new customer</p>">
+          </company-setting>
+
+          <!--Allow electronic, physical, or both-->
+          <div class="feed-activity-list">
+            <div class="feed-element">
+              <div class="media-body ">
+                <div class="actions">
+                  <select ng-model="corpCtrl.displayData.company.settings.cardType" ng-change="corpCtrl.changeSelect('cardType')">
+                    <option value="both">Both</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="physical">Physical</option>
+                  </select>
+                </div>
+                <div class="well">
+                  <div class="desc"></div>
+                  Select the card types which your company is willing to buy. For example, if you only want to purchase electronic cards, selected "electronic." If you are willing to buy both electronic and physical cards, select "both."
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--Timezones-->
+          <div class="feed-activity-list">
+            <div class="feed-element">
+              <div class="media-body">
+                <div class="actions">
+                  <select ng-model="corpCtrl.displayData.company.settings.timezone" ng-change="corpCtrl.changeSelect('timezone')">
+                    <option ng-repeat="timezone in timezones" ng-selected="corpCtrl.displayData.company.settings.timezone === timezone">{{timezone}}</option>
+                  </select>
+                </div>
+                <div class="actions">
+                  <div class="well">
+                    Select the company's timezone.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--Auto-set buy-rates based on sell rates-->
+          <div class="feed-activity-list">
+            <div class="feed-element">
+              <div class="media-body ">
+                <div class="actions">
+                  <a ng-class="{'btn btn-xs': true, 'btn-primary': corpCtrl.displayData.company.settings.autoSetBuyRates, 'btn-default': !corpCtrl.displayData.company.settings.autoSetBuyRates}" ng-click="corpCtrl.toggleSetting('autoSetBuyRates')">
+                    <i ng-class="{'fa': true, 'fa-check-square': corpCtrl.displayData.company.settings.autoSetBuyRates, 'fa-square-o': !corpCtrl.displayData.company.settings.autoSetBuyRates}"></i> Auto-set buy rates</a>
+                </div>
+                <div class="well">
+                  <p>When set to active, buy rates will automatically be determined based on the rate at which a card sells.</p>
+                  <p>Assume that Chipotle is selling for 82%. If this option is enabled, and cards which sell for between 80% and 85% are sold at a 10% margin, then all Chipotle cards will be purchased at 72% by default. So if a customer wants to sell a $100 Chipotle card, they will be offered $72 for it.</p>
+                  <p>These buy rates can still be overridden on the card intake page. This override may require manager approval based on the "Managers set buy rates" option.</p>
+                </div>
+              </div>
+
+              <div ng-show="corpCtrl.displayData.company.settings.autoSetBuyRates">
+                <div class="mail-box">
+                  <table class="table table-hover table-mail">
+                    <tbody>
+                    <!--Over 95%-->
+                    <tr class="unread">
+                      <td class="mail-ontact"><div>95% and greater</div></td>
+                      <td class="">
+                        <input type="text" class="form-control input-sm" name="search"
+                               ng-model="corpCtrl.displayData.company.settings.autoBuyRates._95"
+                               numbers-only="decimal">
+                      </td>
+                      <td>%</td>
+                    </tr>
+                    <tr ng-class-even="'unread'" ng-class-odd="'read'"
+                        ng-repeat="value in [95, 90, 85, 80, 75, 70, 65, 60, 55]">
+                      <td class="mail-ontact"><div>{{value - 5}}-{{value}}%</div></td>
+                      <td class="">
+                        <input type="text" class="form-control input-sm" name="search"
+                               ng-model="corpCtrl.displayData.company.settings.autoBuyRates['_' + (value - 5) + '_' + value]"
+                               numbers-only="decimal">
+                      </td>
+                      <td>%</td>
+                    </tr>
+                    <!--Below 50%-->
+                    <tr class="read">
+                      <td class="mail-ontact"><div>Below 50%</div></td>
+                      <td class="">
+                        <input type="text" class="form-control input-sm" name="search"
+                               ng-model="corpCtrl.displayData.company.settings.autoBuyRates._50"
+                               numbers-only="decimal">
+                      </td>
+                      <td>%</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-center">
+                  <a class="btn btn-success" ng-click="corpCtrl.saveAutoBuyRates()">Save new rates</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Modify a company's profile-->
+<cq-modal modal-id="show-modify-profile" submit-button="corpCtrl.updateProfile()"
+          modal-title="Modify Company Profile" modal-width="75%">
+  <div ng-include="'app/corporate/update/update.html'"></div>
+</cq-modal>
+
+<!--Update profile success/failure-->
+<cq-modal modal-id="show-modify-profile-success" hide-submit="true"
+          modal-title="Company profile updated">
+</cq-modal>
+<cq-modal modal-id="show-modify-profile-fail" hide-submit="true"
+          modal-title="Failed to update company profile">
+</cq-modal>
+
+<!--Rates saved/failure-->
+<cq-modal modal-id="rates-saved" modal-title="Auto-buy rates successfully updated" hide-submit="true">
+</cq-modal>
+<cq-modal modal-id="rates-saved-fail" modal-title="Failed to update auto-buy rates" hide-submit="true">
+</cq-modal>

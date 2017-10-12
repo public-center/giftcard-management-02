@@ -1,0 +1,48 @@
+<div class="wrapper wrapper-content">
+  <div class="row animated">
+    <div class="col-md-4">
+      <div class="ibox float-e-margins">
+        <div>
+          <div class="ibox-content profile-content">
+            <h3><strong>{{customerCtrl.displayData.selectedCustomer.fullName}}</strong></h3>
+            <h4>Address</h4>
+            <p>
+              {{customerCtrl.displayData.selectedCustomer.address1}}
+              <br ng-if="customerCtrl.displayData.selectedCustomer.address2">{{customerCtrl.displayData.selectedCustomer.address2}}
+              <br>{{customerCtrl.displayData.selectedCustomer.city}},
+              <!--State (either object or string)-->
+              {{angular.isObject(customerCtrl.displayData.selectedCustomer.state) ? customerCtrl.displayData.selectedCustomer.state.abbreviation: customerCtrl.displayData.selectedCustomer.state}} {{customerCtrl.displayData.selectedCustomer.zip}}
+            </p>
+            <h4>Phone</h4>
+            <p>{{customerCtrl.displayData.selectedCustomer.phone}}</p>
+            <div class="user-button">
+              <div class="row">
+                <div class="col-md-6" ng-if="customerCtrl.displayData.showAddCardsButton">
+                  <button type="button" class="btn btn-primary btn-sm btn-block" ng-click="customerCtrl.goToCardIntake()">
+                    <i class="fa fa-plus"></i> Add cards
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-danger btn-sm btn-block"
+                          ng-click="customerCtrl.goToEditCustomer()">
+                    <i class="fa fa-edit"></i> Edit customer
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" ng-if="customerCtrl.displayData.rejectionTotal">
+                  <button class="btn btn-warning cash-payment-customer-details" type="button" ng-click="customerCtrl.openCashPayment()">
+                    <i class="fa fa-usd"></i> Cash payment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Make a cash payment-->
+<cash-payments ctrl="customerCtrl" rejection-total="{{customerCtrl.displayData.rejectionTotal}}"></cash-payments>

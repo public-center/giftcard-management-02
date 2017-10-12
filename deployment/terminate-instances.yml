@@ -1,0 +1,15 @@
+---
+- name: Terminate instances
+  hosts: app_servers
+  user: ubuntu
+  tasks:
+    - name: Terminating instances
+      local_action:
+        module: ec2
+        state: 'absent'
+        region: us-east-1
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+
+    - name: Remove ec2 instance from hosts
+      local_action: lineinfile dest=inventory/hosts regexp="{{ansible_ec2_public_hostname}}" state=absent
+      with_items: ec2.instances

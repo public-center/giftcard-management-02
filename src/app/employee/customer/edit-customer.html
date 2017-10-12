@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <form method="get" class="form-horizontal">
+          <!--Name-->
+          <div class="form-group" cq-error="firstName"><label class="col-sm-2 control-label">First name</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.firstName"></div>
+          </div>
+          <div class="form-group" cq-error="lastName"><label class="col-sm-2 control-label">Middle name</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.middleName"></div>
+          </div>
+          <div class="form-group" cq-error="lastName"><label class="col-sm-2 control-label">Last name</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.lastName"></div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group" cq-error="stateId"><label class="col-sm-2 control-label">State ID (such as license number)</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.stateId"></div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group" cq-error="phone"><label class="col-sm-2 control-label">Phone number</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.phone"></div>
+          </div>
+          <!--Address-->
+          <div class="form-group" cq-error="address1"><label class="col-sm-2 control-label">Address 1</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.address1"></div>
+          </div>
+          <div class="form-group" cq-error="address2"><label class="col-sm-2 control-label">Address 2</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.address2"></div>
+          </div>
+          <div class="form-group" cq-error="city"><label class="col-sm-2 control-label">City</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.city"></div>
+          </div>
+          <div class="form-group" cq-error="state"><label class="col-sm-2 control-label">State</label>
+            <div class="col-sm-10">
+              <ui-select ng-model="customerCtrl.displayData.selectedCustomer.state">
+                <ui-select-match>
+                  <span ng-bind="$select.selected.name"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (customerCtrl.states | filter: $select.search) track by item.abbreviation">
+                  <span ng-bind="item.name"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <div class="form-group" cq-error="zip"><label class="col-sm-2 control-label">Zip</label>
+            <div class="col-sm-10"><input type="text" class="form-control" ng-model="customerCtrl.displayData.selectedCustomer.zip" numbers-only zip-code></div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+              <button class="btn btn-primary" type="submit" ng-click="customerCtrl.updateCustomer()">Save changes</button>
+              <button class="btn btn-white" type="submit" ng-click="customerCtrl.goToCustomer({customerId: customerCtrl.displayData.selectedCustomer._id})">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

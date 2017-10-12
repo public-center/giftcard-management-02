@@ -1,0 +1,40 @@
+<div class="wrapper wrapper-content  animated ">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-content">
+
+          <div class="m-b-lg">
+
+            <div class="m-t-md">
+              <strong>{{modifyCtrl.numberUsers}}</strong>
+            </div>
+
+          </div>
+
+          <div class="table-responsive">
+            <table ng-table="modifyCtrl.tableParams" show-filter="true" class="table table-hover issue-tracker">
+              <tbody>
+              <tr ng-repeat="row in $data track by row.id">
+                <td sortable="'role'" title="'Role'">
+                  <a ng-click="modifyCtrl.changeRole(row)"><span class="label"
+                                                   ng-class="{'label-primary': row.role === 'admin'}">{{row.role.toUpperCase()}}</span></a>
+                </td>
+                <td title="'Name'" filter="{fullName: 'text'}" sortable="'fullName'">
+                  <a ui-sref="main.admin.users.modifySingle({id: row.id})">
+                    {{row.fullName}}
+                  </a>
+                </td>
+                <td title="'Company'" filter="{companyName: 'text'}" sortable="'companyName'">{{row.companyName}}</td>
+                <td title="'Store'" filter="{storeName: 'text'}" sortable="'storeName'">{{row.storeName}}</td>
+                <td title="'Email'" filter="{email: 'text'}" sortable="'email'">{{row.email}}</td>
+                <td title="'Created'" sortable="'created'">{{row.created}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

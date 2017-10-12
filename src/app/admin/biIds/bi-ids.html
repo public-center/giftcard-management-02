@@ -1,0 +1,63 @@
+<div class="wrapper wrapper-content animated ">
+  <ui-view></ui-view>
+  <div class="row">
+    <div class="col-md-12">
+      <button ng-click="idCtrl.generateObject()" class="btn btn-xs btn-primary">Generate Object for BI</button>
+      <button ng-click="idCtrl.sync()" class="btn btn-xs btn-info">Sync with BI</button>
+      <button ng-click="idCtrl.disableRetailerShow()" class="btn btn-xs btn-danger" ng-disabled="!idCtrl.displayData.selected.length || !idCtrl.selectedCompany">Disable Retailer</button>
+      <button ui-sref="main.admin.biIds.createRetailer" class="btn btn-med btn-info pull-right">New Retailer</button>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <p>Company</p>
+        <input ng-model="idCtrl.companySearch" ng-change="idCtrl.searchCompanies()">
+        <select ng-model="idCtrl.selectedCompany" ng-if="idCtrl.displayData.companies.length" ng-change="idCtrl.handleSelectCompany()">
+          <option value="{{company._id}}" ng-repeat="company in idCtrl.displayData.companies | filter:idCtrl.company as results track by $index">
+            {{company.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table
+        st-table="displayData.retailers"
+        st-safe-src="displayData.safe"
+        class="table table-striped activity-table">
+        <thead>
+        <tr>
+          <th st-sort="name">Name</th>
+          <th st-sort="name">GS ID</th>
+          <th st-sort="name">GCMGR ID</th>
+        </tr>
+        <tr>
+          <th>
+            <input st-search="name" class="input-sm form-control" type="search"/>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in displayData.retailers" bi-id-select-row row="row" ctrl="idCtrl" ng-class="idCtrl.isDisabledClass(row._id)">
+          <td>{{row.name}}</td>
+          <td><input ng-model="row.gsId" ng-change="idCtrl.changeGsId(row)"></td>
+          <td>{{row._id}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="5" class="text-center">
+            <div st-pagination="" st-items-by-page="displayData.perPage"></div>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<cq-modal modal-id="disable-retailer-for-company" submit-button="idCtrl.disableForCompany()"
+          modal-title="Are you sure you would like to toggle disabled status for the selected retailers?">
+
+</cq-modal>

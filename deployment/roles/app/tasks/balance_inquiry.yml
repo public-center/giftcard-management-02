@@ -1,0 +1,62 @@
+---
+
+- name: See if the deploy key exists on the server
+  stat: path=/home/ubuntu/.ssh/github
+  register: deploy_key
+
+- name: Upload the private key used for Github cloning
+  sudo: yes
+  when: not deploy_key.stat.exists
+  copy: src=private_key/id_rsa dest=/home/ubuntu/.ssh/github
+
+- name: Correct SSH deploy key permissions
+  sudo: yes
+  file: dest=/home/ubuntu/.ssh/github mode=0600
+
+- name: Add github to known hosts
+  sudo: yes
+  shell: ssh-keyscan -H github.com >> /etc/ssh/ssh_known_hosts
+
+- name: Deploy site files from repository
+  git: repo=git@bitbucket.org:cardquiry/balanceinquiry.git dest=/var/www/balanceInquiry key_file=/home/ubuntu/.ssh/github accept_hostkey=yes force=yes version=updates
+  sudo: yes
+
+- name: Delete SSH deploy key
+  file: path=/home/ubuntu/.ssh/github state=absent
+
+- name: Change owner and group of app to ubuntu
+  sudo: yes
+  shell: chown -R ubuntu:ubuntu /var/www
+
+- name: Init virtualenv
+  shell: virtualenv venv
+  args:
+      chdir: /var/www/balanceInquiry
+
+- name: Install cryptography dependencies
+  apt: pkg={{ item }} state=present
+  with_items:
+    - libssl-dev
+    - libffi-dev
+
+- name: Install Balance Inquiry dependencies
+  pip: requirements=/var/www/balanceInquiry/api/requirements.txt
+  args:
+      chdir: /var/www/balanceInquiry
+      virtualenv: /var/www/balanceInquiry/venv
+
+#- name: Set app to listen to any incoming connections
+#  replace: dest=/var/www/balanceInquiry/api/cherrypy_server.py regexp="8080" replace="8081"
+
+- name: See if balance inquiry is running
+  shell: ss -tp state listening sport = :8081 | grep python
+  register: bi_running
+  ignore_errors: yes
+
+- name: Run Balance Inquiry API
+  shell: nohup /var/www/balanceInquiry/venv/bin/python cherrypy_server.py &
+  when: "'python' not in '{{bi_running.stdout}}'"
+  args:
+    chdir: /var/www/balanceInquiry/api
+  environment:
+    BI_PORT: 8081

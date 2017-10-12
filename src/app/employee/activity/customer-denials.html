@@ -1,0 +1,81 @@
+<div class="wrapper wrapper-content animated ">
+
+  <div class="row">
+    <!--<div class="col-md-12">-->
+      <!--<div class="row">-->
+        <!--<div class="col-md-12" style="height: 75px; position: relative" ng-hide="denialsCtrl.isIntakeDenials">-->
+          <!--<div style="float: right; width: 20%; right: 5px">-->
+            <!--<label class="font-noraml">Date End</label>-->
+            <!--<div class="input-group date">-->
+              <!--<input type="datetime" class="form-control" date-time-->
+                     <!--ng-model="denialsCtrl.displayData.dateRange.dateEnd" view="date" min-view="date"-->
+                     <!--auto-close="true" format="MM-dd-yyyy">-->
+              <!--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div style="float: right; width: 20%">-->
+            <!--<label class="font-noraml">Date Begin</label>-->
+            <!--<div class="input-group date">-->
+              <!--<input type="datetime" class="form-control" date-time-->
+                     <!--ng-model="denialsCtrl.displayData.dateRange.dateBegin" view="date" min-view="date"-->
+                     <!--auto-close="true" format="MM-dd-yyyy">-->
+              <!--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<span style="float: right; bottom: 0; position: relative; right: 5px; top: 25px">-->
+            <!--<label class="font-noraml">&nbsp;</label>-->
+            <!--<button type="button" class="btn btn-info btn-sm" ng-click="denialsCtrl.jumpToToday()">-->
+              <!--<i class="fa fa-thumb-tack"></i> Jump to today-->
+            <!--</button>-->
+          <!--</span>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="row">
+      <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+        <button type="button" class="btn btn-info btn-sm" ng-click="denialsCtrl.search()">
+          <i class="fa fa-search"></i> Search
+        </button>
+      </div>
+    </div>
+    <div class="activity-table-responsive">
+      <activity-revised-denial
+        display-data="displayData"
+        totals="activityCtrl.displayData.totals"
+        set-value="activityCtrl.setValue({row: row, type: type})"
+        ctrl="activityCtrl"
+        corporate="true"
+        mass-update="activityCtrl.massUpdate()"
+        piper="piper"
+        customer-denial="true"
+      ></activity-revised-denial>
+    </div>
+  </div>
+
+  <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+      <!--Per page-->
+      <!--<select ng-model="activityCtrl.displayData.perPage" ng-change="activityCtrl.exposeTableData()">-->
+        <!--<option ng-repeat="value in [5, 10, 20, 50, 100, 999999999] track by $index" value="{{value}}">-->
+          <!--{{value === 999999999 ? 'All' : value}}-->
+        <!--</option>-->
+      <!--</select>-->
+    <!--</div>-->
+  <!--</div>-->
+</div>
+
+<style>
+  .activity-error {
+    background-color: #fac3c3;
+  }
+  .ng-table-responsive td:before {
+    position: absolute;
+    padding: 8px;
+    left: 0;
+    top: 0;
+    width: 50%;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+</style>

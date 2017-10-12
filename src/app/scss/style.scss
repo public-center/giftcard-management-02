@@ -1,0 +1,143 @@
+/*
+ *
+ *   INSPINIA - Responsive Admin Theme
+ *   version 2.2
+ *
+*/
+
+// Google Fonts
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
+
+
+// Variables, Mixins
+@import "import/_variables";
+@import "import/_mixins";
+
+// INSPINIA Theme Elements
+@import "import/_typography";
+@import "import/_navigation";
+@import "import/_top_navigation";
+@import "import/_buttons";
+@import "import/_badgets_labels";
+@import "import/_elements";
+@import "import/_sidebar";
+@import "import/_base";
+@import "import/_pages";
+@import "import/_chat";
+@import "import/_metismenu";
+@import "import/_spinners";
+
+// Landing page
+@import "import/_landing";
+
+// RTL Support
+@import "import/_rtl";
+
+// For demo only - config box style
+@import "import/_theme-config";
+
+// INSPINIA Skins
+@import "import/_skins";
+@import "import/_md-skin";
+
+// Media query style
+@import "import/_media";
+
+// Custom style
+// Your custom style to override base style
+@import "import/_custom";
+
+@import "node_modules/angularjs-datepicker/src/css/angular-datepicker";
+
+// Restrict width of activity table inputs
+.activity-table input {
+  width:100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/**
+ * Activity table
+ */
+.rejected {
+  background-color: #ffd0d0 !important;
+}
+
+.rejected.selected {
+  background-color: #dcf2a6 !important;
+}
+
+.credited {
+  background-color: #add8e6 !important;
+}
+
+.selected {
+  background-color: #e0f2a6 !important;
+}
+
+.pad-bottom {
+  padding-bottom: 10px;
+}
+
+.activity-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  min-height: 0.01%;
+}
+
+.activity-revised-table td {
+  min-width: 75px !important;
+}
+
+// Make sure that we can always see the input values in the activity tables
+.activity-select-header {
+  max-width: 50px;
+}
+
+// Payment row on customer denial page
+.isPayment {
+  font-weight: bold;
+  background-color: #bedfff !important;
+}
+
+/**
+ * Sort table arrows
+ */
+th[st-sort] {
+  cursor: pointer;
+}
+.st-sort-ascent:before{
+  content: '\25B2';
+}
+.st-sort-descent:before{
+  content: '\25BC';
+}
+
+// Store summaries
+.store-summary-controls {
+  display: flex;
+  flex-direction: row;
+}
+
+.store-summary-button {
+  align-self: flex-end;
+}
+
+/**
+Cash payment button on customer details page
+ */
+.cash-payment-customer-details {
+  width: 100%
+}
+
+#header-buttons > div {
+  display: inline;
+}
+
+/**
+Transactions
+ */
+.transactions-input {
+  border-radius: 2px;
+}

@@ -1,0 +1,23 @@
+<ui-view></ui-view>
+
+<!--Manager override-->
+<cq-modal modal-id="manager-override" submit-button="employeeCtrl.managerOverride()" modal-title="Enter manager credentials" enter-tab="99">
+  <form class="m-t" role="form">
+    <div class="form-group">
+      <input class="form-control" placeholder="Email" ng-model="employeeCtrl.displayData.managerCredentials.email" tabindex="97">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" ng-model="employeeCtrl.displayData.managerCredentials.password" tabindex="98">
+    </div>
+  </form>
+</cq-modal>
+
+<!--Manager override fail-->
+<cq-modal modal-id="manager-override-fail" hide-submit="true" modal-title="Invalid manager credentials"></cq-modal>
+
+<!--Inventories need reconciliation-->
+<cq-modal modal-id="inventories-need-reconciliation" submit-button="employeeCtrl.reconcileInventories()" modal-title="There are cards which need to be reconciled">
+  <p>There are cards which have been sold but are still in inventory.</p>
+  <p>These cards need to be added to reconciliation before they will display on the reconciliation page.</p>
+  <p>Would you like to add these cards to reconciliation now?</p>
+</cq-modal>

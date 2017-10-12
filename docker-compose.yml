@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  mongo:
+    image: library/mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/mongo
+    network_mode: "host"
+  app:
+    build: "."
+    command: "gulp serve"
+    volumes:
+      - .:/var/www/gcmgr
+    ports:
+      - "3000:3000"
+      - "9000:9000"
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - mongo
+
+
+# Host machine: Run on host machine
+# Container: Run in container
+#1) Install docker - Go ahead and follow it through to the end, about running docker without sudo: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+#2) Install docker compose - https://docs.docker.com/compose/install/
+#3) Import your current mongo DB on your host machine by doing the following
+#- Host machine: mkdir <gcmgr_directory>/mongo
+#- Host machine: cd <gcmgr_directory>/mongo
+#- Host machine: mongodump -d gcmanager --out .
+#- This will leave you with the following:
+#- Host machine: <gcmgr_directory>/mongo/gcmanager/<various_db_files>
+#4) Make sure that you have the same version of node on the docker container and the host container
+#- Host machine: node -v
+#  - Copy the version. For example, if the output is "v6.4.0," copy "6.4.0"
+#- Look in Dockerfile on line 13, and paste the version of node for the container
+#5) Host machine: cd <gcmgr_directory>
+#6) Host machine: docker-compose up --build
+#7) When you run it the first time, you will get an error that says, "Error: daemon not found." This means that your database is not initialized with data. Do the following:
+#- Host machine: docker exec -it gcmgr_mongo_1 bash
+#  - This will drop you into the mongodb container
+#  - If it says that container cannot be found, get the running containers by running:
+#    - docker ps
+#  - Copy the running app container name, under the NAMES column, and use that in the above command
+#- Container: mongorestore -d gcmanager /mongo/gcmanager
+#8) Now go back to the terminal that docker-compose was run in and hit ctrl-c to stop it.
+#9) Once it's finished stopping, run this to bring it back up again:
+#- Host machine: docker-compose up

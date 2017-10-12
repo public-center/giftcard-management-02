@@ -1,0 +1,103 @@
+<!-- Inventory cards table -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>{{cardType | capitalize}} cards received since last reconciliation</h5>
+      </div>
+      <div class="ibox-content">
+        <!--<div class="row">-->
+          <!--<div class="col-sm-12">-->
+            <!--<div class="input-group">-->
+              <!--<input type="text" placeholder="Search" class="input-sm form-control">-->
+              <!--<span class="input-group-btn">-->
+                <!--<button type="button" class="btn btn-sm btn-primary"> Go!</button>-->
+              <!--</span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th></th>
+              <!--transactionId-->
+              <th>Transaction ID </th>
+              <!--sellerName-->
+              <th>Seller name </th>
+              <!--date-->
+              <th>Date purchased</th>
+              <!--retailer-->
+              <th>Retailer name</th>
+              <!--type-->
+              <th>Type</th>
+              <!--number-->
+              <th>Card number</th>
+              <!--pin-->
+              <th>PIN</th>
+              <!--balance-->
+              <th>Balance</th>
+              <!--saleAmount-->
+              <th ng-if="!(employeeCtrl.displayData.hideBuyRates || alternative)">Sale amount</th>
+              <!--buyRate-->
+              <th ng-if="!(employeeCtrl.displayData.hideBuyRates || alternative)">Buy Rate</th>
+              <!--sellRate-->
+              <th ng-if="employeeCtrl.displayData.isManager && !alternative">Sell Rate</th>
+              <!--status-->
+              <th>Status</th>
+              <!--sellButton-->
+              <th ng-if="!employeeCtrl.displayData.hideSellButton">Sell</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="inventory in ctrl.displayData.cards[cardType] | filter:ctrl.displayData.cardSearch track by inventory._id" ng-click="ctrl.displayInventoryDetails(inventory)" ng-class="{'table-error': !inventory.proceedWithSale || inventory.customer.fullName.indexOf('__default') !== -1 || inventory.type === 'DISABLED'}">
+              <td>
+                <i class="fa"
+                   ng-class="{
+                           'fa-check text-navy': inventory.status === 'SALE_CONFIRMED',
+                           'fa-cog text-warning': inventory.status !== 'SALE_CONFIRMED' && inventory.status !== 'SALE_FAILED',
+                           'fa-exclamation-triangle text-danger': inventory.status === 'SALE_FAILED' || inventory.customer.fullName.indexOf('__default') !== -1
+                           }"
+                >
+                </i>
+              </td>
+              <!--transactionId-->
+              <td>{{inventory.cqTransactionId || 'N/A'}}</small></td>
+              <!--sellerName-->
+              <td>{{inventory.customer.fullName.indexOf('__default') !== -1 ? 'CUSTOMER NOT SET' : inventory.customer.fullName}}</td>
+              <!--date-->
+              <td>{{inventory.created | date}}</td>
+              <!--retailer-->
+              <td>{{inventory.retailer.name}}</td>
+              <!--type-->
+              <td><strong ng-show="inventory.type === 'DISABLED'">{{inventory.type === 'DISABLED' ? 'NO SALE' : inventory.type}}</strong></td>
+              <!--number-->
+              <td>{{inventory.card.number}}</td>
+              <!--pin-->
+              <td>{{inventory.card.pin}}</td>
+              <!--balance-->
+              <td>{{inventory.card.balance | currency}}</td>
+              <!--saleAmount-->
+              <td ng-if="!(employeeCtrl.displayData.hideBuyRates || alternative)">{{inventory.buyAmount | currency}}</td>
+              <!--buyRate-->
+              <td ng-if="!(employeeCtrl.displayData.hideBuyRates || alternative)">{{inventory.card.buyRate * 100 | number:2}}%</td>
+              <!--sellRate-->
+              <td ng-if="employeeCtrl.displayData.isManager && inventory.type === 'DISABLED' && !alternative"><strong>NO SALE</strong></td>
+              <td ng-if="employeeCtrl.displayData.isManager && inventory.type !== 'DISABLED' && !alternative">{{inventory.card.sellRate * 100 | number:2}}%</td>
+              <!--status-->
+              <td>{{inventory.proceedWithSale === false ? 'PENDING AUTHORIZATION' : inventory.status.replace('_', ' ')}}</td>
+              <!--sellButton-->
+              <td>
+                <button type="button" class="btn btn-sm" ng-class="{'btn-primary': true, 'btn-info': ctrl.displayData.isSelling[inventory._id]}" ng-click="ctrl.sellCard($event, inventory)" ng-if="!inventory.proceedWithSale && !employeeCtrl.displayData.hideSellButton">
+                  {{ctrl.displayData.isSelling[inventory._id] ? 'Selling': 'Sell'}}
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

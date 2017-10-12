@@ -1,0 +1,49 @@
+<div class="wrapper wrapper-content animated ">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+
+          <table ng-table="companyCtrl.tableParams" show-filter="true" class="table table-hover issue-tracker">
+            <colgroup>
+              <col width="20%"/>
+              <col width="15%"/>
+              <col width="15%"/>
+              <col width="10%"/>
+              <col width="10%"/>
+              <col width="10%"/>
+              <col width="10%"/>
+              <col width="10%"/>
+            </colgroup>
+            <tbody>
+            <tr ng-repeat="row in $data track by row._id">
+              <td title="'Company name'" filter="{name: 'text'}" sortable="'name'">
+                <a ui-sref="main.admin.settings.companies.edit({companyId: row._id})">
+                  {{row.name}}
+                </a>
+              </td>
+              <td title="'Address'" filter="{address1: 'text'}" sortable="'address1'">{{row.address1}}</td>
+              <td title="'Address 2'" filter="{address2: 'text'}" sortable="'address2'">{{row.address2}}</td>
+              <td title="'City'" filter="{city: 'text'}" sortable="'city'">{{row.city}}</td>
+              <td title="'State'" filter="{state: 'text'}" sortable="'state'">{{row.state}}</td>
+              <td title="'Zip'" filter="{zip: 'text'}" sortable="'zip'">{{row.zip}}</td>
+              <td title="'Created'" sortable="'created'">{{row.created | date}}</td>
+              <td class="text-right" title="'APIs'">
+                <button class="btn btn-white btn-xs" ng-click="companyCtrl.setApi(row, 'bi')"
+                        ng-class="{active: row.apis.bi === true}"> BI
+                </button>
+                <button class="btn btn-white btn-xs" ng-click="companyCtrl.setApi(row, 'lq')"
+                        ng-class="{active: row.apis.lq === true}"> LQ
+                </button>
+                <button class="btn btn-white btn-xs" ng-click="companyCtrl.setApi(row, 'dgc')"
+                        ng-class="{active: row.apis.dgc === true}"> GCD
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+---
+
+- name: Copy logrotate files
+  sudo: yes
+  copy: src=gcmgr dest=/etc/logrotate.d/gcmgr

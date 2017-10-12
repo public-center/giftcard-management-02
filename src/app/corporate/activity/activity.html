@@ -1,0 +1,200 @@
+<div class="wrapper wrapper-content animated ">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12" style="height: 75px; position: relative">
+          <div style="float: left; width: 20%; right: 5px; display: inline">
+            <label class="font-noraml">Download CSV of currently displayed records</label>
+            <div class="input-group date">
+              <button type="button" class="btn btn-primary btn-sm" ng-click="corpActivityCtrl.downloadCsvSheet()">
+                <i class="fa fa-download"></i> Download CSV
+              </button>
+            </div>
+          </div>
+          <div style="float: right; width: 20%; right: 5px; display: inline">
+            <label class="font-noraml">Date End</label>
+            <div class="input-group date">
+              <datepicker date-format="MM-dd-yyyy">
+                <input type="text" class="form-control" ng-model="corpActivityCtrl.displayData.dateRange.dateEnd">
+              </datepicker>
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <div style="float: right; width: 20%">
+            <label class="font-noraml">Date Begin</label>
+            <div class="input-group date">
+              <datepicker date-format="MM-dd-yyyy">
+                <input type="text" class="form-control" ng-model="corpActivityCtrl.displayData.dateRange.dateBegin">
+              </datepicker>
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <span style="float: right; bottom: 0; position: relative; right: 5px; top: 25px">
+            <label class="font-noraml">&nbsp;</label>
+            <button type="button" class="btn btn-info btn-sm" ng-click="corpActivityCtrl.jumpToToday()">
+              <i class="fa fa-thumb-tack"></i> Jump to today
+            </button>
+          </span>
+        </div>
+        <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+          <button type="button" class="btn btn-info btn-sm" ng-click="corpActivityCtrl.search()">
+            <i class="fa fa-search"></i> Search
+          </button>
+        </div>
+    </div>
+
+    <div class="activity-table-responsive">
+      <!--REMOVED-->
+      <!--mass-update="activityCtrl.massUpdate()"-->
+      <activity-revised-corp
+        display-data="displayData"
+        totals="corpActivityCtrl.displayData.totals"
+        set-value="corpActivityCtrl.setValue({row: row, type: type})"
+        ctrl="corpActivityCtrl"
+        corporate="true"
+        mass-update="activityCtrl.massUpdate()"
+        piper="piper"
+        alternative="corpActivityCtrl.alternativeGcmgr"
+      ></activity-revised-corp>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      Per page
+      <select ng-model="corpActivityCtrl.displayData.perPage" ng-change="corpActivityCtrl.exposeTableData()">
+        <option ng-repeat="value in [5, 10, 20, 50, 100, 999999999] track by $index" value="{{value}}">
+          {{value === 999999999 ? 'All' : value}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!--Inventory details modal-->
+<cq-modal modal-id="inventory-details" modal-title="Modify Inventory" hide-submit="true" cancel-text="Close" modal-width="70%">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Card Details</h5>
+        </div>
+        <div class="ibox-content">
+          <table class="table table-hover no-margins">
+            <tbody>
+            <tr>
+              <td><strong>Customer Name</strong></td>
+              <td>{{corpActivityCtrl.currentInventory.customerName}}</td>
+            </tr>
+            <tr>
+              <td><strong>User</strong></td>
+              <td>{{corpActivityCtrl.currentInventory.userName}}</td>
+            </tr>
+            <tr>
+              <td><strong>SaveYa ID</strong></td>
+              <td>{{corpActivityCtrl.currentInventory.transaction_id || 'N/A'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Commission</strong></td>
+              <td>{{corpActivityCtrl.currentInventory.commission || 0 | currency}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button type="button" class="btn btn-danger btn-sm" ng-click="corpActivityCtrl.deleteInventoryConfirm()">
+        <i class="fa fa-crosshairs"></i> Delete card</button>
+    </div>
+  </div>
+  <br>
+  <label>Update balance</label>
+  <div class="row">
+    <div class="col-md-6">
+      <input ng-model="corpActivityCtrl.updatedBalance">
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-info btn-sm pull-right">
+        <i class="fa fa-crosshairs"></i> Update balance</button>
+    </div>
+  </div>
+  <br>
+  <label>Update card LQ status</label>
+  <div class="row margin-5">
+    <div class="col-md-6">
+      <select name="modify-card-select" ng-model="corpActivityCtrl.modifySelect">
+        <option value="notAddedToLiquidation" selected>Not added to liquidation</option>
+        <option value="addedToLiquidation">Set added to liquidation</option>
+        <option value="rateVerified">Set rate verified AND acceptable</option>
+        <option value="rateVerifiedNotAcceptable">Set rate verified AND NOT acceptable</option>
+        <option value="soldToLiquidation">Set sold to liquidation</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-info btn-sm pull-right" ng-click="corpActivityCtrl.modifyCard()"
+              ng-disabled="!corpActivityCtrl.modifySelect">
+        <i class="fa fa-crosshairs"></i> Update status
+      </button>
+    </div>
+  </div>
+  <label>Change card details</label>
+  <div class="row" ng-show="corpActivityCtrl.displayData.canChangeSmp">
+    <div class="col-md-3">
+      <label>SMP</label>
+      <select name="modify-card-select" ng-model="corpActivityCtrl.smpSelect">
+        <option value="cardcash">CardCash</option>
+        <option value="cardpool">CardPool</option>
+        <option value="giftcardrescue">Giftcard Rescue</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="control-label">Number</label>
+      <input ng-model="corpActivityCtrl.number">
+    </div>
+    <div class="col-md-3">
+      <label>PIN</label>
+      <input ng-model="corpActivityCtrl.pin">
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-info btn-sm pull-right" ng-click="corpActivityCtrl.changeCardDetails()">
+        <i class="fa fa-crosshairs"></i> Update card</button>
+    </div>
+  </div>
+</cq-modal>
+
+<!--Delete confirm-->
+<cq-modal modal-id="delete-inventory-confirm" submit-button="corpActivityCtrl.deleteInventory()"
+          modal-title="Are you sure you want to delete this card?">
+</cq-modal>
+
+<!--Failed to delete-->
+<cq-modal modal-id="delete-fail" hide-submit="true"
+          modal-title="Failed to delete card">
+</cq-modal>
+
+<!--Cannot change smp-->
+<cq-modal modal-id="update-card-fail" hide-submit="true" modal-title="Failed to update card"></cq-modal>
+
+<!--Batch update success-->
+<cq-modal modal-id="batch-update-success" hide-submit="true" modal-title="Card statuses updated successfully"></cq-modal>
+<cq-modal modal-id="batch-update-fail" hide-submit="true" modal-title="Failed to update card statuses"></cq-modal>
+
+<style>
+  .activity-error {
+    background-color: #fac3c3;
+  }
+  .ng-table-responsive td:before {
+    position: absolute;
+    padding: 8px;
+    left: 0;
+    top: 0;
+    width: 50%;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+</style>

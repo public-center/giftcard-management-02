@@ -1,0 +1,46 @@
+[dev_servers]
+54.152.30.12 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+
+[prod_servers_frontend]
+# 3
+54.147.255.111 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 4
+54.82.164.86 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 5
+184.73.61.209 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+
+# Backend server to run defer script
+[prod_servers_backend_defer]
+# 4
+#52.204.224.246 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 5
+#54.89.85.13 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 6
+54.211.86.171 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 7
+54.175.0.0 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+
+[prod_servers_backend_defer_ps]
+#1
+107.23.221.181 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+#2
+54.175.94.224 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+
+# Backend production servers that don't run defer
+[prod_servers_backend]
+
+# GCMGR DB servers
+[db_servers]
+# 2
+4.165.18.199 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 3
+52.71.252.177 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 4
+52.90.213.88 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+# 5
+34.201.152.162 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem
+
+# Staging
+[staging_servers]
+# 3
+54.197.214.180 ansible_ssh_private_key_file=~/.ssh/gc_mgr.pem

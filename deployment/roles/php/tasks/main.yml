@@ -1,0 +1,8 @@
+---
+- name: Install PHP
+  apt: name=php5
+  sudo: yes
+
+- name: Install PHP cURL
+  apt: name=php5-curl
+  sudo: yes

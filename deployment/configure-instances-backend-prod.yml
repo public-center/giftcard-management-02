@@ -1,0 +1,28 @@
+---
+- name: Configure existing instances
+  hosts: prod_servers_backend
+  remote_user: ubuntu
+  vars:
+      node_version: "0.10.33"
+      node_version_tag: "v0.10.33"
+      node_prefix: "node-v{{node_version}}"
+      node_tarball: "{{node_prefix}}.tar.gz"
+      node_path: "/usr/local"
+      production: true
+      backend: true
+      frontend: false
+      defer: false
+      staging: false
+      db: false
+      local_path: "/public/cardquiry/gcmgr"
+      install_path: "/var/www/gcmanager/"
+      repo: "git@github.com:loganetherton/gcmgr.git"
+      branch: "master"
+  roles:
+#    - system
+#    - {role: mongodb, sudo: yes}
+#    - node
+#    - php
+#    - {role: git, sudo: yes}
+#    - nginx
+    - app

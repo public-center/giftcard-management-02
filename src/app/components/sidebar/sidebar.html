@@ -1,0 +1,125 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle img-responsive"
+                                 src="assets/images/logo/logo_square_vsm.png"/>
+                             </span>
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#"></a>
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                              class="font-bold">{{companyName}}</strong>
+                             </span> <span class="text-muted text-xs block">{{userName}} </span> </span> </a>
+        </div>
+        <div class="logo-element">
+          IN+
+        </div>
+      </li>
+      <!--Admin-->
+      <li class="active" ng-if="user.role === 'admin'">
+        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Admin</span><span
+          class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+          <li ng-class="{active: currentState.indexOf('main.admin.users') !== -1}"><a ui-sref="main.admin.users.list">Users</a>
+          </li>
+          <li
+            ng-class="{active: currentState.indexOf('main.admin.settings') !== -1 && currentState.indexOf('main.admin.settings.rates') === -1}">
+            <a ui-sref="main.admin.settings.companies.list">Companies</a></li>
+          <li ng-class="{active: currentState.indexOf('main.admin.settings.rates') !== -1}"><a
+            ui-sref="main.admin.settings.rates">Rates</a></li>
+          <li
+            ng-class="{active: currentState.indexOf('main.admin.activity') !== -1 && currentState.indexOf('main.admin.activity-new') === -1}">
+            <a ui-sref="main.admin.activity">Activity</a>
+          <li ng-class="{active: currentState.indexOf('main.admin.exchange') !== -1}"><a
+            ui-sref="main.admin.exchange">Exchange</a></li>
+          <li ng-class="{active: currentState.indexOf('main.admin.customerDenials') !== -1}"><a
+            ui-sref="main.admin.customerDenials">Customer Denials</a></li>
+          <li ng-class="{active: currentState.indexOf('main.admin.biIds') !== -1}"><a
+            ui-sref="main.admin.biIds">BI IDs</a></li>
+          <li ng-class="{active: currentState.indexOf('main.admin.settings.biInfo') !== -1}"><a
+            ui-sref="main.admin.settings.biInfo">BI Info</a></li>
+          <li ng-class="{active: currentState.indexOf('main.admin.stats') !== -1}"><a
+            ui-sref="main.admin.stats">Statistics</a></li>
+          <li ng-class="{active: currentState.indexOf('main.admin.functions') !== -1}"><a
+            ui-sref="main.admin.functions">Admin Functions</a></li>
+        </ul>
+      </li>
+      <!--Corporate admin-->
+      <li class="active" ng-if="user.role === 'corporate-admin'">
+        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Company Settings</span></span></a>
+        <ul class="nav nav-second-level">
+          <li ng-class="{active: currentState.indexOf('main.corporate.settings') !== -1}"><a
+            ui-sref="main.corporate.settings({companyId: user.company._id})">Company settings</a></li>
+          <li
+            ng-class="{active: currentState.indexOf('main.corporate.store.list') !== -1 ||
+            currentState.indexOf('main.corporate.store.details') !== -1 ||
+            currentState.indexOf('main.corporate.store.newEmployee') !== -1 ||
+            currentState.indexOf('main.corporate.store.update') !== -1}">
+            <a ui-sref="main.corporate.store.list">Stores</a></li>
+          <li ng-class="{active: currentState.indexOf('main.corporate.buyRates') !== -1}"><a
+            ui-sref="main.corporate.buyRates">Buy rates</a></li>
+          <li
+            ng-class="{active: currentState.indexOf('main.corporate.customer') !== -1}">
+            <a ui-sref="main.corporate.customer">Customer</a>
+          </li>
+          <li
+            ng-class="{active: currentState.indexOf('main.corporate.receipts') !== -1}">
+            <a ui-sref="main.corporate.receipts">Receipts</a>
+          </li>
+          <li ng-class="{active: currentState.indexOf('main.corporate.inventory') !== -1}"><a
+            ui-sref="main.corporate.inventory">Daily Inventory</a></li>
+          <li ng-class="{active: currentState.indexOf('main.corporate.reconciliationComplete') !== -1}">
+            <a ui-sref="main.corporate.reconciliationComplete">Shipping</a>
+          </li>
+          <!--Activity-->
+          <li ng-class="{active: currentState.indexOf('main.corporate.activity') !== -1}" ng-if="!useAlternateGCMGR"><a
+            ui-sref="main.corporate.activity({companyId: user.company._id})">Activity</a></li>
+          <li ng-class="{active: currentState.indexOf('main.corporate.denials') !== -1}"><a
+            ui-sref="main.corporate.denials({companyId: user.company._id})">Denials</a></li>
+          <!--Transactions-->
+          <li ng-class="{active: currentState.indexOf('main.corporate.transactions') !== -1}" ng-if="useAlternateGCMGR"><a
+            ui-sref="main.corporate.transactions({companyId: user.company._id})">Transactions</a></li>
+          <li ng-class="{active: currentState.indexOf('main.corporate.reserves') !== -1}" ng-if="useAlternateGCMGR"><a
+            ui-sref="main.corporate.reserves({companyId: user.company._id})">Reserves</a></li>
+        </ul>
+      </li>
+      <!--Store employee-->
+      <li class="active" ng-if="user.role === 'employee' || user.role === 'manager'">
+        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Store</span></a>
+        <ul class="nav nav-second-level">
+          <li ng-if="!hideBuyRates" ng-class="{active: currentState.indexOf('main.employee.buyRates') !== -1}"><a
+            ui-sref="main.employee.buyRates">Buy rates</a></li>
+          <li
+            ng-class="{active: currentState.indexOf('main.employee.customer') !== -1}">
+            <a ui-sref="main.employee.customer">Customer</a>
+          </li>
+          <li
+            ng-class="{active: currentState.indexOf('main.employee.receipts') !== -1}">
+            <a ui-sref="main.employee.receipts">Receipts</a>
+          </li>
+          <li ng-class="{active: currentState.indexOf('main.employee.inventory') !== -1}"><a
+            ui-sref="main.employee.inventory">Daily Inventory</a></li>
+          <li ng-class="{active: currentState.indexOf('main.employee.reconciliationComplete') !== -1}">
+            <a ui-sref="main.employee.reconciliationComplete">Shipping</a>
+          </li>
+          <li ng-class="{active: currentState.indexOf('main.employee.store.details') !== -1}"
+              ng-if="role === 'manager'">
+            <a
+              ui-sref="main.employee.store.details({storeId: user.store._id, companyId: user.company._id})">Employees</a>
+          </li>
+          <li
+            ng-if="!hideBuyRates"
+            ng-class="{active: currentState.indexOf('main.employee.denials') !== -1}">
+            <a ui-sref="main.employee.denials">Denials</a>
+          </li>
+          <li ng-if="user.role === 'manager'"
+            ng-class="{active: currentState.indexOf('main.employee.activity') !== -1}">
+            <a ui-sref="main.employee.activity">Activity</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</nav>

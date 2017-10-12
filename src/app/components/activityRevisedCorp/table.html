@@ -1,0 +1,477 @@
+<table
+  st-table="displayData.display"
+  st-pipe="piper"
+  class="table table-striped activity-table activity-revised-table table-bordered"
+>
+  <!--Widths-->
+  <colgroup>
+    <!--id-->
+    <col ng-if="ctrl.displayData.company._id === '587fce2bd01c3fe03bdf85ce'">
+    <!--date-->
+    <col>
+    <!--Date rejected/date paid-->
+    <col ng-if="customerDenial">
+    <!--Batch-->
+    <col ng-if="!customerDenial">
+    <!--Store-->
+    <col>
+    <!--Retailer-->
+    <col>
+    <!--UserName-->
+    <col>
+    <!--CustomerName-->
+    <col>
+    <!--Number-->
+    <col>
+    <!--Pin-->
+    <col>
+    <!--Balance-->
+    <col>
+    <!--VerifiedBalance-->
+    <col>
+    <!--Reject/payment amount-->
+    <col ng-if="customerDenial">
+    <!--BuyRate-->
+    <col ng-if="!ctrl.displayData.hideBuyRates">
+    <!--BuyAmount-->
+    <col ng-if="!ctrl.displayData.hideBuyRates">
+    <!--CorporateSellRate-->
+    <col>
+    <!--CqPaidCorp-->
+    <col>
+    <!--TransactionServiceFee-->
+    <col>
+    <!--NetAmount-->
+    <col ng-if="!customerDenial">
+    <col>
+    <col>
+    <col ng-if="!customerDenial">
+    <col>
+    <col ng-if="!customerDenial">
+    <col ng-if="customerDenial">
+  </colgroup>
+  <!--/Widths-->
+  <!--Head-->
+  <thead>
+  <tr>
+    <!--id-->
+    <th ng-if="ctrl.displayData.company._id === '587fce2bd01c3fe03bdf85ce'">
+      <div>ID</div>
+    </th>
+    <!--date-->
+    <th st-sort="created">
+      <div>Date Purchased</div>
+    </th>
+    <!--Date rejected/date paid-->
+    <th st-sort="dateRejected" ng-if="customerDenial">
+      <div>Denial/Payment Date</div>
+    </th>
+    <!--Batch-->
+    <th st-sort="batch" ng-if="!customerDenial">
+      <div>Batch #</div>
+    </th>
+    <th st-sort="storeName">
+      <div>Store Name</div>
+    </th>
+    <th st-sort="retailer_name">
+      <div>Retailer</div>
+    </th>
+    <th st-sort="employeeName">
+      <div>Employee Name</div>
+    </th>
+    <th st-sort="customerName">
+      <div>Customer Name</div>
+    </th>
+    <th st-sort="card_number">
+      <div>Card #</div>
+    </th>
+    <th st-sort="pin_code">
+      <div>PIN</div>
+    </th>
+    <th st-sort="balance">
+      <div>Balance</div>
+    </th>
+    <th st-sort="verifiedBalance">
+      <div>Verified Balance</div>
+    </th>
+    <th st-sort="rejectAmount" ng-if="customerDenial">
+      <div>Reject/Payment Amount</div>
+    </th>
+    <th st-sort="buyRate" ng-if="!ctrl.displayData.hideBuyRates">
+      <div>Buy Rate</div>
+    </th>
+    <th st-sort="buyAmount" ng-if="!ctrl.displayData.hideBuyRates">
+      <div>Buy Amount</div>
+    </th>
+    <th st-sort="sellRate">
+      <div>Sell Rate</div>
+    </th>
+    <th st-sort="saleAfterMargin">
+      <div>CQ Paid</div>
+    </th>
+    <th st-sort="netAmount">
+      <div>Net Amt</div>
+    </th>
+    <th st-sort="margin" ng-if="!customerDenial">
+      <div>Margin</div>
+    </th>
+    <th st-sort="type">
+      <div>Type</div>
+    </th>
+    <th st-sort="buyerShipStatus">
+      <div>Ship Status</div>
+    </th>
+    <th st-sort="cqAch" ng-if="!customerDenial">
+      <div>ACH</div>
+    </th>
+    <th st-sort="deduction">
+      <div>Deduction</div>
+    </th>
+    <th st-sort="adminActivityNote" ng-if="!customerDenial">
+      <div>Notes</div>
+    </th>
+    <th st-sort="rejectionRunningTotal" ng-if="customerDenial">
+      <div>Amount Owed</div>
+    </th>
+  </tr>
+  <tr>
+    <!--id-->
+    <th ng-if="ctrl.displayData.company._id === '587fce2bd01c3fe03bdf85ce'">
+      <div>
+        <input st-search="_id" class="input-sm form-control" type="search" />
+      </div>
+    </th>
+    <!--date-->
+    <th>
+      <div></div>
+    </th>
+    <!--Date rejected/date paid-->
+    <th ng-if="customerDenial">
+      <div></div>
+    </th>
+    <!--Batch-->
+    <th ng-if="!customerDenial">
+      <div>
+        <!--<input st-search="batch" class="input-sm form-control" type="search"/>-->
+        <select st-search="batch" class="activity-select-header">
+          <option></option>
+          <option value="{{batch._id}}" ng-repeat="batch in ctrl.displayData.params.batches track by $index">
+            {{batch.batchId}}
+          </option>
+        </select>
+      </div>
+    </th>
+    <!--Store-->
+    <th>
+      <div>
+        <select st-search="store" class="activity-select-header">
+          <option></option>
+          <option value="{{store._id}}" ng-repeat="store in ctrl.displayData.params.stores track by $index">
+            {{store.name}}
+          </option>
+        </select>
+      </div>
+    </th>
+    <!--Retailer-->
+    <th>
+      <div>
+        <input st-search="retailer" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--UserName-->
+    <th>
+      <div></div>
+    </th>
+    <!--CustomerName-->
+    <th>
+      <div>
+        <input st-search="customerName" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--Number-->
+    <th>
+      <div>
+        <input st-search="number" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--Pin-->
+    <th>
+      <div>
+        <input st-search="pin" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--Balance-->
+    <th>
+      <div>
+        <input st-search="balance" class="input-sm form-control" type="search" numbers-only="decimal" ng-model="ctrl.balanceSearch"/>
+      </div>
+    </th>
+    <!--VerifiedBalance-->
+    <th>
+      <div>
+        <input st-search="verifiedBalance" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--BuyRate-->
+    <th ng-if="!ctrl.displayData.hideBuyRates">
+      <div>
+        <input st-search="buyRate" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--BuyAmount-->
+    <th ng-if="!ctrl.displayData.hideBuyRates">
+      <div>
+        <input st-search="buyAmount" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--CorporateSellRate-->
+    <th>
+      <div>
+        <input st-search="liquidationRate" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <!--CqPaidCorp-->
+    <th>
+      <div>
+        <!--<input st-search="saleAfterMargin" class="input-sm form-control" type="search"/>-->
+      </div>
+    </th>
+    <!--ServiceFee-->
+    <th>
+      <div>
+        <!--<input st-search="netAmount" class="input-sm form-control" type="search"/>-->
+      </div>
+    </th>
+    <!--TransactionServiceFee-->
+    <th ng-if="!customerDenial">
+      <div>
+        <!--<input st-search="margin" class="input-sm form-control" type="search"/>-->
+      </div>
+    </th>
+    <!--NetAmount-->
+    <th>
+      <div>
+        <select st-search="type" class="activity-select-header">
+          <option></option>
+          <option value="electronic">
+            Electronic
+          </option>
+          <option value="physical">
+            Physical
+          </option>
+        </select>
+      </div>
+    </th>
+    <th>
+      <div>
+        <select st-search="activityStatus" class="activity-select-header">
+          <option value="">Blank</option>
+          <option value="-">
+            Any
+          </option>
+          <option value="notShipped">
+            Not shipped
+          </option>
+          <option value="shipped">
+            In transit to CQ
+          </option>
+          <option value="receivedCq">
+            Received by CQ
+          </option>
+          <option value="sentToSmp">
+            Sent to SMP
+          </option>
+          <option value="receivedSmp">
+            Received by SMP
+          </option>
+          <option value="rejected">
+            Rejected by CQ
+          </option>
+          <option value="needsAttention">
+            Needs Attention
+          </option>
+        </select>
+      </div>
+    </th>
+    <th ng-if="!customerDenial">
+      <div>
+        <input st-search="cqAch" class="input-sm form-control" type="search"/>
+      </div>
+    </th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <!--/Head-->
+  <tbody>
+  <!--Data-->
+  <tr ng-repeat="row in displayData.display" select-row="row" ctrl="ctrl" ng-class="{credited: row.credited, rejected: row.rejected, isPayment: row.isPayment}">
+    <!--id-->
+    <td ng-if="ctrl.displayData.company._id === '587fce2bd01c3fe03bdf85ce'">
+      <div>{{row._id}}</div>
+    </td>
+    <!--date-->
+    <td>
+      <div ng-if="!row.isPayment">{{row.created | date:'M/d/yyyy':'UTC'}}</div>
+      <div ng-if="row.isPayment">PAYMENT</div>
+    </td>
+    <!--Date rejected/date paid-->
+    <td ng-if="customerDenial">
+      <div ng-if="!row.isPayment && !row.credited">{{row.rejectedDate | date:'M/d/yyyy':'UTC'}}</div>
+      <div ng-if="!row.isPayment && row.credited">{{row.creditedDate | date:'M/d/yyyy':'UTC'}}</div>
+      <div ng-if="row.isPayment">{{row.created | date:'M/d/yyyy':'UTC'}}</div>
+    </td>
+    <!--Batch-->
+    <td ng-if="!customerDenial">{{row.batch.batchId}}</td>
+    <!--Store-->
+    <td>{{row.store.name}}</td>
+    <!--Retailer-->
+    <td>{{row.retailer.name}}</td>
+    <!--UserName-->
+    <td>{{row.user.firstName}} {{row.user.lastName}}</td>
+    <!--CustomerName-->
+    <td>{{row.customer.fullName}}</td>
+    <!--Number-->
+    <td>{{row.card.number}}</td>
+    <!--Pin-->
+    <td>{{row.card.pin}}</td>
+    <!--Balance-->
+    <td>{{row.balance || row.card.balance | currency}}</td>
+    <!--VerifiedBalance-->
+    <td>
+      <div>
+        {{row.verifiedBalance | currency}}
+      </div>
+      <div ng-if="!row.verifiedBalance"></div>
+    </td>
+    <!--Reject/payment amount-->
+    <td ng-if="customerDenial">
+      <div ng-if="!row.isPayment && !row.credited">({{row.rejectAmount | currency}})</div>
+      <div ng-if="!row.isPayment && row.credited">{{row.creditAmount | currency}}</div>
+      <div ng-if="row.isPayment">{{row.amount | currency}}</div>
+    </td>
+    <!--BuyRate-->
+    <td ng-if="!ctrl.displayData.hideBuyRates">
+      <div ng-if="!row.isPayment">{{(row.buyRate > 1 ? row.buyRate : row.buyRate * 100) | number:2}}%</div>
+    </td>
+    <!--BuyAmount-->
+    <td ng-if="!ctrl.displayData.hideBuyRates">{{row.buyAmount | currency}}</td>
+    <!--CorporateSellRate-->
+    <td><div ng-if="!row.isPayment">{{(row.corpRateThisInventory * 100) | number:2}}% {{row.merchandise ? '(M)' : ''}}</div></td>
+    <!--CqPaidCorp-->
+    <td>{{row.cqPaid | currency}}</td>
+    <!--NetAmount-->
+    <td ng-if="!row.isTransaction">{{row.netAmount | currency}}</td>
+    <!--NetPayout-->
+    <td ng-if="row.isTransaction">{{row.transaction.netPayout | currency}}</td>
+    <td ng-if="!customerDenial && row.displayMargin">{{row.companyMargin || 0 | number:2}}%</td>
+    <td ng-if="!customerDenial && !row.displayMargin">N/A</td>
+    <!--Type-->
+    <td>{{row.type}}</td>
+    <td>
+      <select ng-model="row.activityStatus" ng-change="setValue({row: row, type: 'activityStatus'})"
+              ng-click="ctrl.preventDefault($event)" ng-if="revised">
+        <option value="notShipped">
+          Not shipped
+        </option>
+        <option value="shipped">
+          In transit to CQ
+        </option>
+        <option value="receivedCq">
+          Received by CQ
+        </option>
+        <option value="sentToSmp">
+          Sent to SMP
+        </option>
+        <option value="receivedSmp">
+          Received by SMP
+        </option>
+        <option value="rejected">
+          Rejected by CQ
+        </option>
+        <option value="needsAttention">
+          Needs Attention
+        </option>
+      </select>
+      <div>{{row.activityStatus}}</div>
+    </td>
+    <!--CQ ACH-->
+    <td ng-if="!customerDenial">
+      <div>{{row.cqAch}}</div>
+    </td>
+    <!--Deduction-->
+    <td ng-if="!customerDenial">
+      <div>{{row.deduction}}</div>
+    </td>
+    <!--Admin activity note-->
+    <td ng-if="!customerDenial"></td>
+    <!--Rejection running total for single customer denial mode-->
+    <td ng-if="customerDenial">{{row.rejectionRunningTotal | currency}}</td>
+  </tr>
+  <!--/Data-->
+  <!--Page Totals-->
+  <tr ng-if="displayData.safe.length && !customerDenial">
+    <td><strong>PAGE TOTALS</strong></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>BAL: {{totals.pageTotal.balance | currency}}</td>
+    <td>VB: {{totals.pageTotal.verifiedBalance | currency}}</td>
+    <td></td>
+    <td ng-if="!ctrl.displayData.hideBuyRates">BUY: {{totals.pageTotal.buyAmount | currency}}</td>
+    <td></td>
+    <td>CQP: {{totals.pageTotal.cqPaid | currency}}</td>
+    <td>NET: {{totals.pageTotal.netAmount | currency}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <!--/Page Totals-->
+  <!--Grand Totals-->
+  <tr ng-if="displayData.safe.length && !customerDenial">
+    <td><strong>GRAND TOTALS</strong></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>BAL: {{totals.grandTotal.balance | currency}}</td>
+    <td>VB: {{totals.grandTotal.verifiedBalance | currency}}</td>
+    <td></td>
+    <td ng-if="!ctrl.displayData.hideBuyRates">BUY: {{totals.grandTotal.buyAmount | currency}}</td>
+    <td></td>
+    <td>CQP: {{totals.grandTotal.cqPaid | currency}}</td>
+    <td>NET: {{totals.grandTotal.netAmount | currency}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <!--/Grand Totals-->
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="22" class="text-center">
+      <div st-pagination="" st-items-by-page="displayData.perPage" class="pull-left"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<!--Mass update-->
+<cq-modal modal-id="mass-update-confirm" submit-button="massUpdate()" modal-title="Mass update selected cards?"></cq-modal>
+<cq-modal modal-id="mass-update-success" hide-submit="true" modal-title="Mass update successful"></cq-modal>
+<cq-modal modal-id="mass-update-failure" hide-submit="true" modal-title="Mass update failed"></cq-modal>

@@ -1,0 +1,12 @@
+<admin-functions-react-directive></admin-functions-react-directive>
+
+<!--Resell cards-->
+<cq-modal modal-id="rejection-history" submit-button="functionsCtrl.rejectionHistory()" modal-title="Fill in rejection history">
+  <div class="row">
+    <div class="col-md-12 text-center"><h1 style="color: red">THIS IS DANGEROUS</h1></div>
+    <p>If you click continue, the complete rejection history will be lost. All rejections and payments will be recalculated.</p>
+    <p>Payments will be condensed into a single payment. DO NOT CLICK THIS BUTTON IF YOU DO NOT KNOW WHAT YOU ARE DOING.</p>
+  </div>
+</cq-modal>
+<cq-modal modal-id="rejection-history-success" hide-submit="true" modal-title="Rejection history recreated"></cq-modal>
+<cq-modal modal-id="rejection-history-fail" hide-submit="true" modal-title="Failed to recreate rejection history"></cq-modal>

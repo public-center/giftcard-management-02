@@ -1,0 +1,29 @@
+---
+- name: Configure existing instances
+  hosts: staging_servers
+  remote_user: ubuntu
+  vars:
+      node_version: "0.10.33"
+      node_version_tag: "v0.10.33"
+      node_prefix: "node-v{{node_version}}"
+      node_tarball: "{{node_prefix}}.tar.gz"
+      node_path: "/usr/local"
+      production: False
+      frontend: True
+      backend: True
+      staging: True
+      db: True
+      api_url: "http://gcmgr-staging.cardquiry.com"
+      local_path: "/public/cardquiry/gcmgr"
+      install_path: "/var/www/gcmanager/"
+      repo: "git@github.com:loganetherton/gcmgr.git"
+      branch: "development"
+  roles:
+#    - system
+#    - {role: mongodb, sudo: yes}
+#    - node
+#    - php
+#    - {role: git, sudo: yes}
+#    - nginx
+    - app
+    - logrotate

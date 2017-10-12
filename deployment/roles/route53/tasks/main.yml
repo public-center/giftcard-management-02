@@ -1,0 +1,26 @@
+---
+- name: Get EC2 facts
+  ec2_facts:
+
+- name: Place application servers behind ELB
+  local_action:
+    module: ec2_elb
+    instance_id: "{{ ansible_ec2_instance_id }}"
+    ec2_elbs: "loganswalk"
+    state: 'present'
+    region: us-east-1
+
+# TODO: Add ELB to DNS records
+
+#- name: Retrieve the current A records for Loganswalk.com
+#  local_action: route53 command=get zone=loganswalk.com record=loganswalk.com type=A
+#  register: a_records
+#
+#- name: Add new A record for running instance
+#  local_action: route53 command=create zone="loganswalk.com" record="loganswalk.com" type=A ttl=3600 value="{{ansible_ec2_public_ipv4}}" overwrite="yes"
+#  when: not a_records|bool
+#
+#- name: Add new wildcard A record for running instance
+#  local_action: route53 command=create zone="loganswalk.com" record="*.loganswalk.com" type=A ttl=3600 value="{{ansible_ec2_public_ipv4}}" overwrite="yes"
+#  when: not a_records|bool
+

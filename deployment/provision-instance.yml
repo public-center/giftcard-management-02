@@ -1,0 +1,23 @@
+---
+- name: Provision a new AWS instance
+  hosts: localhost
+  connection: local
+  tags: provisioning
+  vars:
+    instance_type: t2.micro
+    security_group: sg_loganswalk_app_srv
+    image: ami-9eaa1cf6
+    region: us-east-1
+    keypair: loganswalk_ec2
+  roles:
+    - provision
+
+- name: Configure provisioned instances
+  hosts: sg_loganswalk_app_srv
+  user: ubuntu
+  sudo: True
+  roles:
+    - system
+    - database
+    - node
+    - app

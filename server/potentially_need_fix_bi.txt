@@ -1,0 +1,367 @@
+@TODO Examine these cards and make sure they synced over properly from BI
+
+
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10002856971680795082'
+"{'retailerId': '5', 'balance': '1.06', 'pin': '4447', 'number': '6139815297800298', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10025455409405176191', datetime.datetime(2017, 8, 22, 4, 37, 40), 'cGaWqPc7ut', '98061380064223229997413', '1270', '5468', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10025455409405176191'
+"{'retailerId': '5468', 'balance': '25', 'pin': '1270', 'number': '98061380064223229997413', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10025467273347210895', datetime.datetime(2017, 8, 22, 21, 43, 23), 'cGaWqPc7ut', '98061402444611169997414', '4171', '5468', '5.0000', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10025467273347210895'
+"{'retailerId': '5468', 'balance': '5.0000', 'pin': '4171', 'number': '98061402444611169997414', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10026999261367689108', datetime.datetime(2017, 8, 22, 21, 48, 49), 'cGaWqPc7ut', '6139682237552608', '9505', '6017', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10026999261367689108'
+"{'retailerId': '6017', 'balance': '200', 'pin': '9505', 'number': '6139682237552608', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10026999261367689108', datetime.datetime(2017, 8, 22, 21, 48, 49), 'cGaWqPc7ut', '6139682237552608', '9505', '6017', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10026999261367689108'
+"{'retailerId': '6017', 'balance': '200', 'pin': '9505', 'number': '6139682237552608', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10027032215683953783', datetime.datetime(2017, 8, 22, 1, 21, 54), 'cGaWqPc7ut', '6006491591533844861', '4459', '5344', '0', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10027032215683953783'
+"{'retailerId': '5344', 'balance': '0', 'pin': '4459', 'number': '6006491591533844861', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10028201065167479990', datetime.datetime(2017, 8, 22, 22, 1, 28), 'cGaWqPc7ut', '6006491591893281324', '5847', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10028201065167479990'
+"{'retailerId': '5344', 'balance': '25', 'pin': '5847', 'number': '6006491591893281324', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10034447723292353650', datetime.datetime(2017, 8, 22, 3, 54, 12), 'cGaWqPc7ut', '6006496958016270226', '3255', '5344', '25.00', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10034447723292353650'
+"{'retailerId': '5344', 'balance': '25.00', 'pin': '3255', 'number': '6006496958016270226', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10045431044320636297', datetime.datetime(2017, 8, 22, 2, 24, 18), 'cGaWqPc7ut', '6006491591843521647', '1093', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10045431044320636297'
+"{'retailerId': '5344', 'balance': '25', 'pin': '1093', 'number': '6006491591843521647', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10064874000521071974', datetime.datetime(2017, 8, 22, 20, 28, 16), 'cGaWqPc7ut', '98061380070386529997417', '7108', '5468', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10064874000521071974'
+"{'retailerId': '5468', 'balance': '25', 'pin': '7108', 'number': '98061380070386529997417', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10087616368286933749', datetime.datetime(2017, 8, 23, 4, 50, 26), 'cGaWqPc7ut', '6134608669898154', '4194', '6017', '40', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10087616368286933749'
+"{'retailerId': '6017', 'balance': '40', 'pin': '4194', 'number': '6134608669898154', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10087616368286933749', datetime.datetime(2017, 8, 23, 4, 50, 26), 'cGaWqPc7ut', '6134608669898154', '4194', '6017', '40', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10087616368286933749'
+"{'retailerId': '6017', 'balance': '40', 'pin': '4194', 'number': '6134608669898154', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10092883890334996790', datetime.datetime(2017, 8, 22, 20, 57, 51), 'cGaWqPc7ut', '98061380070386529997418', '7108', '5468', '0', '900011')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10092883890334996790'
+"{'retailerId': '5468', 'balance': '0', 'pin': '7108', 'number': '98061380070386529997418', 'invalid': 1, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10115672623955721662', datetime.datetime(2017, 8, 23, 3, 20, 44), 'cGaWqPc7ut', '6137844803173719', '8849', '5112', '0', '900011')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10115672623955721662'
+"{'retailerId': '5112', 'balance': '0', 'pin': '8849', 'number': '6137844803173719', 'invalid': 1, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10129206160417198888', datetime.datetime(2017, 8, 22, 6, 32, 58), 'cGaWqPc7ut', '6112737742891784', '7344', '5112', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10129206160417198888'
+"{'retailerId': '5112', 'balance': '100', 'pin': '7344', 'number': '6112737742891784', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10139150913914273802', datetime.datetime(2017, 8, 22, 18, 10, 2), 'cGaWqPc7ut', '6006491591777563490', '2540', '5344', '15', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10139150913914273802'
+"{'retailerId': '5344', 'balance': '15', 'pin': '2540', 'number': '6006491591777563490', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10141222052572686675', datetime.datetime(2017, 8, 22, 2, 59, 14), 'cGaWqPc7ut', '6393050682108374286', '9983', '5542', '50', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10141222052572686675'
+"{'retailerId': '5542', 'balance': '50', 'pin': '9983', 'number': '6393050682108374286', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10143121005885479438', datetime.datetime(2017, 8, 22, 14, 56, 19), 'cGaWqPc7ut', '1110210166047585939', '7691', '5542', '50', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10143121005885479438'
+"{'retailerId': '5542', 'balance': '50', 'pin': '7691', 'number': '1110210166047585939', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('1014652168962502491', datetime.datetime(2017, 8, 22, 18, 19, 37), 'cGaWqPc7ut', '98061380064333849997410', '7241', '5468', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/1014652168962502491'
+"{'retailerId': '5468', 'balance': '25', 'pin': '7241', 'number': '98061380064333849997410', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10163314678097278346', datetime.datetime(2017, 8, 22, 1, 28, 53), 'cGaWqPc7ut', '6006491591750476157', '0720', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10163314678097278346'
+"{'retailerId': '5344', 'balance': '25', 'pin': '0720', 'number': '6006491591750476157', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('1016502628959515904', datetime.datetime(2017, 8, 22, 22, 29, 20), 'cGaWqPc7ut', '98061450733737119997417', '3806', '5468', '17', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/1016502628959515904'
+"{'retailerId': '5468', 'balance': '17', 'pin': '3806', 'number': '98061450733737119997417', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('1019122419344253407', datetime.datetime(2017, 8, 23, 0, 20, 22), 'cGaWqPc7ut', '6137844803173719', '8649', '5112', '60', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/1019122419344253407'
+"{'retailerId': '5112', 'balance': '60', 'pin': '8649', 'number': '6137844803173719', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10196586287401907005', datetime.datetime(2017, 8, 23, 2, 7, 22), 'cGaWqPc7ut', '6137014484447236', '8198', '6017', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10196586287401907005'
+"{'retailerId': '6017', 'balance': '200', 'pin': '8198', 'number': '6137014484447236', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10196586287401907005', datetime.datetime(2017, 8, 23, 2, 7, 22), 'cGaWqPc7ut', '6137014484447236', '8198', '6017', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10196586287401907005'
+"{'retailerId': '6017', 'balance': '200', 'pin': '8198', 'number': '6137014484447236', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('1020752306122884', datetime.datetime(2017, 8, 22, 2, 46, 24), 'cGaWqPc7ut', '6393050397900465550', '1116', '5542', '6', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/1020752306122884'
+"{'retailerId': '5542', 'balance': '6', 'pin': '1116', 'number': '6393050397900465550', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10217477072754770100', datetime.datetime(2017, 8, 23, 2, 0, 26), 'cGaWqPc7ut', '6119406811964558', '3568', '5112', '20', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10217477072754770100'
+"{'retailerId': '5112', 'balance': '20', 'pin': '3568', 'number': '6119406811964558', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10225596464147699066', datetime.datetime(2017, 8, 22, 18, 35, 49), 'cGaWqPc7ut', '6139673675662252', '8639', '6017', '10', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10225596464147699066'
+"{'retailerId': '6017', 'balance': '10', 'pin': '8639', 'number': '6139673675662252', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10225596464147699066', datetime.datetime(2017, 8, 22, 18, 35, 49), 'cGaWqPc7ut', '6139673675662252', '8639', '6017', '10', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10225596464147699066'
+"{'retailerId': '6017', 'balance': '10', 'pin': '8639', 'number': '6139673675662252', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10229448428970163594', datetime.datetime(2017, 8, 22, 16, 27, 15), 'cGaWqPc7ut', '6393050745041176066', '9186', '5542', '40', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10229448428970163594'
+"{'retailerId': '5542', 'balance': '40', 'pin': '9186', 'number': '6393050745041176066', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('1023735011785060113', datetime.datetime(2017, 8, 22, 5, 31, 34), 'cGaWqPc7ut', '6006491591847804387', '5824', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/1023735011785060113'
+"{'retailerId': '5344', 'balance': '25', 'pin': '5824', 'number': '6006491591847804387', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10242340781690844669', datetime.datetime(2017, 8, 22, 7, 59, 54), 'cGaWqPc7ut', '6006496959027327989', '8460', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10242340781690844669'
+"{'retailerId': '5344', 'balance': '25', 'pin': '8460', 'number': '6006496959027327989', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10243291075444965169', datetime.datetime(2017, 8, 22, 9, 24, 4), 'cGaWqPc7ut', '6393050589589775792', '2634', '5542', '26.5', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10243291075444965169'
+"{'retailerId': '5542', 'balance': '26.5', 'pin': '2634', 'number': '6393050589589775792', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10248935796682891479', datetime.datetime(2017, 8, 22, 17, 30, 43), 'cGaWqPc7ut', '6120214950949120', '1553', '5112', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10248935796682891479'
+"{'retailerId': '5112', 'balance': '200', 'pin': '1553', 'number': '6120214950949120', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10252566398272436040', datetime.datetime(2017, 8, 22, 18, 7, 53), 'cGaWqPc7ut', '6006491591904029449', '5509', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10252566398272436040'
+"{'retailerId': '5344', 'balance': '25', 'pin': '5509', 'number': '6006491591904029449', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10278551552748752818', datetime.datetime(2017, 8, 22, 17, 48, 15), 'cGaWqPc7ut', '6119119547253793', '7442', '5112', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10278551552748752818'
+"{'retailerId': '5112', 'balance': '100', 'pin': '7442', 'number': '6119119547253793', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10284742556418981847', datetime.datetime(2017, 8, 22, 3, 34, 4), 'cGaWqPc7ut', '1110210840667523483', '9604', '5542', '50', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10284742556418981847'
+"{'retailerId': '5542', 'balance': '50', 'pin': '9604', 'number': '1110210840667523483', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10294219003782406328', datetime.datetime(2017, 8, 22, 19, 55, 33), 'cGaWqPc7ut', '6393050621345982568', '5468', '5542', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10294219003782406328'
+"{'retailerId': '5542', 'balance': '25', 'pin': '5468', 'number': '6393050621345982568', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10300370714004049277', datetime.datetime(2017, 8, 22, 20, 29, 6), 'cGaWqPc7ut', '6006491591691707777', '3924', '5344', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10300370714004049277'
+"{'retailerId': '5344', 'balance': '25', 'pin': '3924', 'number': '6006491591691707777', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10301199676814276982', datetime.datetime(2017, 8, 22, 13, 19, 7), 'cGaWqPc7ut', '6006491591747648165', '5118', '5344', '25.00', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10301199676814276982'
+"{'retailerId': '5344', 'balance': '25.00', 'pin': '5118', 'number': '6006491591747648165', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10303576360546200026', datetime.datetime(2017, 8, 23, 0, 38, 52), 'cGaWqPc7ut', '6393050128888264966', '2320', '5542', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10303576360546200026'
+"{'retailerId': '5542', 'balance': '25', 'pin': '2320', 'number': '6393050128888264966', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10316767466972665349', datetime.datetime(2017, 8, 22, 18, 54, 5), 'cGaWqPc7ut', '6111103495660579', '39715896', '5098', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10316767466972665349'
+"{'retailerId': '5098', 'balance': '200', 'pin': '39715896', 'number': '6111103495660579', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10316767466972665349', datetime.datetime(2017, 8, 22, 18, 54, 5), 'cGaWqPc7ut', '6111103495660579', '39715896', '5098', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10316767466972665349'
+"{'retailerId': '5098', 'balance': '200', 'pin': '39715896', 'number': '6111103495660579', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10330314709920716299', datetime.datetime(2017, 8, 22, 14, 16, 25), 'cGaWqPc7ut', '6098165758938298', '04964056', '5098', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10330314709920716299'
+"{'retailerId': '5098', 'balance': '100', 'pin': '04964056', 'number': '6098165758938298', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10330314709920716299', datetime.datetime(2017, 8, 22, 14, 16, 25), 'cGaWqPc7ut', '6098165758938298', '04964056', '5098', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10330314709920716299'
+"{'retailerId': '5098', 'balance': '100', 'pin': '04964056', 'number': '6098165758938298', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10332956315616657878', datetime.datetime(2017, 8, 22, 18, 54, 35), 'cGaWqPc7ut', '6111103495660579', '39715896', '5098', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10332956315616657878'
+"{'retailerId': '5098', 'balance': '200', 'pin': '39715896', 'number': '6111103495660579', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10332956315616657878', datetime.datetime(2017, 8, 22, 18, 54, 35), 'cGaWqPc7ut', '6111103495660579', '39715896', '5098', '200', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10332956315616657878'
+"{'retailerId': '5098', 'balance': '200', 'pin': '39715896', 'number': '6111103495660579', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10336601352454045619', datetime.datetime(2017, 8, 22, 20, 17, 33), 'cGaWqPc7ut', '6006491591836787056', '7755', '5344', '25.00', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10336601352454045619'
+"{'retailerId': '5344', 'balance': '25.00', 'pin': '7755', 'number': '6006491591836787056', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10344233092246430719', datetime.datetime(2017, 8, 22, 2, 36, 5), 'cGaWqPc7ut', '6115653415739758', '35668921', '5098', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10344233092246430719'
+"{'retailerId': '5098', 'balance': '100', 'pin': '35668921', 'number': '6115653415739758', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10344233092246430719', datetime.datetime(2017, 8, 22, 2, 36, 5), 'cGaWqPc7ut', '6115653415739758', '35668921', '5098', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10344233092246430719'
+"{'retailerId': '5098', 'balance': '100', 'pin': '35668921', 'number': '6115653415739758', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10349424714593246995', datetime.datetime(2017, 8, 22, 14, 40, 34), 'cGaWqPc7ut', '6111092671983148', '13586394', '5098', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10349424714593246995'
+"{'retailerId': '5098', 'balance': '100', 'pin': '13586394', 'number': '6111092671983148', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10349424714593246995', datetime.datetime(2017, 8, 22, 14, 40, 34), 'cGaWqPc7ut', '6111092671983148', '13586394', '5098', '100', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10349424714593246995'
+"{'retailerId': '5098', 'balance': '100', 'pin': '13586394', 'number': '6111092671983148', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10359027671095643133', datetime.datetime(2017, 8, 23, 4, 16, 51), 'cGaWqPc7ut', '6006491591846375793', '4300', '5344', '50', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10359027671095643133'
+"{'retailerId': '5344', 'balance': '50', 'pin': '4300', 'number': '6006491591846375793', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10374334439396505004', datetime.datetime(2017, 8, 23, 3, 4, 38), 'cGaWqPc7ut', '98061380032273159997411', '7211', '5468', '60', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10374334439396505004'
+"{'retailerId': '5468', 'balance': '60', 'pin': '7211', 'number': '98061380032273159997411', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('103749250576303464', datetime.datetime(2017, 8, 22, 13, 48, 13), 'cGaWqPc7ut', '6132397141353959', '92413770', '5098', '140', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/103749250576303464'
+"{'retailerId': '5098', 'balance': '140', 'pin': '92413770', 'number': '6132397141353959', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('103749250576303464', datetime.datetime(2017, 8, 22, 13, 48, 13), 'cGaWqPc7ut', '6132397141353959', '92413770', '5098', '140', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/103749250576303464'
+"{'retailerId': '5098', 'balance': '140', 'pin': '92413770', 'number': '6132397141353959', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10379936708396614805', datetime.datetime(2017, 8, 22, 4, 15, 32), 'cGaWqPc7ut', '98061380068910809997419', '8415', '5468', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10379936708396614805'
+"{'retailerId': '5468', 'balance': '25', 'pin': '8415', 'number': '98061380068910809997419', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10404627720117517239', datetime.datetime(2017, 8, 23, 5, 4, 10), 'IySNRlnx16', '6109226545199617', '70839786', '23', '51.34', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10404627720117517239'
+"{'retailerId': '23', 'balance': '51.34', 'pin': '70839786', 'number': '6109226545199617', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10415914087859288665', datetime.datetime(2017, 8, 23, 4, 26, 16), 'cGaWqPc7ut', '98061380072379729997418', '9964', '5468', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10415914087859288665'
+"{'retailerId': '5468', 'balance': '25', 'pin': '9964', 'number': '98061380072379729997418', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10429062659459291767', datetime.datetime(2017, 8, 22, 8, 50), 'cGaWqPc7ut', '6006496959003027512', '6848', '5344', '25.00', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10429062659459291767'
+"{'retailerId': '5344', 'balance': '25.00', 'pin': '6848', 'number': '6006496959003027512', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+***********CARD*************
+('10455316294117777662', datetime.datetime(2017, 8, 22, 18, 55, 43), 'cGaWqPc7ut', '6119440231157616', '7724', '5112', '25', '000')
+***********POST URL*************
+'http://52.204.224.246:9000/api/lq/bi/10455316294117777662'
+"{'retailerId': '5112', 'balance': '25', 'pin': '7724', 'number': '6119440231157616', 'invalid': 0, 'fixed': 1}"
+"{'x-bi-key-Geqwcak52dgwjh': 'Lr9Aff32M9bGp9XKAFqBSzxtu385ioZLKiMz2be3Lhrfr52Jz7sipKicVuYVZimGXYgww9g63JDuYAww7MPsdLYU'}"
+[23/Aug/2017:05:46:45]  *************EXCEPTION IN REINSERT CARDS*************
+[23/Aug/2017:05:46:45]  ('Connection aborted.', error(104, 'Connection reset by peer'))
+[23/Aug/2017:05:46:45]  ***********BI*************
+[23/Aug/2017:05:46:45]  {'RetailerId': '5112', '_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x7f73f9ba4e90>, 'Pin': '7724', 'RequestID': '10455316294117777662', 'GiftCardNumber': '6119440231157616', 'Balance': '25'}
+65.189.33.11 - - [23/Aug/2017:05:46:45] "POST /api/reinsertgcmgr/2017-08-22 HTTP/1.1" 200 - "" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+

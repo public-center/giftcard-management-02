@@ -1,0 +1,96 @@
+<div id="header-buttons">
+  <!-- main.admin.users -->
+  <div ng-if="mainAdminUsers()">
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.admin.settings.companies.list">
+      <i class="fa fa-globe"> </i> Companies
+    </a>
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.admin.users.create-buyer">
+      <i class="fa fa-male"> </i> Create buyer
+    </a>
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.admin.users.create-supplier">
+      <i class="fa fa-male"> </i> Create supplier
+    </a>
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.admin.users.modify">
+      <i class="fa fa-group"> </i> Update users
+    </a>
+    <a class="btn btn-success btn-facebook" ui-sref="main.admin.users.create-admin">
+      <i class="fa fa-user-md"> </i> Create admin user
+    </a>
+  </div>
+  <!-- /main.admin.users -->
+
+  <!-- main.admin.settings -->
+  <div ng-if="mainAdminSettings()">
+    <a class="btn btn-success btn-facebook" ui-sref="main.admin.settings.companies.new">
+      <i class="fa fa-plus"> </i> New company
+    </a>
+  </div>
+  <!-- /main.admin.settings -->
+
+  <!-- main.corporate.store.details -->
+  <div ng-if="mainCorporateStoreDetails()">
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.store.newEmployee({storeId: stateParams.storeId})">
+      <i class="fa fa-globe"> </i> Create new employee
+    </a>
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.store.inventory({storeId: stateParams.storeId})">
+      <i class="fa fa-newspaper-o"> </i> Current inventory
+    </a>
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.store.newEmployee">
+      <i class="fa fa-paperclip"> </i> Reconciliation
+    </a>
+  </div>
+  <!-- /main.corporate.store.details -->
+
+  <!-- main.corporate.store.(?!buyRates|details) -->
+  <div ng-if="mainCorporateStore()">
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.store.new">
+      <i class="fa fa-globe"> </i> Create new store
+    </a>
+  </div>
+  <!-- /main.corporate.store.(?!buyRates|details) -->
+
+  <!-- main.employee.customer params.customerId !== 'default' -->
+  <div ng-if="mainEmployeeCustomerNonDefault()">
+    <div style="display: inline;" ng-if="showNewCustomerButton">
+      <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.employee.customer.new">
+        <i class="fa fa-plus"> </i> Create New Customer
+      </a>
+    </div>
+  </div>
+  <!-- /main.employee.customer params.customerId !== 'default' -->
+
+  <!-- main.corporate.customer params.customerId !== 'default' -->
+  <div ng-if="mainCorporateCustomerNonDefault()">
+    <div style="display: inline;">
+      <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.customer.new">
+        <i class="fa fa-plus"> </i> Create New Customer
+      </a>
+    </div>
+  </div>
+  <!-- /main.corporate.customer params.customerId !== 'default' -->
+
+  <!-- main.coporate.(?!store|customer) -->
+  <div ng-if="mainCorporate()">
+  </div>
+  <!-- /main.corporate.(?!store|customer) -->
+
+  <!--- main.employee.buyRates -->
+  <div ng-if="mainBuyRates()">
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.employee.customer">
+      <i class="fa fa-male"> </i> Customers
+    </a>
+  </div>
+  <!-- /main.employee.buyRates -->
+
+  <!-- main.corporate.buyRates -->
+  <div ng-if="mainCorporateBuyRates()">
+    <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.customer">
+      <i class="fa fa-male"> </i> Customers
+    </a>
+  </div>
+  <!-- /main.corporate.buyRates -->
+
+  <div ng-if="mainCorporateStoreDetails() || mainCorporateStore() || mainCorporateCustomerNonDefault() || mainCorporate()">
+    <corporate-store-switcher></corporate-store-switcher>
+  </div>
+</div>

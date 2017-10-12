@@ -1,0 +1,38 @@
+<div class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h1>Retailer Stats</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table
+        st-table="displayData.retailers"
+        st-safe-src="displayData.safe"
+        class="table table-striped activity-table"
+      >
+        <tr>
+          <th st-sort="name">Retailer name</th>
+          <th st-sort="count">Count</th>
+        </tr>
+        <tr>
+          <th>
+            <input st-search="name" class="input-sm form-control" type="search"/>
+          </th>
+          <th>
+            <input st-search="count" class="input-sm form-control" type="search"/>
+          </th>
+        </tr>
+        <tr ng-repeat="row in displayData.retailers">
+          <td>{{row.name}}</td>
+          <td>{{row.count}}</td>
+        </tr>
+        <tr>
+          <td colspan="5" class="text-center">
+            <div st-pagination="" st-items-by-page="20"></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

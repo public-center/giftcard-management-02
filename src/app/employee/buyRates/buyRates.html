@@ -1,0 +1,45 @@
+<ui-view></ui-view>
+
+
+<div class="wrapper wrapper-content animated ">
+  <div class="row">
+    <div class="col-md-12">
+      <a type="button" class="btn btn-info btn-sm" data-toggle="modal" style="margin-bottom: 10px" ng-click="employeeCtrl.downloadRates()">
+        <i class="fa fa-download"></i> Download as CSV
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <!--Display buy rates only if employees are allowed to see them-->
+        <div class="ibox-content">
+
+          <!--Pick minimum values for rates to display-->
+          <div class="form-group">
+            <label class="control-label" for="status">Select a minimum rate to display</label>
+            <select name="status" id="status" class="form-control" ng-model="employeeCtrl.displayData.minRateToDisplay">
+              <option value="{{rate}}" ng-repeat="rate in ['All', 65, 70, 75, 80, 85, 90, 95]">{{rate}}</option>
+            </select>
+          </div>
+          <!--Buy rates table-->
+          <buy-rates-table employee-ctrl="employeeCtrl" hide-sell-rates="employeeCtrl.displayData.hideSellRates">
+          </buy-rates-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  td img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+</style>
+
+<!--Confirm delete-->
+<cq-modal modal-id="delete-store-confirm" submit-button="employeeCtrl.deleteStore()"
+          modal-title="Are you sure you want to delete this store?" button-text="Delete store" button-class="danger">
+  If you delete this store, all associated employees will be deleted as well
+</cq-modal>

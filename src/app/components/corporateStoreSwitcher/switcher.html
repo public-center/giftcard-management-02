@@ -1,0 +1,12 @@
+<a class="btn btn-success store-selector-parent" style="cursor: default; border-radius: 50px">
+  <span style="cursor: default;">Using store</span>
+  <select ng-model="displayData.selectedStore" id="corpStorePicker" ng-change="changeStore()" style="background-color: #1c84c6; border-radius: 5px">
+    <option value="{{store._id}}" ng-repeat="store in displayData.stores track by $index">{{store.name}}</option>
+  </select>
+</a>
+
+<style>
+  corporate-store-switcher {
+    font-size: 16px;
+  }
+</style>

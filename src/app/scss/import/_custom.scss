@@ -1,0 +1,23 @@
+/* Only demo */
+@media (max-width: 1000px) {
+  .welcome-message {
+    display: none;
+  }
+}
+
+.lightBoxGallery {
+  text-align: center;
+}
+
+.lightBoxGallery img {
+  margin: 5px;
+}
+
+.margin-5 {
+  margin-bottom: 5px;
+}
+
+//Table row error
+.table-error {
+  background-color: #fac3c3 !important;
+}

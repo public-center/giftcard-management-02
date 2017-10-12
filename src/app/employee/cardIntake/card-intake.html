@@ -1,0 +1,491 @@
+<div class="wrapper wrapper-content">
+
+  <div class="ibox">
+    <div class="ibox-title">
+      <div class="col-md-4">
+        <h5>Cards for {{customerCtrl.displayData.selectedCustomer.fullName}}</h5>
+      </div>
+    </div>
+    <div class="ibox-content">
+      <div class="row m-b-sm m-t-sm">
+        <div class="col-md-3">
+          <button type="button" id="add-card" class="btn btn-info btn-sm" data-toggle="modal"
+                  data-target="#cardIntakeModal"><i class="fa fa-plus"></i> Add card
+          </button>
+          <button type="button" id="add-same-brand" class="btn btn-info btn-sm" data-toggle="modal"
+                  data-target="#cardIntakeModal" ng-click="cardIntakeCtrl.useSameBrand()"
+                  ng-if="cardIntakeCtrl.oldRetailer && cardIntakeCtrl.oldRetailerQuery"><i class="fa fa-plus"></i> Add
+            same brand
+          </button>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="cardIntakeCtrl.uploadCardsConfirm()"
+                  ng-show="employeeCtrl.displayData.isAdmin">
+            <i class="fa fa-plus"></i>Upload Cards
+          </button>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="cardIntakeCtrl.runBi()"
+                  ng-show="employeeCtrl.displayData.isAdmin">
+            <i class="fa fa-plus"></i>Run BI on cards
+          </button>
+        </div>
+
+        <!--Manager override-->
+        <div class="col-md-9">
+          <div class="pull-right">
+            <button class="btn btn-primary" type="button" ng-click="employeeCtrl.showManagerOverride()"
+                    ng-show="employeeCtrl.displayData.disableSetBuyRates">
+              <i class="fa fa-pencil"></i> Manager override to modify buy rates or balance
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" ng-show="employeeCtrl.displayData.isAdmin">
+        <div class="pull-right">
+          <button class="btn btn-primary" type="button" ng-click="cardIntakeCtrl.showCreateFakeCards()">
+            <i class="fa fa-pencil"></i> Create fake cards
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <small>Auto-sell is currently {{customerCtrl.displayData.autoSell ? 'ON, so sales will complete automatically as soon as cards are added to inventory' : 'OFF, so sales will need to be manually confirmed before they will be completed'}}</small>
+        </div>
+      </div>
+      <!--Table existing cards-->
+      <div class="project-list">
+        <table class="table table-hover">
+          <tbody ng-show="cardIntakeCtrl.displayData.cards">
+          <tr ng-repeat="card in cardIntakeCtrl.displayData.cards | filter:cardIntakeCtrl.displayData.cardSearch track by card._id" ng-class="cardIntakeCtrl.getRowClass(card)">
+            <td class="project-status">
+              <span class="label"
+                    ng-class="{'label-primary': card.retailer.retailerId, 'label-warning': !card.retailer.retailerId || !card.valid || card.balanceStatus === 'manual'}">{{(!card.retailer.gsId || card.balanceStatus === 'manual' || !card.valid) ? 'Manual': 'Automatic'}}</span>
+            </td>
+            <td class="project-people">
+              <a href="">
+                <img src="assets/images/retailers/{{card.retailer._id}}.{{card.retailer.imageType}}" class="img-circle" ng-if="card.retailer.imageType">
+                <img src="{{card.retailer.imageUrl}}" class="img-circle" ng-if="card.retailer.imageUrl && !card.retailer.imageType">
+              </a>
+            </td>
+            <td class="project-title">
+              <a href="">{{card.retailer.name}}</a>
+              <br/>
+              <small>{{card.created | date}}</small>
+            </td>
+            <td class="project-title">
+              <a href="" ng-show="!employeeCtrl.displayData.isAdmin">{{card.number.substring(card.number.length - 4)}}</a>
+              <a href="" ng-show="employeeCtrl.displayData.isAdmin">{{card.number}}</a>
+              <br/>
+              <small>Last four digits of number</small>
+            </td>
+            <td class="project-title" ng-show="card.balanceStatus === 'received'">
+              <span ng-class="{'label-danger': card.errors.noBalance}">
+                <strong>{{card.errors.noBalance ? 'Zero balance' : 'Balance'}}</strong>
+              </span>
+              <br/>
+              <small>
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control"
+                         ng-model="card.balance"
+                         ng-show="employeeCtrl.displayData.overrideBalance"
+                         ng-change="cardIntakeCtrl.changeManualBalance(card)"
+                         numbers-only="decimal">
+                  <h4 ng-hide="card.errors.noBalance || employeeCtrl.displayData.overrideBalance">
+                    {{card.balance || 0 | currency}}
+                  </h4>
+                  <span class="input-group-btn"></span>
+                </div>
+              </small>
+            </td>
+            <td class="project-title" ng-show="card.balanceStatus !== 'received'">
+              <span><strong>Manual balance</strong></span>
+              <br/>
+              <small>
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control"
+                                                ng-model="card.balance"
+                                                ng-change="cardIntakeCtrl.changeManualBalance(card)"
+                                                numbers-only="decimal">
+                  <span class="input-group-btn"></span>
+                </div>
+              </small>
+            </td>
+            <td class="project-title">
+              <span ng-class="{'label-warning': card.errors.buyRateLessThanMinBuyRate}">
+                <strong>{{card.errors.buyRateLessThanMinBuyRate ? 'Buy rate is too high' : 'Buy rate percentage'}}</strong>
+              </span>
+              <br/>
+              <small>
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control"
+                         ng-model="card.buyRate"
+                         ng-change="cardIntakeCtrl.changeBuyRate(card)"
+                         numbers-only="decimal"
+                         ng-show="!employeeCtrl.displayData.disableSetBuyRates"
+                         ng-disabled="card.errors.noBalance">
+                  <h4 ng-show="employeeCtrl.displayData.disableSetBuyRates">{{card.buyRate * 100 | number:2}}%</h4>
+                  <span class="input-group-btn"></span>
+                </div>
+              </small>
+            </td>
+            <td class="project-title">
+              <span ng-class="{'label-warning': cardIntakeCtrl.getBuyAmountLabelClass(card)}">
+                <strong>{{cardIntakeCtrl.getBuyAmountText(card)}}</strong>
+              </span>
+              <br/>
+              <small>
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" ng-model="card.buyAmount"
+                         ng-change="cardIntakeCtrl.changeBuyAmount(card)"
+                         numbers-only="decimal"
+                         ng-show="!employeeCtrl.displayData.disableSetBuyRates"
+                         ng-disabled="card.errors.noBalance">
+                  <h4 ng-show="employeeCtrl.displayData.disableSetBuyRates">{{card.buyAmount}}</h4>
+                  <span class="input-group-btn"></span>
+                </div>
+              </small>
+            </td>
+            <td class="project-completion">
+              <small ng-if="!card.retailer.gsId">Manual check required</small>
+              <small ng-if="card.retailer.gsId">
+                {{cardIntakeCtrl.balanceStatusText(card.balanceStatus, card.valid)}}
+              </small>
+              <div class="progress progress-mini">
+                <div style="width: {{50 * card.balanceDisplayWidth}}%;" class="progress-bar"></div>
+              </div>
+            </td>
+            <td class="project-actions">
+              <a href="#" class="btn btn-white btn-sm" ng-click="cardIntakeCtrl.editCardModal(card)"><i
+                class="fa fa-pencil"></i> Edit </a>
+              <a href="#" class="btn btn-info btn-sm" ng-click="cardIntakeCtrl.getManualBalance(card)"><i
+                class="fa fa-credit-card"></i> Balance </a>
+              <a href="#" class="btn btn-primary btn-sm" ng-click="cardIntakeCtrl.getCustomers(card)" ng-if="card.customer.firstName === '__default__'">
+                <i class="fa fa-user"></i> Customer </a>
+              <a href="#" class="btn btn-danger btn-sm" ng-click="cardIntakeCtrl.deleteCardModal(card)"><i
+                class="fa fa-remove"></i> Delete </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="ibox">
+              <div class="ibox-content">
+                <h3>Card Intake Totals</h3>
+                <table class="table table-stripped m-t-md">
+                  <tbody>
+                  <tr>
+                    <td class="no-borders">
+                      <strong>Electronic</strong>
+                    </td>
+                    <td class="no-borders">
+                      {{cardIntakeCtrl.displayData.totals.electronic | currency}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Manual</strong>
+                    </td>
+                    <td>
+                      {{cardIntakeCtrl.displayData.totals.manual | currency}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Denials</strong>
+                    </td>
+                    <td>
+                      {{cardIntakeCtrl.displayData.customer.rejectionTotal | currency}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h3>Grand Total</h3>
+                    </td>
+                    <td>
+                      <h1 class="no-margins">{{cardIntakeCtrl.displayData.totals.electronic + cardIntakeCtrl.displayData.totals.manual - cardIntakeCtrl.displayData.customer.rejectionTotal | currency}}</h1>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="button" ng-click="cardIntakeCtrl.addToInventory()" ng-disabled="!cardIntakeCtrl.displayData.cards.length"><i
+          class="fa fa-check"></i> Complete and add to inventory
+        </button>
+        <button class="btn btn-warning" type="button" ng-click="cardIntakeCtrl.openReceiptConfirm()"><i class="fa fa-paste"></i> Print receipt</button>
+        <button class="btn btn-danger" type="button" ng-click="cardIntakeCtrl.confirmResetCards()"
+                ng-if="cardIntakeCtrl.displayReset()">
+          <i class="fa fa-exclamation"></i> Reset changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Card intake modal-->
+<div class="modal inmodal fade" id="cardIntakeModal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a new card</h4>
+        <small class="font-bold">Complete all details to perform a balance inquiry</small>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+              <div class="ibox-content">
+                <form method="get" class="form-horizontal">
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group"><label class="col-sm-2 control-label">Retailer</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" ng-model="cardIntakeCtrl.displayData.retailerQuery" tabindex="95">
+                      <span class="help-block m-b-none">{{cardIntakeCtrl.displayData.retailers.length ? 'Select a retailer in the results below' : "Begin typing a retailer's name to perform a search"}}</span>
+                    </div>
+                  </div>
+                  <div class="form-group text-center">
+                    <div ng-if="cardIntakeCtrl.displayData.retailers.length">
+                      <div class="hr-line-dashed" ng-repeat-start="retailer in cardIntakeCtrl.displayData.retailers track by retailer._id"></div>
+                      <div class="search-result" ng-repeat-end>
+                        <h3><a ng-click="cardIntakeCtrl.selectRetailer(retailer)">{{retailer.name}}</a></h3>
+                        <div class="row">
+                          <div class="col-md-12 text-center">
+                            <a ng-click="cardIntakeCtrl.selectRetailer(retailer)">
+                              <div class="col-md-12">
+                                <img src="assets/images/retailers/{{retailer._id}}.{{retailer.imageType}}" ng-if="retailer.imageType" style="max-height: 100%; max-width: 100%;">
+                                <img src="{{retailer.imageUrl}}" ng-if="!retailer.imageType && retailer.imageUrl" style="max-height: 100%; max-width: 100%;">
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group"><label class="col-sm-2 control-label">Card number</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" ng-model="cardIntakeCtrl.displayData.newCard.number" tabindex="96">
+                      <span class="help-block m-b-none">Enter the complete card number, with no spaces, dashes, or any other marks</span>
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group"><label class="col-sm-2 control-label">PIN</label>
+                    <div class="col-sm-10"><input type="text" class="form-control" name="pin" tabindex="97"
+                                                  ng-model="cardIntakeCtrl.displayData.newCard.pin"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cardIntakeCtrl.clearNewCard()" tabindex="99">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="cardIntakeCtrl.newCard()" ng-disabled="!cardIntakeCtrl.displayData.newCard.retailer || !cardIntakeCtrl.displayData.newCard.number" tabindex="98">Add card</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit card modal-->
+<div class="modal inmodal fade" id="editCardModal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit card</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+              <div class="ibox-content">
+                <form method="get" class="form-horizontal">
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group"><label class="col-sm-2 control-label">Retailer</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"
+                             ng-model="cardIntakeCtrl.displayData.editCard.retailer.name" disabled>
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group"><label class="col-sm-2 control-label">Card number</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" ng-model="cardIntakeCtrl.displayData.editCard.number"
+                             numbers-only>
+                      <span class="help-block m-b-none">Enter the complete card number, with no spaces, dashes, or any other marks</span>
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group"><label class="col-sm-2 control-label">PIN</label>
+                    <div class="col-sm-10"><input type="text" class="form-control" name="password"
+                                                  ng-model="cardIntakeCtrl.displayData.editCard.pin" numbers-only></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="cardIntakeCtrl.editCard()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete card-->
+<cq-modal modal-id="delete-card-confirm" submit-button="cardIntakeCtrl.deleteCard()"
+          modal-title="Are you sure you want to delete this card?" button-text="Delete card" button-class="danger">
+  If you delete this card, it will be removed from the system permanently. You may still re-enter the card information after it has been deleted.
+</cq-modal>
+
+<!--Get manual balance-->
+<cq-modal modal-id="manual-balance-info" modal-title="Check balance of gift card manually"
+          button-text="OK" button-class="success" hide-cancel="true"
+          submit-button="cardIntakeCtrl.hideManualBalanceCheck()">
+  <p ng-if="cardIntakeCtrl.displayData.manualVerificationInfo.url"><a
+    href="{{cardIntakeCtrl.displayData.manualVerificationInfo.url}}" target="_blank">Check balance online</a></p>
+  <p ng-if="cardIntakeCtrl.displayData.manualVerificationInfo.phone">Call
+    {{cardIntakeCtrl.displayData.manualVerificationInfo.phone}} to check balance</p>
+  <p
+    ng-if="!cardIntakeCtrl.displayData.manualVerificationInfo.url && !cardIntakeCtrl.displayData.manualVerificationInfo.phone">
+    No options available for manually checking card balance</p>
+</cq-modal>
+
+<!--Reset card changes-->
+<cq-modal modal-id="reset-cards" submit-button="cardIntakeCtrl.resetCards()"
+          modal-title="Are you sure you want to reset all changes?" button-text="Reset changes" button-class="danger">
+  If you reset changes, all changes made to all cards which have not been added to inventory will be reset.
+</cq-modal>
+
+<!--Card errors before adding to inventory-->
+<cq-modal modal-id="error-cards" submit-button="cardIntakeCtrl.hideErrorCards()"
+          modal-title="The following cards have errors" button-text="OK" hide-cancel="true" modal-title-small="Correct the following errors to add cards to inventory">
+  <p ng-repeat="card in cardIntakeCtrl.displayData.errorCards track by card._id">
+    <strong>{{card.retailer.name}}</strong>
+    <small>Card ending with <strong>{{card.number.substring(card.number.length - 4)}}</strong> {{cardIntakeCtrl.displayData.errorType}}</small>
+  </p>
+</cq-modal>
+
+<!--Confirm add to inventory-->
+<cq-modal modal-id="add-to-inventory" submit-button="cardIntakeCtrl.completeAddToInventory()"
+          modal-title="Add cards to inventory?" button-text="Add to inventory">
+</cq-modal>
+
+<!--Error adding cards to inventory-->
+<cq-modal modal-id="error-cards-add-to-inventory" submit-button="cardIntakeCtrl.closeErrorCards()"
+          modal-title="Error adding cards to inventory" button-text="Close">
+  <p>There was an error adding cards to inventory. Please refresh the browser and try again.</p>
+</cq-modal>
+
+<!--Card already exists-->
+<cq-modal modal-id="card-exists-in-system" submit-button="cardIntakeCtrl.closeCardExists()"
+          modal-title="Card already exists in database" button-text="Close">
+</cq-modal>
+
+<!--Confirm add to inventory and show receipt-->
+<cq-modal modal-id="show-receipt-confirm" submit-button="cardIntakeCtrl.openReceipt()"
+          modal-title="Add to inventory and print receipt" button-text="Show receipt">
+  By clicking "Show receipt," all of the cards currently shown will be added to inventory. You cannot undo this action. Only click "Show receipt" when you have finished entering all cards that the customer has on hand.
+</cq-modal>
+
+<!--Assign customer-->
+<cq-modal modal-id="assign-customer" hide-submit="true"
+          modal-title="Assign customer to sale" modal-width="90%">
+  This card has no customer selected. Select a customer before adding this card to inventory.
+  Select a customer from the table below.
+  <table ng-table="cardIntakeCtrl.tableParams" show-filter="true" class="table table-hover issue-tracker">
+    <tbody>
+    <tr ng-repeat="row in $data track by row._id" ng-click="cardIntakeCtrl.assignCustomerConfirm(row)">
+      <td title="'Customer Name'" filter="{fullName: 'text'}" sortable="'name'">
+        {{row.fullName}}
+      </td>
+      <td title="'Address'" filter="{address1: 'text'}">
+        {{row.address1}}
+      </td>
+      <td title="'City'" filter="{city: 'text'}">
+        {{row.city}}
+      </td>
+      <td title="'State'" filter="{state: 'text'}">
+        {{row.state}}
+      </td>
+      <td title="'Zip'" filter="{zip: 'text'}">
+        {{row.state}}
+      </td>
+      <td title="'Phone'" filter="{phone: 'text'}">
+        {{row.phone}}
+      </td>
+      <td title="'State ID'" filter="{stateId: 'text'}">
+        {{row.stateId}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</cq-modal>
+
+<!--Cannot add to reconciliation because no customer selected-->
+<cq-modal modal-id="assign-customer-before-reconcile" hide-submit="true"
+          modal-title="All cards must have customers selected before they can be reconciled">
+</cq-modal>
+
+<!--Assign customer confirm-->
+<cq-modal modal-id="assign-customer-confirm" submit-button="cardIntakeCtrl.assignCustomer()"
+          modal-title="Are you sure you want to assign this customer to this card?">
+</cq-modal>
+
+<!--Could not assign customer-->
+<cq-modal modal-id="assign-customer-failure" hide-submit="true"
+          modal-title="Could not assign customer to card">
+</cq-modal>
+
+<!--Create fake cards-->
+<cq-modal modal-id="fake-cards" submit-button="cardIntakeCtrl.createFakeCards()" modal-title="Create fake cards">
+  <label>How many?</label>
+  <input type="text" class="input-sm form-control" ng-model="cardIntakeCtrl.displayData.fakeCards" numbers-only>
+</cq-modal>
+
+<cq-modal modal-id="fake-cards-fail" modal-title="Failed to create fake cards"></cq-modal>
+
+<!--Upload cards-->
+<cq-modal modal-id="upload-cards" hide-submit="true" modal-title="Upload a spreadsheet of cards">
+  <form name="cc-upload">
+    <div class="button ngf-select-button text-center" ngf-select ng-model="cardIntakeCtrl.cardsFile" name="file"
+         ngf-max-size="100MB" ngf-pattern="'text/csv'">
+      <span class="upload-text" ng-show="!cardIntakeCtrl.cardsFile" style="cursor: pointer;">Click here to select card csv file</span>
+      <span class="upload-text" ng-show="cardIntakeCtrl.cardsFile">{{cardIntakeCtrl.cardsFile.name}} ready for upload</span>
+    </div>
+    <button type="button" class="btn btn-sm btn-primary" ng-click="cardIntakeCtrl.uploadCardsFile()"
+            ng-disabled="!cardIntakeCtrl.cardsFile"> Upload cards
+    </button>
+  </form>
+</cq-modal>
+
+<cq-modal modal-id="upload-cards-success" submit-button="cardIntakeCtrl.closeUploadResponse()" modal-title="Cards uploaded successfully. Refresh your browser to see the new cards.">
+</cq-modal>
+
+<cq-modal modal-id="upload-cards-failure" submit-button="cardIntakeCtrl.closeUploadResponse()" modal-title="Failed to upload cards. Please check that your csv file has 4 columns: retailer id, retailer name, card number, and card pin">
+</cq-modal>
+
+<cq-modal modal-id="bi-running" hide-submit="true" modal-title="BI running"></cq-modal>
+<cq-modal modal-id="bi-running-failure" hide-submit="true" modal-title="BI run failure"></cq-modal>
+
+<!--Current customer has rejections-->
+<cq-modal modal-id="has-rejections" hide-submit="true" modal-title="The current customer has rejections">
+  <div class="row">
+    <div class="col-md-12">
+      <p>The current customer has rejections from a previously sold batch of cards.</p>
+      <p>The current rejection total of <strong>{{cardIntakeCtrl.displayData.customer.rejectionTotal | currency}}</strong> will be subtracted from the current sale.</p>
+    </div>
+  </div>
+</cq-modal>
+
+<style>
+  .card-error {
+    background-color: #fac3c3;
+  }
+</style>

@@ -1,0 +1,7 @@
+---
+
+- name: Set up DNS
+  hosts: app_servers
+  remote_user: ubuntu
+  roles:
+    - route53

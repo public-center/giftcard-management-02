@@ -1,0 +1,23 @@
+---
+
+- name: Basic deployment
+  include: deploy.yml
+
+- name: Install application dependencies
+  include: app_dependencies.yml
+
+- name: Run the application (production frontend)
+  include: run_app_frontend_prod.yml
+  when: production == True and frontend == True and staging == False
+
+- name: Run the application (staging frontend)
+  include: run_app_frontend_prod.yml
+  when: staging == True and frontend == True and production == False
+
+- name: Run the application (production backend)
+  include: run_app_backend_prod.yml
+  when: production == True and backend == True and staging == False
+
+- name: Run the application (staging backend)
+  include: run_app_backend_prod.yml
+  when: staging == True and backend == True and production == False

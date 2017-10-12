@@ -1,0 +1,559 @@
+<link rel="stylesheet" type="text/css" href="assets/css/angular-loading.css"/>
+
+<div class="wrapper wrapper-content animated" style="max-width: 100%; display:block">
+
+  <div class="row" dw-loading="activity" dw-loading-options="{text: 'Loading records...'}">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12" style="height: 75px; position: relative">
+          <div style="float: right; width: 20%; right: 5px">
+            <label class="font-noraml">Date End</label>
+            <div class="input-group date">
+              <datepicker date-format="MM-dd-yyyy">
+                <input type="text" ng-model="activityCtrl.displayData.dateRange.dateEnd" class="form-control">
+              </datepicker>
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <div style="float: right; width: 20%">
+            <label class="font-noraml">Date Begin</label>
+            <div class="input-group date">
+              <datepicker date-format="MM-dd-yyyy">
+                <input type="text" ng-model="activityCtrl.displayData.dateRange.dateBegin" class="form-control">
+              </datepicker>
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+          <span style="float: right; bottom: 0; position: relative; right: 5px; top: 25px">
+            <label class="font-noraml">&nbsp;</label>
+            <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.jumpToToday()">
+              <i class="fa fa-thumb-tack"></i> Jump to today
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <!--Update statuses by batch-->
+      <div class="col-md-11" style="margin-bottom: 10px">
+        <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.massUpdate()"
+                ng-disabled="activityCtrl.displayData.totalSelectedRows < 1">
+          <i class="fa fa-warning"></i> Mass update
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" ng-click="activityCtrl.selectAll()">
+          <i class="fa fa-warning"></i> Select all
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" ng-click="activityCtrl.deselectAll()"
+                ng-disabled="activityCtrl.displayData.totalSelectedRows < 1">
+          <i class="fa fa-warning"></i> Deselect all
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="activityCtrl.confirmReject()"
+                ng-disabled="activityCtrl.displayData.totalSelectedRows < 1">
+          <i class="fa fa-warning"></i> Reject/Credit
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="activityCtrl.resellSelected()"
+                ng-disabled="activityCtrl.displayData.totalSelectedRows < 1">
+          <i class="fa fa-usd"></i> Resell
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="activityCtrl.addDeduction()"
+                ng-disabled="!activityCtrl.enableDeductionButton()">
+          <i class="fa fa-usd"></i> Add deduction
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="activityCtrl.sendCallbackFromActivity('needsAttention')"
+                ng-disabled="activityCtrl.displayData.totalSelectedRows < 1">
+          <i class="fa fa-warning"></i> Send Needs Attention callback
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="activityCtrl.sendCallbackFromActivity('cqPaymentInitiated')"
+                ng-disabled="activityCtrl.displayData.totalSelectedRows < 1">
+          <i class="fa fa-money"></i> Send Payment Initiated callback
+        </button>
+        <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.downloadCsvSheet('cardCash')">
+          <i class="fa fa-usd"></i> Download CardCash
+        </button>
+        <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.downloadCsvSheet('cardPool')">
+          <i class="fa fa-usd"></i> Download CardPool
+        </button>
+        <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.downloadCsvSheet('giftcardZen')">
+          <i class="fa fa-usd"></i> Download GCZ
+        </button>
+      </div>
+      <div class="col-md-1 text-right">
+        <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.search()">
+          <i class="fa fa-search"></i> Search
+        </button>
+      </div>
+      <div class="activity-table-responsive">
+        <activity-revised-exchange
+          display-data="displayData"
+          recalculate-totals="activityCtrl.recalculateTotals({inventories:inventories})"
+          totals="activityCtrl.displayData.totals"
+          set-value="activityCtrl.setValue({row: row, type: type})"
+          ctrl="activityCtrl"
+          admin="true"
+          revised="true"
+          mass-update="activityCtrl.massUpdate()"
+          paste="activityCtrl.paste({contents: contents})"
+          piper="piper"
+        ></activity-revised-exchange>
+          <h1><b>{{activityCtrl.totalCards(false)}}</b> Cards Found</h1>
+          <h1><b>{{activityCtrl.totalCards(true)}}</b> Displayed</h1>
+          <h1><b>{{activityCtrl.displayData.totalSelectedRows}}</b> Selected</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        Per page
+        <select ng-model="activityCtrl.displayData.perPage" ng-change="activityCtrl.exposeTableData()">
+          <option ng-repeat="value in [5, 10, 20, 50, 100, 999999999] track by $index" value="{{value}}">
+            {{value === 999999999 ? 'All' : value}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Inventory details modal-->
+<cq-modal modal-id="inventory-details-new" modal-title="{{activityCtrl.displayData.updateTitle}}" hide-submit="true" cancel-text="Close" modal-width="70%" close-modal-callback="activityCtrl.closeUpdate()">
+  <div class="row pad-bottom">
+    <div class="col-md-6">
+      <button type="button" class="btn btn-danger btn-sm" ng-click="activityCtrl.deleteInventoryConfirm()">
+        <i class="fa fa-crosshairs"></i> Delete card
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div class="pull-right">
+        <button type="button" class="btn btn-info btn-sm" ng-click="activityCtrl.recalculateTransactionValues()">
+          <i class="fa fa-calculator"></i> Recalculate transaction
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Card Details</h5>
+        </div>
+        <div class="ibox-content">
+          <table class="table table-hover no-margins">
+            <tbody>
+            <tr>
+              <td><strong>Customer Name</strong></td>
+              <td>{{activityCtrl.currentInventory.customer.fullName}}</td>
+            </tr>
+            <tr>
+              <td><strong>User</strong></td>
+              <td>{{activityCtrl.currentInventory.user.firstName}} {{activityCtrl.currentInventory.user.lastName}}</td>
+            </tr>
+            <tr>
+              <td><strong>SaveYa ID</strong></td>
+              <td>{{activityCtrl.currentInventory.transactionId || 'N/A'}}</td>
+            </tr>
+            <!--<tr>-->
+              <!--<td><strong>Commission</strong></td>-->
+              <!--<td>{{activityCtrl.currentInventory.commission || 0 | currency}}</td>-->
+            <!--</tr>-->
+            <tr>
+              <td><strong>CQ TransactionId</strong></td>
+              <td>{{activityCtrl.currentInventory.cqTransactionId}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Updating {{activityCtrl.totalCardsSelected()}}</h5>
+        </div>
+        <div class="ibox-content">
+          <table class="table table-hover no-margins">
+            <col style="width:20%">
+            <col style="width:30%">
+            <col style="width:50%">
+            <tbody>
+            <tr>
+              <td>Update Balance</td>
+              <td><input ng-model="activityCtrl.updatedBalance"></td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right" ng-click="activityCtrl.modifyBalance()">
+                  <i class="fa fa-crosshairs"></i> Update balance
+                </button>
+              </td>
+            </tr>
+            <!--<tr>-->
+              <!--<td>Update CQ Paid</td>-->
+              <!--<td>-->
+                <!--<input ng-model="activityCtrl.cqPaid">-->
+              <!--</td>-->
+              <!--<td></td>-->
+              <!--<td>-->
+                <!--<button type="button" class="btn btn-info btn-sm pull-right"-->
+                        <!--ng-click="activityCtrl.changeCardDetails('cqPaid')">-->
+                  <!--<i class="fa fa-crosshairs"></i> Update CQ Paid-->
+                <!--</button>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <tr>
+              <td>Update SMP Rate</td>
+              <td>
+                <input ng-model="activityCtrl.liquidationRate">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('liquidationRate')">
+                  <i class="fa fa-crosshairs"></i> Update SMP Rate
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change SMP</td>
+              <td>
+                <select name="modify-card-select" ng-model="activityCtrl.smp">
+                  <option value="cardcash">CardCash</option>
+                  <option value="cardpool">CardPool</option>
+                  <option value="raise">Raise</option>
+                  <option value="employee">Employee Purchase</option>
+                  <option value="giftcardZen">Giftcard Zen</option>
+                </select>
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('smp')">
+                  <i class="fa fa-crosshairs"></i> Update SMP
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change Number</td>
+              <td>
+                <input ng-model="activityCtrl.number">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('number')">
+                  <i class="fa fa-crosshairs"></i> Update number
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change PIN</td>
+              <td>
+                <input ng-model="activityCtrl.pin">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('pin')">
+                  <i class="fa fa-crosshairs"></i> Update pin
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change Retailer</td>
+              <td>
+                <input ng-model="activityCtrl.retailerSearch" ng-change="activityCtrl.searchRetailers()">
+              </td>
+              <td>
+                <select ng-model="activityCtrl.newRetailer" ng-if="activityCtrl.displayData.retailers.length">
+                  <option value="{{retailer._id}}"
+                          ng-repeat="retailer in activityCtrl.displayData.retailers | filter:activityCtrl.retailer as results track by $index">
+                    {{retailer.name}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="activityCtrl.changeCardDetails('retailer')">
+                  <i class="fa fa-crosshairs"></i> Change retailer
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change ship status</td>
+              <td>
+                <select ng-model="activityCtrl.activityStatus">
+                  <option></option>
+                  <option value="notShipped">
+                    Not shipped
+                  </option>
+                  <option value="shipped">
+                    In transit to CQ
+                  </option>
+                  <option value="receivedCq">
+                    Received by CQ
+                  </option>
+                  <option value="sentToSmp">
+                    Sent to SMP
+                  </option>
+                  <option value="receivedSmp">
+                    Received by SMP
+                  </option>
+                  <option value="rejected">
+                    Rejected by CQ
+                  </option>
+                </select>
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('activityStatus')">
+                  <i class="fa fa-crosshairs"></i> Change ship status
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change order number</td>
+              <td>
+                <input ng-model="activityCtrl.orderNumber">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('orderNumber')">
+                  <i class="fa fa-crosshairs"></i> Change order number
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change SMP ACH</td>
+              <td>
+                <input ng-model="activityCtrl.smpAch">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('smpAch')">
+                  <i class="fa fa-crosshairs"></i> Change SMP ACH
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change CQ ACH</td>
+              <td>
+                <input ng-model="activityCtrl.cqAch">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('cqAch')">
+                  <i class="fa fa-crosshairs"></i> Change CQ ACH
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change Sell Date</td>
+              <td>
+                <div class="input-group date">
+                  <datepicker date-format="MM-dd-yyyy">
+                    <input type="text" class="form-control" ng-model="activityCtrl.created">
+                  </datepicker>
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('created')">
+                  <i class="fa fa-crosshairs"></i> Change Sell Date
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change Customer</td>
+              <td>
+                <input ng-model="activityCtrl.customerSearch" ng-change="activityCtrl.searchCustomers()">
+              </td>
+              <td>
+                <select ng-model="activityCtrl.newCustomer" ng-if="activityCtrl.displayData.customers.length">
+                  <option value="{{customer._id}}"
+                          ng-repeat="customer in activityCtrl.displayData.customers | filter:activityCtrl.customer as results track by $index">
+                    {{customer.name}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="activityCtrl.changeCardDetails('customer')">
+                  <i class="fa fa-crosshairs"></i> Change customer
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change Batch</td>
+              <td>
+                <input ng-model="activityCtrl.batchSearch" ng-change="activityCtrl.searchBatch()">
+              </td>
+              <td>
+                <select ng-model="activityCtrl.newBatch" ng-if="activityCtrl.displayData.batches.length">
+                  <option value="{{batch._id}}"
+                          ng-repeat="batch in activityCtrl.displayData.batches | filter:activityCtrl.batch as results track by $index">
+                    {{batch.name}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="activityCtrl.changeCardDetails('batch')">
+                  <i class="fa fa-crosshairs"></i> Change batch
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change Users</td>
+              <td>
+                <input ng-model="activityCtrl.userSearch" ng-change="activityCtrl.searchUsers()">
+              </td>
+              <td>
+                <select ng-model="activityCtrl.newUser" ng-if="activityCtrl.displayData.users.length">
+                  <option value="{{user._id}}"
+                          ng-repeat="user in activityCtrl.displayData.users | filter:activityCtrl.user as results track by $index">
+                    {{user.name}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="activityCtrl.changeCardDetails('user')">
+                  <i class="fa fa-crosshairs"></i> Change users
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change store</td>
+              <td>
+                <select ng-model="activityCtrl.updateStore.selectedStore">
+                  <option></option>
+                  <option value="{{store._id}}" ng-repeat="store in activityCtrl.updateStore.storeOptions">
+                    {{store.name}}
+                  </option>
+                </select>
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('store')">
+                  <i class="fa fa-crosshairs"></i> Change store
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change margin</td>
+              <td>
+                <input ng-model="activityCtrl.margin" numbers-only="decimal" max="1">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('margin')">
+                  <i class="fa fa-crosshairs"></i> Change margin
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Change service fee</td>
+              <td>
+                <input ng-model="activityCtrl.serviceFee" numbers-only="decimal" max="1">
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.changeCardDetails('serviceFee')">
+                  <i class="fa fa-crosshairs"></i> Change service fee
+                </button>
+              </td>
+            </tr>
+            <tr >
+              <td>Sent callbacks for the selected record</td>
+              <td>
+                <div>{{activityCtrl.sentCallbacks}}</div>
+              </td>
+              <td></td>
+              <td>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.sendCallbackFromActivity('cqPaymentInitiated', true)">
+                  <i class="fa fa-crosshairs"></i> Send cqPaymentInitiated
+                </button>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.sendCallbackFromActivity('denial', true)">
+                  <i class="fa fa-crosshairs"></i> Send denial/credit
+                </button>
+                <button type="button" class="btn btn-info btn-sm pull-right"
+                        ng-click="activityCtrl.sendCallbackFromActivity('needsAttention', true)">
+                  <i class="fa fa-crosshairs"></i> Send needs attention
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</cq-modal>
+
+<!--Delete confirm-->
+<cq-modal modal-id="delete-inventory-confirm" submit-button="activityCtrl.deleteInventory()"
+          modal-title="Are you sure you want to delete this card?">
+</cq-modal>
+
+<!--Failed to delete-->
+<cq-modal modal-id="delete-fail" hide-submit="true"
+          modal-title="Failed to delete card">
+</cq-modal>
+
+<!--Cannot change smp-->
+<cq-modal modal-id="update-card-fail" hide-submit="true" modal-title="Failed to update card">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{activityCtrl.transactionError}}</h3>
+    </div>
+  </div>
+</cq-modal>
+
+<!--Batch update success-->
+<cq-modal modal-id="batch-update-success" hide-submit="true" modal-title="Card statuses updated successfully"></cq-modal>
+<cq-modal modal-id="batch-update-fail" hide-submit="true" modal-title="Failed to update card statuses"></cq-modal>
+
+<!--Reject card-->
+<cq-modal modal-id="reject" submit-button="activityCtrl.rejectCards()" modal-title="Would you like to reject/credit the selected cards?"></cq-modal>
+<cq-modal modal-id="reject-fail" hide-submit="true" modal-title="Failed to reject/credit cards"></cq-modal>
+<cq-modal modal-id="reject-success" hide-submit="true" modal-title="Selected cards rejected/credited"></cq-modal>
+
+<!--Resell cards-->
+<cq-modal modal-id="resell-failed" hide-submit="true" modal-title="Failed to resell selected cards"></cq-modal>
+
+<!--Add deduction-->
+<cq-modal modal-id="add-deduction" submit-button="activityCtrl.doAddDeduction()" modal-title="Add deduction">
+  Add ACH number from which to apply the deduction
+  <input type="text" ng-model="activityCtrl.displayData.deductionValue" />
+</cq-modal>
+
+<!--Add deduction fails-->
+<cq-modal modal-id="add-deduction-fail" hide-submit="true" modal-title="Failed to add deduction">
+  {{activityCtrl.displayData.deductionError}}
+</cq-modal>
+
+<!--Callback-->
+<cq-modal modal-id="callback-success" hide-submit="true" modal-title="Callback sent"></cq-modal>
+<cq-modal modal-id="callback-fail" hide-submit="true" modal-title="Failed to send callback"></cq-modal>
+
+<style>
+  .activity-error {
+    background-color: #fac3c3;
+  }
+  .ng-table-responsive td:before {
+    position: absolute;
+    padding: 8px;
+    left: 0;
+    top: 0;
+    width: 50%;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+</style>

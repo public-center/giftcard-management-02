@@ -1,0 +1,30 @@
+---
+- name: Configure existing instances for Posting Solutions
+  hosts: prod_servers_backend_defer_ps
+  remote_user: ubuntu
+  vars:
+      node_version: "0.10.33"
+      node_version_tag: "v0.10.33"
+      node_prefix: "node-v{{node_version}}"
+      node_tarball: "{{node_prefix}}.tar.gz"
+      node_path: "/usr/local"
+      production: true
+      backend: true
+      frontend: false
+      defer: true
+      staging: false
+      db: false
+      is_ps: true
+      local_path: "/public/cardquiry/gcmgr"
+      install_path: "/var/www/gcmanager/"
+      repo: "git@github.com:loganetherton/gcmgr.git"
+      branch: "master"
+  roles:
+#    - system
+#    - {role: mongodb, sudo: yes}
+#    - node
+#    - php
+#    - {role: git, sudo: yes}
+#    - nginx
+    - app
+    - logrotate

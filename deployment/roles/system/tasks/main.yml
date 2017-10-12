@@ -1,0 +1,256 @@
+---
+##########################
+# Baseline system config #
+##########################
+
+- name: Keep environment when switching to sudo to allow user agent forwarding to work properly
+  sudo: yes
+  lineinfile: line="Defaults    env_keep += "SSH_AUTH_SOCK""
+              dest=/etc/sudoers
+              state=present
+
+# Some baseline setup to make sure package installs, git clones, etc. will
+# work. This is all system-level stuff, nothing is really project specific
+
+- name: Enabling virtual memory overcommit
+  sysctl: name=vm.overcommit_memory value=1 state=present
+  sudo: yes
+
+# This is used as temporary, local disk drive space. On EC2 this is
+# always a local disk (non EBS)
+- name: Configuring /mnt
+  file: path=/mnt state=directory mode=0777
+  sudo: yes
+
+## Swap file setup
+#  EC2 + Vagrant both have < 1024MB enabled by default.
+
+- name: Check if swap exists
+  stat: path=/mnt/swapfile
+  register: swap_check
+
+- name: Allocate swap file member (2GB)
+  when: not swap_check.stat.exists
+  shell: dd if=/dev/zero of=/mnt/swapfile bs=1M count=2048
+  sudo: yes
+
+- name: Change ownership of swapfile
+  sudo: yes
+  when: not swap_check.stat.exists
+  shell: chown root:root /mnt/swapfile && chmod 600 /mnt/swapfile
+
+- name: Make and flag as swap space
+  sudo: yes
+  when: not swap_check.stat.exists
+  shell: mkswap /mnt/swapfile && swapon /mnt/swapfile
+
+- name: Add swap to fstab
+  sudo: yes
+  lineinfile:
+    dest: /etc/fstab
+    regexp: /mnt/swapfile
+    line: "/mnt/swapfile none swap sw 0 0"
+
+- name: turn on swap
+  sudo: yes
+  command: swapon -a
+
+# Goes into /mnt because that's just a normal disk for local VMs and
+# is local instance storage for EC2. 4GB (4K*1M) should be more than
+# enough since we really only want long-unused data or overflow when
+# we have short-term overuse of memory.
+#- name: Ensure swap file exists
+#  when: ansible_swaptotal_mb < 1024
+#  command: dd if=/dev/zero of=/mnt/swap.swp bs=1M count=4K creates=/mnt/swap.swp
+#  sudo: yes
+#  register: swap_file_created
+#
+#- name: Ensure swap file is formatted
+#  command: mkswap /mnt/swap.swp
+#  sudo: yes
+#  when: swap_file_created|changed
+#
+#- name: Ensure swap file permissions
+#  file: path=/mnt/swap.swp state=file mode=600
+#  sudo: yes
+#  when: swap_file_created|changed
+
+# Just make sure we have enough enabled. On vagrant + EC2, we always
+# have less than 1GB by default, so we can use that to test if we need
+# to enable the additional swap. If we wanted to be more careful, we
+# could run an extra command to test the actual list of mounted
+# partitions
+
+#- name: Check if swap space is enabled
+#  command: cat /proc/swaps
+#  register: swaps
+#
+#- name: Ensure enough swap space is enabled, with high priority
+#  command: swapon -p 100 /mnt/swap.swp
+#  sudo: yes
+#  when: ansible_swaptotal_mb < 1024 and swaps.stdout.find("/mnt/swap.swp") == -1
+
+# Note that we didn't set this up for reboot. We assume any reboots
+#  will be accompanies with an ansible run.
+
+# We need to setup hostnames in /etc/hosts for Vagrant, otherwise
+# configurations that use hostnames across a multi-VM system won't
+# work. Note that we use eth1 because we need the private network
+# address rather than eth0 which is the port which is isolated only to
+# the host+specific VM
+#- name: Setup /etc/hosts for Vagrant [fqdn]
+#  lineinfile: line="{{ hostvars[item].ansible_eth1.ipv4.address }}  {{ hostvars[item].ansible_fqdn }}"
+#              regexp=".*{{ hostvars[item].ansible_fqdn }}"
+#              dest=/etc/hosts
+#              state=present
+#  sudo: yes
+#  with_items: groups["base-servers"]
+#  when: register_etc_hosts
+#
+#- name: Setup /etc/hosts for Vagrant [hostname]
+#  lineinfile: line="{{ hostvars[item].ansible_eth1.ipv4.address }}  {{ item }}"
+#              regexp=".*{{ item }}"
+#              dest=/etc/hosts
+#              state=present
+#  sudo: yes
+#  with_items: groups["base-servers"]
+#  when: register_etc_hosts
+
+
+
+
+
+#######################
+# Baseline apt config #
+#######################
+
+# This is a real pain. We need python-apt installed to get apt Ansible modules
+# working. Except that the packages isn't always called python-apt, and you need
+# to make sure the apt-cache is up to date or it might try to install an out of
+# date package. This means we need to make sure we update the cache and install
+# python-apt before doing anything with the apt Ansible module (which we would
+# want to use for this exact purpose... why they can't implement apt-cache
+# updates without this I do not know).
+#
+# So the end result is that to avoid having to update the cache *every* time we
+# run, we make sure this works on the first run, and we'll skip it on all the
+# rest. We do this by making the command touch a file when it finishes, which
+# will then keep it from ever running again. (It's in temp, which means reboots
+# will run this again, but that's not big concern)
+- name: Ensure python-apt is installed
+  shell: apt-get update && apt-get install python-apt && touch /tmp/.python-apt-installed creates=/tmp/.python-apt-installed
+  sudo: yes
+
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=86400
+  sudo: yes
+
+- name: Installing up unattended-upgrades
+  apt: pkg=unattended-upgrades state=present
+  sudo: yes
+  register: installed_unattended_upgrades
+
+- name: Configuring unattended-upgrades
+  template: src=etc/apt/apt.conf.d/10periodic dest=/etc/apt/apt.conf.d/10periodic
+  sudo: yes
+
+- name: Run unattended-upgrade for security updates
+  command: unattended-upgrade
+  sudo: yes
+  when: installed_unattended_upgrades|changed
+
+# This lets us use apt_repository, which is used below and in some other roles
+- name: Ensure python-software-properties is installed (for apt_repository)
+  apt: pkg=python-software-properties
+  sudo: yes
+
+
+###################################
+# Baseline version control config #
+###################################
+
+# NOTE this should always be the last host from the list in the next
+# rule
+- name: Check well-known hosts
+  shell: grep bitbucket[.]org /etc/ssh/ssh_known_hosts || echo "missing"
+  register: num_ssh_known_hosts
+
+- name: Install keys for well-known hosts
+  shell: ssh-keyscan github.com bitbucket.org >> /etc/ssh/ssh_known_hosts
+  sudo: yes
+  when: num_ssh_known_hosts.stdout == "missing"
+
+
+#####################
+# Baseline utilties #
+#####################
+
+# This stuff is commonly needed enough that we just include it in the base config
+
+- name: Ensure baseline packages are installed
+  apt: pkg={{item}} state=present
+  sudo: yes
+  with_items:
+     - git
+     - ntp
+     - zip
+     - htop
+     - curl
+     - tmux
+     - unzip
+     - software-properties-common
+     - wget
+     - make
+     - g++
+     - gcc
+     - libcurl4-openssl-dev
+     - libsasl2-2
+     - libsasl2-dev
+     - libcurl3
+     - monit
+     # Keep iptables changes between restarts
+     - iptables-persistent
+
+
+
+
+##############################
+# Ansible support libraries  #
+##############################
+
+# We need some extra stuff installed to make sure later Ansible steps can do
+# what they need to. In particular, some modules like the rax_* ones require
+# some Python libraries to be available.
+
+- name: Ensure python and tools are installed
+  apt: pkg={{item}} state=present
+  sudo: yes
+  with_items:
+     - python2.7
+     - python-pip
+  register: python_changed
+  when: db == False
+
+# We only bother updating these the first time, i.e. when we see the
+# pip installation occur
+- name: Ensure pip is up to date
+  pip: name=pip extra_args='--upgrade'
+  sudo: yes
+  when: python_changed|changed
+  when: db == False
+
+- name: Ensure setuptools is up to date
+  pip: name=setuptools extra_args='--upgrade'
+  sudo: yes
+  when: python_changed|changed
+  when: db == False
+
+- name: Install boto
+  sudo: yes
+  pip: name=boto state=latest
+  when: db == False
+
+- name: Install AWS CLI
+  sudo: yes
+  pip: name=awscli state=latest
+  when: db == False

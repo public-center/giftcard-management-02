@@ -1,0 +1,132 @@
+<div class="wrapper wrapper-content animated ">
+  <div class="row store-summary-controls">
+    <div class="col-lg-3">
+      <label>Date begin</label>
+      <div class="input-group date">
+        <datepicker date-format="MM-dd-yyyy">
+          <input type="text" class="form-control" ng-model="storeCtrl.reportDate">
+        </datepicker>
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <label>Date end</label>
+      <div class="input-group date">
+        <datepicker date-format="MM-dd-yyyy">
+          <input type="text" class="form-control" ng-model="storeCtrl.reportDateEnd">
+        </datepicker>
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+    </div>
+    <div class="col-lg-6 store-summary-button">
+      <label>&nbsp;</label>
+      <button type="button" class="btn btn-sm btn-primary" ng-click="storeCtrl.getStoreTotals()">
+        Get store totals
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+
+          <table ng-table="storeCtrl.tableParams" show-filter="true" class="table table-hover issue-tracker">
+            <colgroup>
+              <col width="20%" />
+              <col width="15%" />
+              <col width="15%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" ng-if="storeCtrl.corpDisplayData.alternativeGcmgr"/>
+              <col width="10%" />
+            </colgroup>
+            <tbody>
+            <tr ng-repeat="row in $data track by row._id">
+              <td title="'Store name'" filter="{name: 'text'}" sortable="'name'">
+                <a ui-sref="main.corporate.store.details({storeId: row._id})">
+                  {{row.name}}
+                </a>
+              </td>
+              <td title="'Address'" filter="{address1: 'text'}" sortable="'address1'">{{row.address1}}</td>
+              <td title="'Address 2'" filter="{address2: 'text'}" sortable="'address2'">{{row.address2}}</td>
+              <td title="'City'" filter="{city: 'text'}" sortable="'city'">{{row.city}}</td>
+              <td title="'State'" filter="{state: 'text'}" sortable="'state'">{{row.state}}</td>
+              <td title="'Zip'" filter="{zip: 'text'}" sortable="'zip'">{{row.zip}}</td>
+              <td title="'Created'" sortable="'created'">{{row.created | date}}</td>
+              <td title="'Reserve Total'" ng-if="storeCtrl.corpDisplayData.alternativeGcmgr">{{row.reserveTotal|currency}}</td>
+              <td title="'Delete store'" ng-click="storeCtrl.deleteStoreConfirm(row._id, row.companyId)">Delete store</td>
+              <td title="'Update store'">
+                <a class="btn btn-success btn-facebook btn-outline" ui-sref="main.corporate.store.update({storeId: row._id})">
+                  <i class="fa fa-pencil"> </i> Update store
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-if="storeCtrl.displayData.totals">
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <div class="activity-table-responsive">
+            <table
+              st-table="storeCtrl.displayData.rates"
+              st-safe-src="storeCtrl.displayData.ratesSafe"
+              class="table table-striped activity-table">
+              <col width="8%">
+              <col width="8%">
+              <col width="8%">
+              <col width="6%">
+              <col width="8%">
+              <col width="8%">
+              <col width="8%">
+              <col width="8%">
+              <col width="6%">
+              <col width="6%">
+              <thead>
+              <tr>
+                <th st-sort="store.name">Store Name</th>
+                <th st-sort="balance">Balance</th>
+                <th st-sort="verifiedBalance">Verified Balance</th>
+                <th st-sort="buyRate">Buy Rate</th>
+                <th st-sort="outstandingBuyAmount">Buy Amount</th>
+                <th st-sort="cqPaid">CQ Paid</th>
+                <th st-sort="denials">Denials</th>
+                <th st-sort="netAmount">Net Amount</th>
+                <th st-sort="serviceFee">Service Fee</th>
+                <th st-sort="cqAch">Unpaid</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in storeCtrl.displayData.totals">
+                <td>{{row.store.name.toUpperCase()}}</td>
+                <td>{{row.data.balance || 0 | currency}}</td>
+                <td>{{row.data.verifiedBalance || 0 | currency}}</td>
+                <td>{{row.data.buyRate || 0 | currency}}</td>
+                <td>{{row.data.outstandingBuyAmount || 0 | currency}}</td>
+                <td>{{row.data.cqPaid || 0 | currency}}</td>
+                <td>{{row.data.denials || 0 | currency}}</td>
+                <td>{{row.data.netAmount || 0 | currency}}</td>
+                <td>{{row.data.serviceFee || 0 | currency}}</td>
+                <th>{{row.data.cqOwes || 0 | currency}}</th>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirm delete-->
+<cq-modal modal-id="delete-store-confirm" submit-button="storeCtrl.deleteStore()"
+          modal-title="Are you sure you want to delete this store?" button-text="Delete store" button-class="danger">
+  If you delete this store, all associated employees will be deleted as well
+</cq-modal>

@@ -1,0 +1,33 @@
+<div class="wrapper wrapper-content animated ">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+
+          <table ng-table="listUsersCtrl.tableParams" show-filter="true" class="table table-hover issue-tracker">
+            <colgroup>
+              <col width="20%" />
+              <col width="15%" />
+              <col width="15%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+            </colgroup>
+            <tbody>
+            <tr ng-repeat="row in $data track by row._id">
+              <td title="'Type'" filter="{role: 'text'}" sortable="'role'">{{row.role.replace('-', ' ')}}</td>
+              <td title="'Company'" filter="{companyName: 'text'}" sortable="'companyName'">{{row.companyName}}</td>
+              <td title="'Store'" filter="{storeName: 'text'}" sortable="'storeName'">{{row.storeName}}</td>
+              <td title="'Full Name'" filter="{fullName: 'text'}" sortable="'fullName'"
+                  ng-click="listUsersCtrl.modifySingle(row)">{{row.fullName}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

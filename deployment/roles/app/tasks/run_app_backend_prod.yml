@@ -1,0 +1,89 @@
+---
+
+#- name: Check for symlink of gulp in application directory
+#  stat: path=/var/www/gcmanager/gulp-bin
+#  register: gulpbin
+#
+#- name: Create a symbolic link of gulp to the application directory
+#  shell: ln -s /usr/local/bin/gulp ./gulp-bin
+#  when: gulpbin.stat.islnk is not defined
+#  args:
+#    chdir: "{{install_path}}"
+#
+
+- name: Remove apache, if it exists
+  apt: pkg=apache2 state=absent
+  sudo: yes
+
+- name: Gather facts about instance
+  action: ec2_facts
+  register: instance_facts
+
+- name: Install forever.js
+  sudo: yes
+  npm: name=forever global=yes version=0.15.1
+
+- name: Upload env.json template
+  copy: src=env.json dest="{{install_path}}/env.json"
+
+##########################################
+
+#- name: Replace the resource base API url
+#  replace: dest=/var/www/gcmanager/src/app/Resources/ResourceBase.js regexp="this.url = '.*';" replace="this.url = '';"
+#
+#- name: Replace socket URL
+#  replace: dest=/var/www/gcmanager/src/app/components/socket/SocketService.js regexp="localhost" replace="{{instance_facts['ansible_facts']['ansible_ec2_public_ipv4']}}"
+#
+#- name: Replace the liquidation API url
+#  replace: dest=/var/www/gcmanager/server/api/deferredBalanceInquiries/runDefers.js regexp="localhost" replace="{{instance_facts['ansible_facts']['ansible_ec2_public_ipv4']}}"
+#
+#- name: Build the application
+#  shell: gulp build
+#  args:
+#    chdir: "{{install_path}}"
+#
+#- name: Copy .babelrc
+#  copy: src=.babelrc dest=/var/www/gcmanager/.babelrc
+#
+#- name: Compile server
+#  shell: ./node_modules/babel-cli/bin/babel.js --presets es2015 server --out-dir server-compiled
+#  args:
+#    chdir: "{{install_path}}"
+
+############################
+
+- name: Copy .babelrc for compilation
+  copy: src=.babelrc dest={{install_path}}/.babelrc
+
+- name: Build the server
+  shell: npm run compile
+  args:
+    chdir: "{{install_path}}"
+
+- name: Replace server IP
+  replace: dest="{{install_path}}/server-compiled/config/environment/production.js" regexp="SERVER_IP" replace="{{instance_facts['ansible_facts']['ansible_ec2_public_ipv4']}}"
+
+##########################
+
+- name: Stop any existing forever instances
+  shell: forever stopall
+  args:
+    chdir: "{{install_path}}"
+
+- name: Start application using forever.js (production)
+  shell: NODE_ENV=production PORT=9000 RUN_DEFER=true nohup forever start -l /home/ubuntu/.forever/gcmgr.log -a --minUptime 30000 --spinSleepTime 30000 server-compiled/app.js
+  args:
+    chdir: "{{install_path}}"
+  when: production == True and is_ps == False
+
+- name: Start application using forever.js (production PS)
+  shell: NODE_ENV=production IS_PS=true PORT=9000 RUN_DEFER=false nohup forever start -l /home/ubuntu/.forever/gcmgr.log -a --minUptime 30000 --spinSleepTime 30000 server-compiled/app.js
+  args:
+    chdir: "{{install_path}}"
+  when: production == True and is_ps == True
+
+- name: Start application using forever.js (staging)
+  shell: IS_STAGING=true NODE_ENV=production PORT=9000 RUN_DEFER=true nohup forever start -l /home/ubuntu/.forever/gcmgr.log -a --minUptime 30000 --spinSleepTime 30000 server-compiled/app.js
+  args:
+    chdir: "{{install_path}}"
+  when: production == False

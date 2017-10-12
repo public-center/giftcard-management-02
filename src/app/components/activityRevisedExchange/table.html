@@ -1,0 +1,227 @@
+<table
+  st-table="displayData.display"
+  st-pipe="piper"
+  class="table table-striped activity-table activity-revised-table table-bordered"
+>
+  <!--Widths-->
+  <colgroup>
+    <!--date-->
+    <col>
+    <!--Prefix-->
+    <col>
+    <!--Company Name-->
+    <col>
+    <!--Consumer Name-->
+    <col>
+    <!--Exchange Card #-->
+    <col>
+    <!--Retailer-->
+    <col>
+    <!--Card Number-->
+    <col>
+    <!--PIN-->
+    <col>
+    <!--Balance-->
+    <col>
+    <!--SMP-->
+    <col>
+    <!--CC Trans ID-->
+    <col>
+  </colgroup>
+  <!--/Widths-->
+  <!--Head-->
+  <thead>
+  <tr>
+    <!--date-->
+    <th st-sort="created">
+      <div>Date</div>
+    </th>
+    <!--Prefix-->
+    <th st-sort="transactionPrefix">
+      <div>Prefix</div>
+    </th>
+    <!--Company Name-->
+    <th st-sort="companyName">
+      <div>Company Name</div>
+    </th>
+    <!--Consumer Name-->
+    <th>
+      <div>Consumer Name</div>
+    </th>
+    <!--Exchange Card #-->
+    <th>
+      <div>Exchange Card #</div>
+    </th>
+    <!--Retailer-->
+    <th st-sort="retailer_name">
+      <div>Retailer</div>
+    </th>
+    <!--Card Number-->
+    <th st-sort="card_number">
+      <div>Card Number</div>
+    </th>
+    <!--PIN-->
+    <th st-sort="pin_code">
+      <div>PIN</div>
+    </th>
+    <!--Balance-->
+    <th st-sort="balance">
+      <div>Balance</div>
+    </th>
+    <!--SMP-->
+    <th st-sort="smpRate">
+      <div>SMP</div>
+    </th>
+    <!--CC Trans ID-->
+    <th>
+      <div>CC Trans ID</div>
+    </th>
+  </tr>
+  <tr>
+    <!--date-->
+    <th>
+      <div></div>
+    </th>
+    <!--Prefix-->
+    <th>
+      <div><input st-search="transactionPrefix" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--Company Name-->
+    <th>
+      <div>
+        <select st-search="company" class="activity-select-header">
+          <option></option>
+          <option value="{{company._id}}" ng-repeat="company in ctrl.displayData.params.companies track by $index">
+            {{company.name}}
+          </option>
+        </select>
+      </div>
+    </th>
+    <!--Consumer Name-->
+    <th>
+      <div></div>
+    </th>
+    <!--Exchange Card #-->
+    <th>
+      <div></div>
+    </th>
+    <!--Retailer-->
+    <th>
+      <div><input st-search="retailer" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--Card Number-->
+    <th>
+      <div><input st-search="number" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--PIN-->
+    <th>
+      <div><input st-search="pin" class="input-sm form-control" type="search"/></div>
+    </th>
+    <!--Balance-->
+    <th>
+      <div><input st-search="balance" class="input-sm form-control" type="search" numbers-only="decimal" ng-model="ctrl.balanceSearch"/></div>
+    </th>
+    <!--SMP-->
+    <th>
+      <div></div>
+    </th>
+    <!--CC Trans ID-->
+    <th>
+      <div></div>
+    </th>
+  </tr>
+  </thead>
+  <!--/Head-->
+  <tbody>
+  <!--Data-->
+  <tr ng-repeat="row in displayData.display" select-row="row" ctrl="ctrl" ng-class="{credited: row.credited, rejected: row.rejected, isPayment: row.isPayment}">
+    <!--date-->
+    <td>
+      <div>{{row.created | date:'M/d/yyyy':'UTC'}}</div>
+    </td>
+    <!--Prefix-->
+    <td>
+      {{row.transaction.prefix}}
+    </td>
+    <!--Company Name-->
+    <td>
+      {{row.company.name}}
+    </td>
+    <!--Consumer Name-->
+    <td>
+      John Q. Public
+    </td>
+    <!--Exchange Card #-->
+    <td>
+      4111111111111111
+    </td>
+    <!--Retailer-->
+    <td>
+      {{row.retailer.name}}
+    </td>
+    <!--Card Number-->
+    <td>
+      {{row.card.number}}
+    </td>
+    <!--PIN-->
+    <td>
+      {{row.card.pin}}
+    </td>
+    <!--Balance-->
+    <td>
+      {{row.balance || row.card.balance | currency}}
+    </td>
+    <!--SMP-->
+    <td>
+      {{row.liquidationRate * 100 | number:0}}% {{row.merchandise ? '(M)' : ''}}
+    </td>
+    <!--CC Trans ID-->
+    <td>
+      RYU425
+    </td>
+  </tr>
+  <!--/Data-->
+  <!--Page Totals-->
+  <tr ng-if="displayData.safe.length && !customerDenial">
+    <td><strong>PAGE TOTALS</strong></td>
+    <td>BAL: {{totals.pageTotal.balance | currency}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{totals.pageTotal.cqPaid | currency}}</td>
+    <td>{{totals.pageTotal.sold_for | currency}}</td>
+    <td>VB: {{totals.pageTotal.verifiedBalance | currency}}</td>
+    <td>{{totals.pageTotal.serviceFee | currency}}</td>
+    <td>NET: {{totals.pageTotal.netAmount | currency}}</td>
+  </tr>
+  <!--/Page Totals-->
+  <!--Grand Totals-->
+  <tr ng-if="displayData.safe.length && !customerDenial">
+    <td><strong>GRAND TOTALS</strong></td>
+    <td>BAL: {{totals.grandTotal.balance | currency}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{totals.grandTotal.cqPaid | currency}}</td>
+    <td>{{totals.grandTotal.soldFor | currency}}</td>
+    <td>VB: {{totals.grandTotal.verifiedBalance | currency}}</td>
+    <td>{{totals.grandTotal.serviceFee | currency}}</td>
+    <td>NET: {{totals.grandTotal.netAmount | currency}}</td>
+  </tr>
+  <!--/Grand Totals-->
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="23" class="text-center">
+      <div st-pagination="" st-items-by-page="displayData.perPage" class="pull-left"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<!--Mass update-->
+<cq-modal modal-id="mass-update-confirm" submit-button="massUpdate()" modal-title="Mass update selected cards?"></cq-modal>
+<cq-modal modal-id="mass-update-success" hide-submit="true" modal-title="Mass update successful"></cq-modal>
+<cq-modal modal-id="mass-update-failure" hide-submit="true" modal-title="Mass update failed"></cq-modal>

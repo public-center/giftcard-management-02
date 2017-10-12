@@ -1,0 +1,166 @@
+<table
+  st-table="displayData.display"
+  st-pipe="piper"
+  class="table table-striped activity-table activity-revised-table table-bordered"
+>
+  <colgroup>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+    <col>
+  </colgroup>
+  <thead>
+  <tr>
+    <th st-sort="created">Date Purchased</th>
+    <th st-sort="batch">Batch #</th>
+    <th st-sort="storeName">Store Name</th>
+    <th st-sort="retailer_name">Retailer</th>
+    <th st-sort="customerName">Customer Name</th>
+    <th st-sort="card_number">Card #</th>
+    <th st-sort="pin_code">PIN</th>
+    <th st-sort="transactionPrefix" ng-if="ctrl.alternativeGcmgr">Prefix</th>
+    <th st-sort="balance">Claimed Balance</th>
+    <th st-sort="verifiedBalance">Verified Balance</th>
+    <th st-sort="buyRate">Buy Rate</th>
+    <th st-sort="buyAmount">Buy Amount</th>
+    <th st-sort="amountOwed">Amount Owed by Customer</th>
+    <th st-sort="type">Type</th>
+  </tr>
+  <tr>
+    <th>
+      <div></div>
+    </th>
+    <th>
+      <!--<input st-search="batch" class="input-sm form-control" type="search"/>-->
+      <select st-search="batch" class="activity-select-header">
+        <option></option>
+        <option value="{{batch._id}}" ng-repeat="batch in ctrl.displayData.params.batches track by $index">
+          {{batch.batchId}}
+        </option>
+      </select>
+    </th>
+    <th>
+      <select st-search="store" class="activity-select-header">
+        <option></option>
+        <option value="{{store._id}}" ng-repeat="store in ctrl.displayData.params.stores track by $index">
+          {{store.name}}
+        </option>
+      </select>
+    </th>
+    <th>
+      <input st-search="retailer" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+      <input st-search="customerName" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+      <input st-search="number" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+      <input st-search="pin" class="input-sm form-control" type="search"/>
+    </th>
+    <th ng-if="ctrl.alternativeGcmgr">
+      <input st-search="transactionPrefix" class="input-sm form-control" type="search" />
+    </th>
+    <th>
+      <input st-search="balance" class="input-sm form-control" type="search" numbers-only="decimal" ng-model="ctrl.balanceSearch"/>
+    </th>
+    <th>
+      <input st-search="verifiedBalance" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+      <input st-search="buyRate" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+      <input st-search="buyAmount" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+      <!--<input st-search="liquidationRate" class="input-sm form-control" type="search"/>-->
+    </th>
+    <th>
+      <!--<input st-search="type" class="input-sm form-control" type="search"/>-->
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="row in displayData.display" select-row="row" ctrl="ctrl" ng-class="{credited: row.credited, rejected: row.rejected}">
+    <td>{{row.created | date:'M/d/yyyy':'UTC'}}</td>
+    <td>{{row.batch.batchId}}</td>
+    <td>{{row.store.name}}</td>
+    <td>{{row.retailer.name}}</td>
+    <td><a ng-click="goToCustomer({customerId: row.customer._id})">{{row.customer.fullName}}</a></td>
+    <td>{{row.card.number}}</td>
+    <td>{{row.card.pin}}</td>
+    <td ng-if="ctrl.alternativeGcmgr">{{row.transaction.prefix}}</td>
+    <td>{{row.balance | currency}}</td>
+    <td>
+      <div>
+        {{row.verifiedBalance | currency}}
+      </div>
+    </td>
+    <td>{{row.buyRate | number:2}}%</td>
+    <td>{{row.buyAmount | currency}}</td>
+    <td>{{row.amountOwed | currency}}</td>
+    <td>{{row.type}}</td>
+  </tr>
+  <tr ng-if="displayData.safe.length">
+    <td><strong>PAGE TOTALS</strong></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{totals.pageTotal.balance | currency}}</td>
+    <td>{{totals.pageTotal.verifiedBalance | currency}}</td>
+    <td></td>
+    <td>{{totals.pageTotal.buyAmount | currency}}</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr ng-if="displayData.safe.length">
+    <td><strong>GRAND TOTALS</strong></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{totals.grandTotal.balance | currency}}</td>
+    <td>{{totals.grandTotal.verifiedBalance | currency}}</td>
+    <td></td>
+    <td>{{totals.grandTotal.buyAmount | currency}}</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="13">
+      <div st-pagination="" st-items-by-page="displayData.perPage"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<!--Mass update-->
+<cq-modal modal-id="mass-update-confirm" submit-button="massUpdate()" modal-title="Mass update selected cards?"></cq-modal>
+<cq-modal modal-id="mass-update-success" hide-submit="true" modal-title="Mass update successful"></cq-modal>
+<cq-modal modal-id="mass-update-failure" hide-submit="true" modal-title="Mass update failed"></cq-modal>

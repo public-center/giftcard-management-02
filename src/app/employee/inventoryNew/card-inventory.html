@@ -1,0 +1,60 @@
+<div class="wrapper wrapper-content animated ">
+
+  <div class="ibox">
+    <div class="ibox-content">
+
+      <div class="row margin-5" ng-if="employeeCtrl.displayData.isManager !== undefined && !employeeCtrl.displayData.isManager">
+        <div class="col-md-12">
+          <div class="pull-right">
+            <button type="button" class="btn btn-sm btn-primary" ng-click="employeeCtrl.showManagerOverride()">
+              Manager login
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!--Electronic cards-->
+      <inventory-table
+        card-type="electronic"
+        ctrl="cardInventoryCtrl"
+        employee-ctrl="employeeCtrl"
+        is-manager="employeeCtrl.displayData.isManager"
+        alternative="cardInventoryCtrl.alternativeGcmgr"
+      ></inventory-table>
+
+      <!--Physical cards-->
+      <inventory-table
+        card-type="physical"
+        ctrl="cardInventoryCtrl"
+        employee-ctrl="employeeCtrl"
+        is-manager="employeeCtrl.displayData.isManager"
+        alternative="cardInventoryCtrl.alternativeGcmgr"
+      ></inventory-table>
+
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success pull-right" ng-click="cardInventoryCtrl.confirmAddToReconciliation()">
+            <i class="fa fa-check"></i> Reconcile cards</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Add to reconciliation-->
+<cq-modal modal-id="add-to-reconciliation" submit-button="cardInventoryCtrl.addToReconciliation()"
+          modal-title="Reconcile cards" button-text="Submit">
+  <p>Clicking "Submit" will add all cards which have not yet been reconciled to reconciliation.</p>
+  <p>All cards which have been electronically sold, as well as all physical cards, will be added to reconciliation.</p>
+  <p>If a card is awaiting approval before it sells, it will not be added to reconciliation until it is sold.</p>
+  <p>Cards which have not been reconciled, but which are ready for reconciliation, even if not displayed above, will be added to reconciliation.</p>
+  <p>Electronic cards for which the sale has failed will be removed from inventory.</p>
+  <p>Only click "Submit" if you are ready to stop purchasing cards from your customers for the day.</p>
+</cq-modal>
+
+<!--Inventory details -->
+<cq-modal modal-id="card-details" submit-button=""
+          modal-title="Inventory Information" button-text="" button-class="">
+  {{cardInventoryCtrl.displayData.inventoryDetails}}
+</cq-modal>

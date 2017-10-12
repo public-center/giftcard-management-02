@@ -1,0 +1,11 @@
+---
+
+- name: Drop the existing database
+  shell: mongo gcmanager --eval "db.dropDatabase()"
+  when: production == false
+
+- name: Import database
+  command: mongorestore gcmanager -d gcmanager
+  args:
+    chdir: /home/ubuntu/collections/
+  when: production == false

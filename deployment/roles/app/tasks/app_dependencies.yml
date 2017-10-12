@@ -1,0 +1,46 @@
+---
+
+- name: "Change permissions to open (TODO: Change me, don't want these permissions)"
+  shell: chmod -R 0777 .
+  sudo: yes
+  args:
+    chdir: "{{install_path}}"
+
+- name: Install bower
+  sudo: yes
+  npm: name=bower global=yes
+  when: frontend == True
+
+- name: Install node-gyp
+  sudo: yes
+  npm: name=node-gyp global=yes state=present version=3.2.1
+
+- name: Add pgp key for yarn
+  sudo: yes
+  shell: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+- name: Add yarn ppa
+  sudo: yes
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    state: present
+
+- name: Install yarn
+  sudo: yes
+  npm: name=yarn global=yes state=present version=0.24.5
+
+- name: Install npm packages
+  shell: yarn install
+  when: backend == True
+  args:
+    chdir: "{{install_path}}"
+
+- name: Install bower dependencies
+  command: bower install --config.interactive=false
+  args:
+    chdir: "{{install_path}}"
+  when: frontend == True
+
+- name: Install Gulp
+  sudo: yes
+  npm: name=gulp global=yes

@@ -1,0 +1,63 @@
+<div class="wrapper wrapper-content animated">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <!--Search box-->
+        <div class="ibox-content" ng-hide="customerCtrl.newCustomer">
+          <h2>
+            {{customerCtrl.displayData.customerResults.length}} results found for: <span class="text-navy">{{customerCtrl.customerName}}</span>
+          </h2>
+
+          <div class="search-form">
+            <form method="get">
+              <div class="input-group">
+                <input type="text" placeholder="Customer information" name="search" class="form-control input-lg"
+                       ng-model="customerCtrl.customerName">
+                <div class="input-group-btn">
+                  <button class="btn btn-lg btn-primary" ng-click="customerCtrl.searchCustomers()">
+                    Search
+                  </button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+          <div ng-if="customerCtrl.displayData.customerResults.length">
+            <div class="hr-line-dashed" ng-repeat-start="customer in customerCtrl.displayData.customerResults track by customer._id"></div>
+            <div class="search-result" ng-repeat-end>
+              <h3><a ng-click="customerCtrl.goToCustomer(customer._id)">{{customer.fullName}}</a></h3>
+              <a href="#" class="search-link">State ID: {{customer.stateId}}</a>
+              <p>
+                <strong>Address:</strong> <br>
+                {{customer.address1}}<br ng-if="customer.address2">
+                {{customer.address2}}<br>
+                {{customer.city}}, {{customer.state}}, {{customer.zip}}
+              </p>
+              <p>
+                <strong>Phone:</strong><br> {{customer.phone}}
+              </p>
+            </div>
+          </div>
+          <div class="hr-line-dashed"></div>
+          <div class="text-center">
+            <div class="btn-group">
+              <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i>
+              </button>
+              <button class="btn btn-white active">1</button>
+              <!--<button class="btn btn-white">2</button>-->
+              <!--<button class="btn btn-white">3</button>-->
+              <!--<button class="btn btn-white">4</button>-->
+              <!--<button class="btn btn-white">5</button>-->
+              <!--<button class="btn btn-white">6</button>-->
+              <!--<button class="btn btn-white">7</button>-->
+              <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!--Child states-->
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+/home/ubuntu/.forever/*.log {
+        daily
+        size 100M
+        rotate 2
+        compress
+        delaycompress
+        missingok
+        notifempty
+        copytruncate
+        create 777 ubuntu ubuntu
+}

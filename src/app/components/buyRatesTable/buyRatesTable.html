@@ -1,0 +1,39 @@
+<table ng-table="employeeCtrl.tableParams" show-filter="true" class="table table-hover issue-tracker">
+  <colgroup>
+    <col width="20%" />
+    <col width="20%" />
+    <col width="20%" />
+    <col width="20%" ng-if="!hideSellRates"/>
+    <col width="20%" />
+  </colgroup>
+  <tbody>
+  <tr ng-repeat="row in $data track by row._id">
+    <td title="'Store name'" filter="{name: 'text'}" sortable="'name'">
+      <a>
+        <div class="text-center">
+          {{row.name}}
+        </div>
+      </a>
+    </td>
+    <td title="'Buy Rate'" filter="{buyRate: 'text'}" sortable="'buyRate'">
+      <div class="text-center">
+        {{row.buyRate ? row.buyRate * 100 : 60 | number:2}}%
+      </div>
+    </td>
+    <td title="'Sell Rate'" filter="{sellRate: 'text'}" sortable="'sellRate'" ng-if="!hideSellRates">
+      <div class="text-center">
+        {{row.sellRate ? row.sellRate * 100 : 0 | number:2}}%
+      </div>
+    </td>
+    <td title="'Type'" filter="{type: 'text'}" sortable="'type'">
+      <div class="text-center">
+        {{row.type}}
+      </div>
+    </td>
+    <td title="Retailer">
+      <img src="assets/images/retailers/{{row._id}}.{{row.imageType}}" ng-if="row.imageType">
+      <img src="{{row.imageUrl}}" ng-if="!row.imageType && row.imageUrl">
+    </td>
+  </tr>
+  </tbody>
+</table>

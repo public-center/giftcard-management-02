@@ -1,0 +1,60 @@
+<div class="wrapper wrapper-content animated ">
+  <div class="row">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-sm btn-success" ng-click="biInfoCtrl.downloadCsv()">
+        Download CSV
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <div class="activity-table-responsive">
+          <table
+            st-table="biInfoCtrl.displayData.retailers"
+            st-safe-src="biInfoCtrl.displayData.retailersSafe"
+            class="table table-striped activity-table">
+            <col width="33%">
+            <col width="33%">
+            <col width="33%">
+            <thead>
+            <tr>
+              <th st-sort="name">Retailer</th>
+              <th>URL</th>
+              <th>Phone</th>
+            </tr>
+            <tr>
+              <th>
+                <input st-search="name" class="input-sm form-control" type="search"/>
+              </th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in biInfoCtrl.displayData.retailers">
+              <td>{{row.name.toUpperCase()}}</td>
+              <td>
+                <input type="text" ng-model="row.verification.url"
+                       ng-change="biInfoCtrl.setProp(row.verification.url, ['verification', 'url'], row._id)">
+              </td>
+              <td><input type="text" ng-model="row.verification.phone"
+                         ng-change="biInfoCtrl.setProp(row.verification.phone, ['verification', 'phone'], row._id)">
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="biInfoCtrl.displayData.perPage"></div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

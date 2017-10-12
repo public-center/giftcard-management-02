@@ -1,0 +1,237 @@
+<div class="wrapper wrapper-content animated ">
+
+  <div class="ibox">
+    <div class="ibox-content">
+
+      <reconciliation ctrl="reconciliationCtrl"></reconciliation>
+
+      <!--&lt;!&ndash; Electronic cards table &ndash;&gt;-->
+      <!--<div class="row">-->
+        <!--<div class="col-lg-12">-->
+          <!--<div class="ibox float-e-margins">-->
+            <!--<div class="ibox-title">-->
+              <!--<h5>Electronic cards added since last reconciliation</h5>-->
+            <!--</div>-->
+            <!--<div class="ibox-content">-->
+              <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="col-sm-12">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="table-responsive">-->
+                <!--<table class="table table-striped">-->
+                  <!--<thead>-->
+                  <!--<tr>-->
+                    <!--<th>Transaction ID </th>-->
+                    <!--<th>Seller name </th>-->
+                    <!--<th>Date purchased</th>-->
+                    <!--<th>Retailer name</th>-->
+                    <!--<th>Type</th>-->
+                    <!--<th>Card number</th>-->
+                    <!--<th>PIN</th>-->
+                    <!--<th>Balance</th>-->
+                    <!--<th>Buy amount</th>-->
+                    <!--<th>CQ Pays</th>-->
+                    <!--<th>SMP Code</th>-->
+                  <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody>-->
+                  <!--<tr ng-repeat="inventory in reconciliationCtrl.displayData.inventory.electronic | filter:reconciliationCtrl.displayData.cardSearch track by $index" ng-class="{'strong-row': $last}">-->
+                    <!--<td>{{inventory.cqTransactionId}}</small></td>-->
+                    <!--<td>{{inventory.customer.fullName}}</td>-->
+                    <!--<td>{{inventory.created | date}}</td>-->
+                    <!--<td>{{inventory.retailer.name}}</td>-->
+                    <!--<td>{{inventory.type}}</td>-->
+                    <!--<td>{{inventory.card.number}}</td>-->
+                    <!--<td>{{inventory.card.pin}}</td>-->
+                    <!--<td>{{inventory.card.balance | currency}}</td>-->
+                    <!--<td>{{inventory.buyAmount | currency}}</td>-->
+                    <!--<td>{{inventory.balance * inventory.liquidationRate | currency}}</td>-->
+                    <!--<td>{{inventory.smp}}</td>-->
+                  <!--</tr>-->
+                  <!--</tbody>-->
+                <!--</table>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--&lt;!&ndash; Physical cards table &ndash;&gt;-->
+      <!--<div class="row">-->
+        <!--<div class="col-lg-12">-->
+          <!--<div class="ibox float-e-margins">-->
+            <!--<div class="ibox-title">-->
+              <!--<h5>Physical cards added since last reconciliation</h5>-->
+            <!--</div>-->
+            <!--<div class="ibox-content">-->
+              <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="col-sm-12">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<div class="table-responsive">-->
+                <!--<table class="table table-striped">-->
+                  <!--<thead>-->
+                  <!--<tr>-->
+                    <!--<th>Transaction ID </th>-->
+                    <!--<th>Seller name </th>-->
+                    <!--<th>Date purchased</th>-->
+                    <!--<th>Retailer name</th>-->
+                    <!--<th>Type</th>-->
+                    <!--<th>Card number</th>-->
+                    <!--<th>PIN</th>-->
+                    <!--<th>Balance</th>-->
+                    <!--<th>Buy amount</th>-->
+                    <!--<th>CQ Pays</th>-->
+                    <!--<th>SMP Code</th>-->
+                  <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody>-->
+                  <!--<tr ng-repeat="inventory in reconciliationCtrl.displayData.inventory.physical | filter:reconciliationCtrl.displayData.cardSearch track by $index" ng-class="{'strong-row': $last}">-->
+                    <!--<td>{{inventory.cqTransactionId || 'N/A'}}</small></td>-->
+                    <!--<td>{{inventory.customer.fullName}}</td>-->
+                    <!--<td>{{inventory.created | date}}</td>-->
+                    <!--<td>{{inventory.retailer.name}}</td>-->
+                    <!--<td>{{inventory.type}}</td>-->
+                    <!--<td>{{inventory.card.number}}</td>-->
+                    <!--<td>{{inventory.card.pin}}</td>-->
+                    <!--<td>{{inventory.card.balance | currency}}</td>-->
+                    <!--<td>{{inventory.buyAmount | currency}}</td>-->
+                    <!--<td>{{inventory.sellAmount | currency}}</td>-->
+                    <!--<td>{{inventory.smp}}</td>-->
+                  <!--</tr>-->
+                  <!--</tbody>-->
+                <!--</table>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+      <!--&lt;!&ndash; Denied cards table &ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col-lg-12">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="ibox float-e-margins">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="ibox-title">&ndash;&gt;-->
+              <!--&lt;!&ndash;<h5>Electronic cards added since last reconciliation</h5>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="ibox-content">&ndash;&gt;-->
+              <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="col-sm-12">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--&lt;!&ndash;<div class="table-responsive">&ndash;&gt;-->
+                <!--&lt;!&ndash;<table class="table table-striped">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<thead>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Transaction ID </th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Seller name </th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Date purchased</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Retailer name</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Type</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Card number</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>PIN</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Balance</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Buy amount</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>CQ Paid</th>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<th>Deduction</th>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</thead>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<tr ng-repeat="inventory in reconciliationCtrl.displayData.inventory.denials | filter:reconciliationCtrl.displayData.cardSearch track by $index">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.cqTransactionId || 'N/A'}}</small></td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.customer.fullName}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.created | date}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.retailer.name}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.type}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.card.number}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.card.pin}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.card.balance | currency}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>{{inventory.buyAmount | currency}}</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>CQ PAID</td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<td>DEDUCTION</td>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+                <!--&lt;!&ndash;</table>&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col-lg-3 col-lg-offset-9">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="ibox">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="ibox-content">&ndash;&gt;-->
+              <!--&lt;!&ndash;<h5>Balance Total</h5>&ndash;&gt;-->
+              <!--&lt;!&ndash;<h1 class="no-margins">{{reconciliationCtrl.getIntakeTotal('denials', 'card', 'balance') | currency}}</h1>&ndash;&gt;-->
+              <!--&lt;!&ndash;<h5>Buy Amount Total</h5>&ndash;&gt;-->
+              <!--&lt;!&ndash;<h1 class="no-margins">{{reconciliationCtrl.getIntakeTotal('denials', 'buyAmount') | currency}}</h1>&ndash;&gt;-->
+              <!--&lt;!&ndash;<h5>Card Intake Total</h5>&ndash;&gt;-->
+              <!--&lt;!&ndash;<h1 class="no-margins">{{reconciliationCtrl.getIntakeTotal('denials', 'balance') | currency}}</h1>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+      <!--<hr>-->
+      <!--<div class="row">-->
+        <!--<div class="col-lg-3">-->
+          <!--<div class="ibox">-->
+            <!--<div class="ibox-content">-->
+              <!--<h3>Reconciliation Totals</h3>-->
+              <!--<table class="table table-stripped m-t-md">-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                  <!--<td class="no-borders">-->
+                    <!--<strong>Balance Total</strong>-->
+                  <!--</td>-->
+                  <!--<td class="no-borders">-->
+                    <!--{{reconciliationCtrl.displayData.intakeTotal.balance | currency}}-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td>-->
+                    <!--<strong>Buy Amount Total</strong>-->
+                  <!--</td>-->
+                  <!--<td>-->
+                    <!--{{reconciliationCtrl.displayData.intakeTotal.buyAmount | currency}}-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                  <!--<td>-->
+                    <!--<strong>CQ Pays Total</strong>-->
+                  <!--</td>-->
+                  <!--<td>-->
+                    <!--{{reconciliationCtrl.displayData.intakeTotal.sellAmount | currency}}-->
+                  <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+              <!--</table>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-success pull-right" ng-click="reconciliationCtrl.completeReconciliation()">
+            <i class="fa fa-check"></i> Print report and packing slip</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--<style>-->
+  <!--.strong-row {-->
+    <!--font-weight: bold;-->
+  <!--}-->
+<!--</style>-->
